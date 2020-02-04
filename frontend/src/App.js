@@ -5,14 +5,17 @@ import EcosystemData from "./components/EcosystemData/EcosystemData";
 import Map from "./components/Map/Map";
 
 import "./App.css";
+import {Container} from "@material-ui/core";
 
 function App() {
     return (
-        <div>
-            <Decisions/>
-            <Map/>
-            <EcosystemData/>
-        </div>
+        <Container>
+            <div className="App-root">
+                <Decisions/>
+                <Map/>
+                <EcosystemData/>
+            </div>
+        </Container>
     );
 }
 

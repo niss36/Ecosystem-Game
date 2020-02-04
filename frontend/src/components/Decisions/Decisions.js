@@ -1,10 +1,12 @@
 import React from "react";
 
+import "./Decisions.css";
+
 export default class Decisions extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="Decisions-root">
                 <p>Decisions</p>
             </div>
         );
