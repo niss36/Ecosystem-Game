@@ -1,5 +1,12 @@
 .App-root {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+}
+
+.panel {
+    position: relative;
+
+    --border: 1px;
+    height: calc(100% - 2 * var(--border));
+
+    border-radius: 5px;
+    border: var(--border) solid lightgray;
 }
