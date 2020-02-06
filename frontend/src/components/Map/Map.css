@@ -6,3 +6,15 @@
     top: 0;
     right: 0;
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(16, auto);
+    grid-template-rows: repeat(16, auto);
+}
+
+.grid p {
+    margin: 0;
+}
+
+.noselect { }
