@@ -5,16 +5,17 @@ import Settings from "@material-ui/icons/Settings";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import "./Map.css";
 import Cell from "./Cell";
+
+import "./Map.css";
 
 export default class Map extends React.Component {
 
     render() {
-        const {va, vb} = this.props;
-        let l = new Array(16*16);
-        l.fill(1);
-        l = l.map((value, i) => <Cell i={i}></Cell>);
+        let cells = new Array(16*16);
+        for (let i = 0; i < cells.length; i++) {
+            cells[i] = (<Cell i={i} key={i}/>);
+        }
 
         let dic = {color: "blue", backgroundColor : "gray"};
 
@@ -22,8 +23,8 @@ export default class Map extends React.Component {
         return (
             <div className="Map-root panel">
                 <SettingsMenu/>
-                <div className="grid" style={dic}>
-                    {l.map(value => <p>{value}</p>)}
+                <div className="Map-grid" style={dic}>
+                    {cells}
                 </div>
                 <p>Map</p>
             </div>

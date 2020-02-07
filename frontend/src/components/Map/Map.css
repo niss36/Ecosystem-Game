@@ -7,14 +7,12 @@
     right: 0;
 }
 
-.grid {
+.Map-grid {
     display: grid;
     grid-template-columns: repeat(16, auto);
     grid-template-rows: repeat(16, auto);
 }
 
-.grid p {
+.Map-grid p {
     margin: 0;
 }
-
-.noselect { }
