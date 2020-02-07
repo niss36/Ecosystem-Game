@@ -10,26 +10,6 @@ import Cell from "./Cell";
 
 export default class Map extends React.Component {
 
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            settingsPopupAnchor: null,
-        };
-
-        this.openSettingsPopup = this.openSettingsPopup.bind(this);
-        this.closeSettingsPopup = this.closeSettingsPopup.bind(this);
-    }
-
-    openSettingsPopup(event) {
-        this.setState({settingsPopupAnchor: event.currentTarget});
-    }
-
-    closeSettingsPopup() {
-        this.setState({settingsPopupAnchor: null});
-    }
-
     render() {
         const {va, vb} = this.props;
         let l = new Array(16*16);
@@ -41,35 +21,63 @@ export default class Map extends React.Component {
 
         return (
             <div className="Map-root panel">
-                <div className="Map-settings">
-                    <IconButton aria-label="map settings" onClick={this.openSettingsPopup}>
-                        <Settings/>
-                    </IconButton>
-                    <Menu
-                        id="settings-menu"
-                        anchorEl={this.state.settingsPopupAnchor}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        keepMounted
-                        open={Boolean(this.state.settingsPopupAnchor)}
-                        onClose={this.closeSettingsPopup}
-                    >
-                        <MenuItem onClick={this.closeSettingsPopup}>Setting 1</MenuItem>
-                        <MenuItem onClick={this.closeSettingsPopup}>Setting 2</MenuItem>
-                        <MenuItem onClick={this.closeSettingsPopup}>Setting 3</MenuItem>
-                    </Menu>
-                </div>
+                <SettingsMenu/>
                 <div className="grid" style={dic}>
                     {l.map(value => <p>{value}</p>)}
                 </div>
                 <p>Map</p>
+            </div>
+        );
+    }
+}
+
+class SettingsMenu extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            anchor: null,
+        };
+
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
+    }
+
+    open(event) {
+        this.setState({anchor: event.currentTarget});
+    }
+
+    close() {
+        this.setState({anchor: null});
+    }
+
+    render() {
+        return (
+            <div className="Map-settings">
+                <IconButton aria-label="map settings" onClick={this.open}>
+                    <Settings/>
+                </IconButton>
+                <Menu
+                    id="settings-menu"
+                    anchorEl={this.state.anchor}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                    }}
+                    keepMounted
+                    open={Boolean(this.state.anchor)}
+                    onClose={this.close}
+                >
+                    <MenuItem onClick={this.close}>Setting 1</MenuItem>
+                    <MenuItem onClick={this.close}>Setting 2</MenuItem>
+                    <MenuItem onClick={this.close}>Setting 3</MenuItem>
+                </Menu>
             </div>
         );
     }
