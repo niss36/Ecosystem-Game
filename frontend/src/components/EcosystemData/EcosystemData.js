@@ -1,7 +1,5 @@
 import React from "react";
 
-import Grid from "@material-ui/core/Grid";
-
 import TabsPane from "../util/TabsPane";
 
 import "./EcosystemData.css";
@@ -24,19 +22,17 @@ export default class EcosystemData extends React.Component {
 
     render() {
         return (
-            <Grid item xs={12} md={12} className="EcosystemData-root">
-                <div className="panel">
-                    <TabsPane value={this.state.selectedTab} onChange={this.onTabChange} tabs={["Graphs", "Other stuff"]}>
-                        <div>
-                            Graphs
-                        </div>
-                        <div>
-                            Other stuff
-                        </div>
-                    </TabsPane>
-                    <p>EcosystemData</p>
-                </div>
-            </Grid>
+            <div className="panel">
+                <TabsPane value={this.state.selectedTab} onChange={this.onTabChange} tabs={["Graphs", "Other stuff"]}>
+                    <div>
+                        Graphs
+                    </div>
+                    <div>
+                        Other stuff
+                    </div>
+                </TabsPane>
+                <p>EcosystemData</p>
+            </div>
         );
     }
 }
