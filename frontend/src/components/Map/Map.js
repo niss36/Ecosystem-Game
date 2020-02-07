@@ -37,9 +37,8 @@ export default class Map extends React.Component {
         l.fill(1);
         l = l.map((value, i) => <Cell i={i}></Cell>);
 
-        let dic = {color: "blue", backgroundColor : "gray"};
-
-
+        let dic = {color: "blue", backgroundColor : "gray",
+            backgroundImage: "url('/uk.svg')",backgroundSize:"cover",backgroundPosition:"center", backgroundRepeat:"no-repeat"};
         return (
             <Grid item xs={12} md={8} className="Map-root">
                 <div className="panel">

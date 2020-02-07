@@ -17,7 +17,7 @@ export default class Cell extends React.Component {
 
         // this.clicked();
         let style = this.state.toggled ? {color: "red", backgroundColor : "blue", user_select : "none"}
-        : {color: "blue", backgroundColor : "gray", user_select : "none"}; // user_select none doesnt work
+        : {color: "blue",user_select : "none"}; // user_select none doesnt work
 
         return (
         <p style={style} onClick={() => this.setState({toggled :!this.state.toggled})}> {i} </p>
