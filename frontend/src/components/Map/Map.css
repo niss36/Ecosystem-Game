@@ -10,9 +10,21 @@
 .Map-grid {
     display: grid;
     grid-template-columns: repeat(16, auto);
-    grid-template-rows: repeat(16, auto);
+    grid-auto-rows: 1fr;
+
+    color: blue;
+    background-color: gray;
 }
 
-.Map-grid p {
-    margin: 0;
+.Map-grid::before {
+    content: "";
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.Map-grid > *:first-child {
+    grid-row: 1;
+    grid-column: 1;
 }

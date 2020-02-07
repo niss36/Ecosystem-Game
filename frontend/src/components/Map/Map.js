@@ -17,13 +17,10 @@ export default class Map extends React.Component {
             cells[i] = (<Cell i={i} key={i}/>);
         }
 
-        let dic = {color: "blue", backgroundColor : "gray"};
-
-
         return (
             <div className="Map-root panel">
                 <SettingsMenu/>
-                <div className="Map-grid" style={dic}>
+                <div className="Map-grid">
                     {cells}
                 </div>
                 <p>Map</p>
