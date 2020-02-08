@@ -1,0 +1,16 @@
+.Cell-root {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+
+    margin: 0;
+
+    color: blue;
+    background-color: gray;
+}
+
+.Cell-root.toggled {
+    color: red;
+    background-color: blue;
+}
