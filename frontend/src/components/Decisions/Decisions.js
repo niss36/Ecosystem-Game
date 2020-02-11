@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
@@ -7,7 +8,7 @@ import TabsPane from "../util/TabsPane";
 
 import "./Decisions.css";
 
-export default class Decisions extends React.Component {
+class Decisions extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,7 +33,7 @@ export default class Decisions extends React.Component {
 
     render() {
 
-        const {onNextTurn} = this.props;
+        const {onNextTurn, onDecisionStuff} = this.props;
 
         const tabs = ["Agriculture", "Fisheries", "Forestry", "Population", "Hunting", "Energy"];
 
@@ -51,7 +52,7 @@ export default class Decisions extends React.Component {
                     <div>
                         <ul>
                             <li>Build/sell fishing boat (each boat goes in a cell in the map) -- produces food</li>
-                            <Button onClick={() => this.props.onDecisionStuff("fish")}>Fishing boat</Button>
+                            <Button onClick={() => onDecisionStuff("fish")}>Fishing boat</Button>
                             <li>Slider for effort</li>
                         </ul>
                     </div>
@@ -122,3 +123,10 @@ export default class Decisions extends React.Component {
         );
     }
 }
+
+Decisions.propTypes = {
+    onNextTurn: PropTypes.func,
+    onDecisionStuff: PropTypes.func,
+};
+
+export default Decisions;
