@@ -15,9 +15,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 const ExpansionPanel = withStyles({
     root: {
         boxShadow: "none",
-        "&:not(:last-child)": {
-            borderBottom: "1px solid lightgray",
-        },
+        borderBottom: "1px solid lightgray",
         "&:before": {
             display: "none",
         },
@@ -99,7 +97,11 @@ export function HappinessPane({happiness}) {
 
     const classes = useHappinessStyles();
 
-    const className = happiness > 80 ? classes.veryHigh : (happiness > 60 ? classes.high : (happiness > 40 ? classes.medium : (happiness > 20 ? classes.low : classes.veryLow)));
+    const classesArray = [classes.veryLow, classes.low, classes.medium, classes.high, classes.veryHigh];
+
+    const ix = Math.min(4, Math.max(0, Math.floor(happiness / 20)));
+
+    const className = classesArray[ix];
 
     return (
         <ExpansionPanel>
@@ -111,6 +113,21 @@ export function HappinessPane({happiness}) {
                 <div>Base: 100%</div>
                 <div>Taxes: -20%</div>
                 <div>Pollution: -10%</div>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
+    );
+}
+
+export function PopulationPane({population, food}) {
+
+    return (
+        <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
+                <div>Population:</div>
+                <div>{population}</div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+                <div></div>
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );

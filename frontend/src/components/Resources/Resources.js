@@ -1,6 +1,6 @@
 import React from "react";
 
-import {ResourcePane, HappinessPane} from "./ResourcePanes";
+import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
 import "./Resources.css";
 
@@ -17,19 +17,20 @@ export default class Resources extends React.Component {
             <div className="Resources-root">
                 <h3>Resources</h3>
 
+                <PopulationPane population={42} food={1337}/>
                 <HappinessPane happiness={70}/>
                 <ResourcePane name="Money" amount={100000} income={1000}/>
                 <ResourcePane name="Food" amount={100000} income={1000}/>
                 <ResourcePane name="Wood" amount={100000} income={1000}/>
 
-                <ul>
+                {/*<ul>
                     <li>Money: {this.money}</li>
                     <li>Food: {this.food}</li>
                     <li>Population: {this.population}</li>
                     <li>Happiness: {this.happiness}</li>
                     <li>Electricity: {this.electricity}</li>
                     <li>Wood: {this.wood}</li>
-                </ul>
+                </ul>*/}
             </div>
         );
     }
