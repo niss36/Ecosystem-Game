@@ -1,12 +1,11 @@
 import React from "react";
 
-import MuiButton from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 
 import TabsPane from "../util/TabsPane";
 
 import "./Decisions.css";
-import Button from "./Button";
 
 export default class Decisions extends React.Component {
 
@@ -42,7 +41,7 @@ export default class Decisions extends React.Component {
                     <div>
                         <ul>
                             <li>Build (insert animal) farm</li>
-                            <Button content = {"Animal Farm"} key = {"Animal Farm"}>{}</Button>
+                            <Button>Animal Farm</Button>
                         </ul>
                     </div>
 
@@ -50,7 +49,7 @@ export default class Decisions extends React.Component {
                     <div>
                         <ul>
                             <li>Build/sell fishing boat (each boat goes in a cell in the map) -- produces food</li>
-                            <Button content = {"Fishing Boat"} key = {"Fishing Boat"}>{}</Button>
+                            <Button onClick={() => this.props.onDecisionStuff("fish")}>Fishing boat</Button>
                             <li>Slider for effort</li>
                         </ul>
                     </div>
@@ -68,11 +67,11 @@ export default class Decisions extends React.Component {
                                             <li>
                                                 Cheap: More pollution and doesn't replant
                                             </li>
-                                            <Button content = {"Cheap Mill"} key = {"Cheap Mill"}>{}</Button>
+                                            <Button >Cheap Mill</Button>
                                             <li>
                                                 Expensive: Less pollution and more sustainable (Same payoff, less impact on ecosystem)
                                             </li>
-                                            <Button content = {"Expensive Mill"} key = {"Expensive Mill"}>{}</Button>
+                                            <Button>Expensive Mill</Button>
                                         </ul>
                                     </li>
                                 </ul>
@@ -98,7 +97,7 @@ export default class Decisions extends React.Component {
                         <ul>
                             <li>Kill animals for food</li>
                             <li>Hire hunters per cell</li>
-                            <Button content = {"Hire Hunter"} key = {"Hire Hunter"}>{}</Button>
+                            <Button >Hire Hunter</Button>
                         </ul>
                     </div>
 
@@ -107,15 +106,15 @@ export default class Decisions extends React.Component {
                         <ul>
                             <li>Electricity: Keep number higher than needs (depend on population)</li>
                             <li>Build coal plant</li>
-                            <Button content = {"Coal Plant"} key = {"Coal Plant"}>{}</Button>
+                            <Button >Coal Plant</Button>
                             <li>Build wind turbine</li>
-                            <Button content = {"Wind Turbine"} key = {"Wind Turbine"}>{}</Button>
+                            <Button >Wind Turbine</Button>
                         </ul>
                     </div>
                 </TabsPane>
                 <div className="filler"/>
                 <div className="Decisions-nextTurn">
-                    <MuiButton variant="contained" size="large" startIcon={<PlayArrow/>}>Next turn</MuiButton>
+                    <Button variant="contained" size="large" startIcon={<PlayArrow/>}>Next turn</Button>
                 </div>
             </div>
         );

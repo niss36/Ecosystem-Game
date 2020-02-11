@@ -10,28 +10,49 @@ import Resources from "./components/Resources/Resources";
 
 import "./App.css";
 
-function App() {
-    return (
-        <Container maxWidth={false} className="App-root">
-            <Grid container spacing={2}>
-                <Grid item xs={2}>
-                    <Resources/>
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            mapargs : []
+        };
+
+        this.decisionsCall = this.decisionsCall.bind(this);
+
+    }
+
+    decisionsCall(name) {
+        if (name === "fish") {
+            this.setState({mapargs : [10]})
+        }
+
+    }
+
+
+    render() {
+        return (
+            <Container maxWidth={false} className="App-root">
+                <Grid container spacing={2}>
+                    <Grid item xs={2}>
+                        <Resources/>
+                    </Grid>
+                    <Grid item xs={8} container spacing={2}>
+                        <Grid item xs={12} md={4}>
+                            <Decisions onDecisionStuff={this.decisionsCall}/>
+                        </Grid>
+                        <Grid item xs={12} md={8}>
+                            <Map mapargs = {this.state.mapargs} />
+                        </Grid>
+                        <Grid item xs={12} md={12}>
+                            <EcosystemData/>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={2}/>{/*Cell info + maybe events?*/}
                 </Grid>
-                <Grid item xs={8} container spacing={2}>
-                    <Grid item xs={12} md={4}>
-                        <Decisions/>
-                    </Grid>
-                    <Grid item xs={12} md={8}>
-                        <Map/>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
-                        <EcosystemData/>
-                    </Grid>
-                </Grid>
-                <Grid item xs={2}/>{/*Cell info + maybe events?*/}
-            </Grid>
-        </Container>
-    );
+            </Container>
+        );
+    }
 }
 
 export default App;
