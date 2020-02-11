@@ -4,7 +4,6 @@ import TabsPane from "../util/TabsPane";
 
 import "./Decisions.css";
 import Button from "./Button";
-
 export default class Decisions extends React.Component {
 
     constructor(props) {
@@ -16,11 +15,17 @@ export default class Decisions extends React.Component {
 
         this.onTabChange = this.onTabChange.bind(this);
     }
+    objectPlaceholder = {
+        icon: 'unknown.svg',
+        income: 0,
+        cost: 100,
+        killRate: 10,
+        cellNo: 0
+    };
 
     onTabChange(event, value) {
         this.setState({selectedTab: value});
     }
-
     render() {
 
         const tabs = ["Agriculture", "Fisheries", "Forestry", "Population", "Hunting", "Energy"];
