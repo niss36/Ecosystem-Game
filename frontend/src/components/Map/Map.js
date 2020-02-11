@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import IconButton from "@material-ui/core/IconButton";
 import Settings from "@material-ui/icons/Settings";
@@ -9,7 +10,7 @@ import Cell from "./Cell";
 
 import "./Map.css";
 
-export default class Map extends React.Component {
+class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,6 +53,12 @@ export default class Map extends React.Component {
         );
     }
 }
+
+Map.propTypes = {
+    mapargs: PropTypes.arrayOf(PropTypes.number),
+};
+
+export default Map;
 
 class SettingsMenu extends React.Component {
 
