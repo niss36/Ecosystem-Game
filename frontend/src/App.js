@@ -3,10 +3,7 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
-import Decisions from "./components/Decisions/Decisions";
-import EcosystemData from "./components/EcosystemData/EcosystemData";
-import Map from "./components/Map/Map";
-import Resources from "./components/Resources/Resources";
+import {Decisions, EcosystemData, Map, Resources} from "./components";
 
 import "./App.css";
 
@@ -32,7 +29,6 @@ class App extends React.Component {
     nextTurn() {
         console.log("Next turn!!"); // TODO
     }
-
 
     render() {
         return (
