@@ -13,10 +13,10 @@ import "./Map.css";
 class Map extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             mousedown : false,
         };
-
 
         this.onMouseDown = this.onMouseDown.bind(this);
     }
@@ -25,8 +25,6 @@ class Map extends React.Component {
         this.setState({mouseDown: !this.state.mouseDown});
         // console.log(event.node.props.i);
     }
-
-
 
     render() {
         let args = this.props.mapargs;
@@ -48,7 +46,6 @@ class Map extends React.Component {
                      onMouseMove={this.mousemove}>
                     {cells}
                 </div>
-                <p>Map</p>
             </div>
         );
     }
