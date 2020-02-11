@@ -2,9 +2,11 @@
     min-height: 600px;
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 }
 
-.filler {
+.Decisions-root .filler {
     flex-grow: 1;
 }
 
@@ -12,4 +14,10 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+
+    border-top: 1px solid lightgray;
+}
+
+.Decisions-nextTurn .MuiButton-root {
+    border-radius: 0;
 }
