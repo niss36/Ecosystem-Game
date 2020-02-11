@@ -10,17 +10,41 @@ import Cell from "./Cell";
 import "./Map.css";
 
 export default class Map extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mousedown : false,
+        };
+
+
+        this.onMouseDown = this.onMouseDown.bind(this);
+    }
+
+    onMouseDown(event) {
+        this.setState({mouseDown: !this.state.mouseDown});
+        // console.log(event.node.props.i);
+    }
+
+
 
     render() {
+        let args = this.props.mapargs;
+
         let cells = new Array(16*16);
         for (let i = 0; i < cells.length; i++) {
-            cells[i] = (<Cell i={i} key={i}/>);
+            if (args[0] == 10) {
+                cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={10} key={i} />);
+            } else {
+                cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={i} key={i}/>);
+            }
         }
 
         return (
             <div className="Map-root panel">
                 <SettingsMenu/>
-                <div className="Map-grid">
+                <div className="Map-grid"
+                     onMouseDown={this.onMouseDown}
+                     onMouseMove={this.mousemove}>
                     {cells}
                 </div>
                 <p>Map</p>
