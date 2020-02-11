@@ -17,6 +17,13 @@ export default class Decisions extends React.Component {
 
         this.onTabChange = this.onTabChange.bind(this);
     }
+    objectPlaceholder = {
+        icon: 'unknown.svg',
+        income: 0,
+        cost: 100,
+        killRate: 10,
+        cellNo: 0
+    };
 
     onTabChange(event, value) {
         this.setState({selectedTab: value});
