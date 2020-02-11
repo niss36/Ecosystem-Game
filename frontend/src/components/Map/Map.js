@@ -72,9 +72,9 @@ class SettingsMenu extends React.Component {
                     open={Boolean(this.state.anchor)}
                     onClose={this.close}
                 >
-                    <MenuItem onClick={this.close}>Setting 1</MenuItem>
-                    <MenuItem onClick={this.close}>Setting 2</MenuItem>
-                    <MenuItem onClick={this.close}>Setting 3</MenuItem>
+                    <MenuItem onClick={this.close}>Colour blind mode</MenuItem>
+                    <MenuItem onClick={this.close}>Overlay</MenuItem>
+                    <MenuItem onClick={this.close}>Difficulty</MenuItem>
                 </Menu>
             </div>
         );
