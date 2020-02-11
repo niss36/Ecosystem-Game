@@ -1,9 +1,13 @@
 import React from "react";
 
+import MuiButton from "@material-ui/core/Button";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+
 import TabsPane from "../util/TabsPane";
 
 import "./Decisions.css";
 import Button from "./Button";
+
 export default class Decisions extends React.Component {
 
     constructor(props) {
@@ -26,6 +30,7 @@ export default class Decisions extends React.Component {
     onTabChange(event, value) {
         this.setState({selectedTab: value});
     }
+
     render() {
 
         const tabs = ["Agriculture", "Fisheries", "Forestry", "Population", "Hunting", "Energy"];
@@ -108,7 +113,10 @@ export default class Decisions extends React.Component {
                         </ul>
                     </div>
                 </TabsPane>
-                <p>Decisions</p>
+                <div className="filler"/>
+                <div className="Decisions-nextTurn">
+                    <MuiButton variant="contained" size="large" startIcon={<PlayArrow/>}>Next turn</MuiButton>
+                </div>
             </div>
         );
     }

@@ -1,3 +1,15 @@
 .Decisions-root {
     min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filler {
+    flex-grow: 1;
+}
+
+.Decisions-nextTurn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
