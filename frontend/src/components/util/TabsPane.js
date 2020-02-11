@@ -32,13 +32,15 @@ const useTabStyles = makeStyles(theme => ({
     selected: {},
 }));
 
-function TabsPane({tabs, children, value, onChange, ...props}) {
+function TabsPane({tabs, children, ...props}) {
     const tabsClasses = useTabsStyles();
     const tabClasses = useTabStyles();
 
+    const [value, onChange] = React.useState(0);
+
     return (
         <>
-            <Tabs classes={tabsClasses} value={value} onChange={onChange} {...props}>
+            <Tabs classes={tabsClasses} value={value} onChange={(e, v) => onChange(v)} {...props}>
                 {
                     tabs.map(
                         (val, i) => {

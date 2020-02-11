@@ -10,15 +10,6 @@ import "./Decisions.css";
 
 class Decisions extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedTab: 0
-        };
-
-        this.onTabChange = this.onTabChange.bind(this);
-    }
     objectPlaceholder = {
         icon: 'unknown.svg',
         income: 0,
@@ -26,10 +17,6 @@ class Decisions extends React.Component {
         killRate: 10,
         cellNo: 0
     };
-
-    onTabChange(event, value) {
-        this.setState({selectedTab: value});
-    }
 
     render() {
 
@@ -39,7 +26,7 @@ class Decisions extends React.Component {
 
         return (
             <div className="Decisions-root panel">
-                <TabsPane variant="scrollable" value={this.state.selectedTab} onChange={this.onTabChange} tabs={tabs}>
+                <TabsPane variant="scrollable" tabs={tabs}>
                     {/*Agriculture*/}
                     <div>
                         <ul>
