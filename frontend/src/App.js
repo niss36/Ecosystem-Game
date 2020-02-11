@@ -19,7 +19,7 @@ class App extends React.Component {
         };
 
         this.decisionsCall = this.decisionsCall.bind(this);
-
+        this.nextTurn = this.nextTurn.bind(this);
     }
 
     decisionsCall(name) {
@@ -27,6 +27,10 @@ class App extends React.Component {
             this.setState({mapargs : [10]})
         }
 
+    }
+
+    nextTurn() {
+        console.log("Next turn!!"); // TODO
     }
 
 
@@ -39,7 +43,7 @@ class App extends React.Component {
                     </Grid>
                     <Grid item xs={8} container spacing={2}>
                         <Grid item xs={12} md={4}>
-                            <Decisions onDecisionStuff={this.decisionsCall}/>
+                            <Decisions onNextTurn={this.nextTurn} onDecisionStuff={this.decisionsCall}/>
                         </Grid>
                         <Grid item xs={12} md={8}>
                             <Map mapargs = {this.state.mapargs} />

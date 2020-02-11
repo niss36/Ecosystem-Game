@@ -32,7 +32,7 @@ export default class Map extends React.Component {
 
         let cells = new Array(16*16);
         for (let i = 0; i < cells.length; i++) {
-            if (args[0] == 10) {
+            if (args[0] === 10) {
                 cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={10} key={i} />);
             } else {
                 cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={i} key={i}/>);

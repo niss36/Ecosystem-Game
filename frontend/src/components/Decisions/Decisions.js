@@ -32,6 +32,8 @@ export default class Decisions extends React.Component {
 
     render() {
 
+        const {onNextTurn} = this.props;
+
         const tabs = ["Agriculture", "Fisheries", "Forestry", "Population", "Hunting", "Energy"];
 
         return (
@@ -114,7 +116,7 @@ export default class Decisions extends React.Component {
                 </TabsPane>
                 <div className="filler"/>
                 <div className="Decisions-nextTurn">
-                    <Button variant="contained" size="large" startIcon={<PlayArrow/>}>Next turn</Button>
+                    <Button onClick={onNextTurn} variant="contained" size="large" startIcon={<PlayArrow/>}>Next turn</Button>
                 </div>
             </div>
         );
