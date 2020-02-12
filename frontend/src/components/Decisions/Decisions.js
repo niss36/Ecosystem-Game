@@ -48,9 +48,10 @@ class Decisions extends React.Component {
                         <BuildingPane name="Fishing Boat" numberBuilt={2} canBuy onBuy={() => onDecisionStuff("fish")} onSell={() => console.log("sell")}>
                             A boat to catch fish in the ocean.
                             <br/>
-                            Slider:
-                            <Slider min={0} max={100} defaultValue={50} step={1} marks={{0: '0%', 100: '100%', 50:'50%'}} handle={this.handle}/>
-                            <br/>
+                            Effort:
+                            <div style={{padding: '10px 20px 10px'}}>
+                                <Slider min={0} max={100} defaultValue={100} step={1} marks={{0: '0%', 100: '100%', 50:'50%'}} handle={this.handle}/>
+                            </div>
                         </BuildingPane>
                         {/*Hunting*/}
                         <BuildingPane name="Hunting Shack" numberBuilt={4} canBuy>
@@ -70,7 +71,10 @@ class Decisions extends React.Component {
 
                     {/*Population*/}
                     <div>
-                        {/*TODO*/}
+                        Tax:
+                        <div style={{padding:'10px 20px 10px'}}>
+                            <Slider min={0} max={100} defaultValue={100} step={5} marks={{0: '0%', 100: '100%', 50:'50%'}} handle={this.handle}/>
+                        </div>
                         <ul>
                             <li>
                                 Taxes
