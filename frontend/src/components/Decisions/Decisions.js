@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 
 import TabsPane from "../util/TabsPane";
+import BuildingPane from "./BuildingPane";
 
 import "./Decisions.css";
 
@@ -22,55 +23,43 @@ class Decisions extends React.Component {
 
         const {onNextTurn, onDecisionStuff} = this.props;
 
-        const tabs = ["Agriculture", "Fisheries", "Forestry", "Population", "Hunting", "Energy"];
+        const tabs = ["Food", "Forestry", "Population", "Energy"];
 
         return (
             <div className="Decisions-root panel">
                 <TabsPane variant="scrollable" tabs={tabs}>
-                    {/*Agriculture*/}
+                    {/*Food*/}
                     <div>
-                        <ul>
-                            <li>Build (insert animal) farm</li>
-                            <Button>Animal Farm</Button>
-                        </ul>
-                    </div>
+                        {/*Agriculture*/}
+                        <BuildingPane name="Animal Farm" numberBuilt={3} canBuy onBuy={() => console.log("buy")} onSell={() => console.log("sell")}>
+                            Rear animals to produce food.
+                        </BuildingPane>
 
-                    {/*Fisheries*/}
-                    <div>
-                        <ul>
-                            <li>Build/sell fishing boat (each boat goes in a cell in the map) -- produces food</li>
-                            <Button onClick={() => onDecisionStuff("fish")}>Fishing boat</Button>
-                            <li>Slider for effort</li>
-                        </ul>
+                        {/*Fisheries*/}
+                        <BuildingPane name="Fishing Boat" numberBuilt={2} canBuy onBuy={() => onDecisionStuff("fish")} onSell={() => console.log("sell")}>
+                            A boat to catch fish in the ocean.
+                        </BuildingPane>
+                        {/*TODO Slider for effort*/}
+
+                        {/*Hunting*/}
+                        <BuildingPane name="Hunting Shack" numberBuilt={4} canBuy>
+                            Hire hunters to harvest wild animals.
+                        </BuildingPane>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <ul>
-                            <li>
-                                Lumber mill
-                                <ul>
-                                    <li>Per cell</li>
-                                    <li>
-                                        Multiple options
-                                        <ul>
-                                            <li>
-                                                Cheap: More pollution and doesn't replant
-                                            </li>
-                                            <Button >Cheap Mill</Button>
-                                            <li>
-                                                Expensive: Less pollution and more sustainable (Same payoff, less impact on ecosystem)
-                                            </li>
-                                            <Button>Expensive Mill</Button>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <BuildingPane name="Cheap Lumber mill" numberBuilt={2} canBuy>
+                            Cuts down trees to produce wood. Substantial impact on the ecosystem.
+                        </BuildingPane>
+                        <BuildingPane name="Expensive Lumber mill" numberBuilt={0} canBuy>
+                            Cuts down trees to produce wood sustainably with less pollution.
+                        </BuildingPane>
                     </div>
 
                     {/*Population*/}
                     <div>
+                        {/*TODO*/}
                         <ul>
                             <li>
                                 Taxes
@@ -82,24 +71,14 @@ class Decisions extends React.Component {
                         </ul>
                     </div>
 
-                    {/*Hunting*/}
-                    <div>
-                        <ul>
-                            <li>Kill animals for food</li>
-                            <li>Hire hunters per cell</li>
-                            <Button >Hire Hunter</Button>
-                        </ul>
-                    </div>
-
                     {/*Energy*/}
                     <div>
-                        <ul>
-                            <li>Electricity: Keep number higher than needs (depend on population)</li>
-                            <li>Build coal plant</li>
-                            <Button >Coal Plant</Button>
-                            <li>Build wind turbine</li>
-                            <Button >Wind Turbine</Button>
-                        </ul>
+                        <BuildingPane name="Coal Power Plant" numberBuilt={2} canBuy>
+                            Generate electricity by burning coal.
+                        </BuildingPane>
+                        <BuildingPane name="Wind Turbine" numberBuilt={1} canBuy>
+                            Generate electricity by harnessing the wind.
+                        </BuildingPane>
                     </div>
                 </TabsPane>
                 <div className="filler"/>
