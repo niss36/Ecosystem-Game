@@ -17,44 +17,51 @@ class Map extends React.Component {
         super(props);
 
         this.state = {
-            selectedIndexs: []
+            selectedIndexs: [],
         };
 
         this.cellMouseMove = this.cellMouseMove.bind(this);
+        this.cellMouseclick = this.cellMouseclick.bind(this);
     }
 
 
     cellMouseMove(i) {
-
-
         if (this.props.mapargs.selectionMode) { //looking inside a dic of dic
-            if ((i % size) < 1) {
-                i++;
-            }
-            if ((i % size) === size - 1) {
-                i--;
-            }
-            if (i < size) {
-                i += size
-            }
-            if (i > size * (size - 1)) {
-                i -= size
-            }
-            this.setState({selectedIndexs: [i, i + 1, i - 1, i - size, i - size + 1, i - size - 1, i + size, i + size + 1, i + size - 1]})
+            if ((i % size) < 1) { i++;}
+            if ((i % size) === size - 1) {i--;}
+            if (i < size) {i += size}
+            if (i > size * (size - 1)) {i -= size}
+            this.setState({selectedIndexs: [i, i + 1, i - 1, i - size, i - size + 1, i - size - 1, i + size, i + size + 1, i + size - 1]});
         }
     }
+    cellMouseclick(i) {
+        if (!this.props.mapargs.selectionMode) {
+            this.setState({selectedIndexs :[i]});
+        } else {
+            //TODO when app.js cells is done
+            //call fun in app.js
+            // clear selection
+            // display image
+        }
 
-
+    }
 
 
     render() {
 
+        const {selectedIndexs } = this.state;
+
         let cells = new Array(size * size);
         for (let i = 0; i < cells.length; i++) {
-            if (this.props.mapargs.selectionMode && this.state.selectedIndexs.includes(i)) {
-                cells[i] = (<Cell cellMouseMove={this.cellMouseMove} selected={true} i={i} key={i}/>);
+            if (this.props.mapargs.selectionMode && selectedIndexs.includes(i)) {
+
+                cells[i] = (<Cell cellMouseMove={this.cellMouseMove}
+                                  cellMouseclick={this.cellMouseclick}
+                                  selected={true} i={i} key={i}/>);
             } else {
-                cells[i] = (<Cell cellMouseMove={this.cellMouseMove} selected={false} i={i} key={i}/>);
+                cells[i] = (<Cell cellMouseMove={this.cellMouseMove}
+                                  cellMouseclick={this.cellMouseclick}
+                                  selected={false} i={i} key={i}/>);
             }
         }
 
