@@ -25,7 +25,6 @@ class App extends React.Component {
             dataCells: dataCells,
             desiredChanges: desiredChanges,
         };
-
         this.decisionsCall = this.decisionsCall.bind(this);
         this.nextTurn = this.nextTurn.bind(this);
         this.submitChange = this.submitChange.bind(this);
@@ -66,7 +65,7 @@ class App extends React.Component {
                             <Decisions onNextTurn={this.nextTurn} onDecisionStuff={this.decisionsCall}/>
                         </Grid>
                         <Grid item xs={12} md={8}>
-                            <Map mapargs = {this.state.mapargs} />
+                            <Map mapargs = {this.state.mapargs} submitChange={this.submitChange}/>
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <EcosystemData/>
