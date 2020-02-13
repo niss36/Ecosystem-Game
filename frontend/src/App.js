@@ -3,8 +3,6 @@ import React from "react";
 import Game from "./Game";
 import Menu from "./Menu";
 
-import "./App.css";
-
 class App extends React.Component {
 
     constructor(props) {
