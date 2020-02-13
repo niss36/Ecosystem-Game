@@ -11,6 +11,7 @@ import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import "./ResourcePanes.css";
 
 const ExpansionPanel = withStyles({
     root: {
@@ -35,7 +36,6 @@ const ExpansionPanelSummary = withStyles({
         },
     },
     content: {
-        justifyContent: "space-between",
         overflow: "hidden",
         margin: "4px 0",
         "&$expanded": {
@@ -62,7 +62,7 @@ export function ResourcePane({name, icon,amount, income}) {
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} height={25}/>
-                <div>{name}:</div>
+                <div className="flex-grow-1 ResourcePanes-name">{name}:</div>
                 <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income}/month)</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -108,7 +108,7 @@ export function HappinessPane({happiness,icon}) {
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} height={25}/>
-                <div>Happiness:</div>
+                <div className="flex-grow-1 ResourcePanes-name">Happiness:</div>
                 <div className={classes.root + " " + className}>{happiness}%</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -126,7 +126,7 @@ export function PopulationPane({population, food,icon}) {
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} height={25}/>
-                <div>Population:</div>
+                <div className="flex-grow-1 ResourcePanes-name">Population:</div>
                 <div>{population}</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>

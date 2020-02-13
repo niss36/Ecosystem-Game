@@ -15,10 +15,6 @@
     margin-bottom: 8px;
 }
 
-.BuildingPane-header .filler {
-    flex-grow: 1;
-}
-
 .BuildingPane-description {
     margin-bottom: 6px;
     color: #666;

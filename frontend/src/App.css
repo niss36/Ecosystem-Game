@@ -1,0 +1,13 @@
+.panel {
+    position: relative;
+
+    --border: 1px;
+    height: calc(100% - 2 * var(--border));
+
+    border-radius: 5px;
+    border: var(--border) solid lightgray;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}

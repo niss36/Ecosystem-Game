@@ -93,7 +93,7 @@ class Decisions extends React.Component {
                         </ul>
                     </div>
                 </TabsPane>
-                <div className="filler"/>
+                <div className="flex-grow-1"/>
                 <div className="Decisions-nextTurn">
                     <Button onClick={onNextTurn} size="large" fullWidth startIcon={<PlayArrow/>}>Next turn</Button>
                 </div>
