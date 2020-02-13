@@ -5,10 +5,6 @@
     overflow: hidden;
 }
 
-.Decisions-root .filler {
-    flex-grow: 1;
-}
-
 .Decisions-nextTurn {
     display: flex;
     flex-direction: row;

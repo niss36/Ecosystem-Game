@@ -47,7 +47,7 @@ class Decisions extends React.Component {
 
         const {onNextTurn, onDecisionStuff} = this.props;
 
-        const tabs = ["Food", "Forestry", "Population", "Energy"];
+        const tabs = ["Food", "Forestry", "Population"];
 
         return (
             <div className="Decisions-root panel">
@@ -93,7 +93,7 @@ class Decisions extends React.Component {
                         </ul>
                     </div>
                 </TabsPane>
-                <div className="filler"/>
+                <div className="flex-grow-1"/>
                 <div className="Decisions-nextTurn">
                     <Button onClick={onNextTurn} size="large" fullWidth startIcon={<PlayArrow/>}>Next turn</Button>
                 </div>
