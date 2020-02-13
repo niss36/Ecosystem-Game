@@ -92,12 +92,6 @@ class Decisions extends React.Component {
                             </li>
                         </ul>
                     </div>
-
-                    {/*Energy*/}
-                    <div>
-                        <MakeBuildingPane id="coalPowerPlant"/>
-                        <MakeBuildingPane id="windTurbine"/>
-                    </div>
                 </TabsPane>
                 <div className="filler"/>
                 <div className="Decisions-nextTurn">
