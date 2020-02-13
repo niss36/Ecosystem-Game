@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {BUY_BUILDING, SELL_BUILDING, SET_EFFORT, NEXT_TURN} from "./Actions";
+import {BUY_BUILDING, SELL_BUILDING, SET_EFFORT, NEXT_TURN} from "../actions";
 
 const initialState = {
     numberBuilt: 0,

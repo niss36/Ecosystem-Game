@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect, Provider} from "react-redux";
-import {createStore} from "redux";
+import {connect} from "react-redux";
 
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
@@ -10,8 +9,7 @@ import MuiSlider from "@material-ui/core/Slider";
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
 import {buildings} from "./Buildings";
-import {buyBuilding, sellBuilding, setEffort} from "./Actions";
-import {buildings as buildingsReducer} from "./Reducers";
+import {buyBuilding, sellBuilding, setEffort} from "../../actions";
 
 import "./Decisions.css";
 
@@ -70,8 +68,6 @@ function MakeFishingBoatPane() {
     return <ABuildingPane id={id} building={buildings[id]}/>
 }
 
-const store = createStore(buildingsReducer);
-
 class Decisions extends React.Component {
 
     objectPlaceholder = {
@@ -88,7 +84,7 @@ class Decisions extends React.Component {
 
         const tabs = ["Food", "Forestry", "Population"];
 
-        const content = (
+        return (
             <div className="Decisions-root panel">
                 <TabsPane variant="scrollable" tabs={tabs}>
                     {/*Food*/}
@@ -134,8 +130,6 @@ class Decisions extends React.Component {
                 </div>
             </div>
         );
-
-        return (<Provider store={store} children={content}/>); // TODO
     }
 }
 
