@@ -10,31 +10,51 @@ import Cell from "./Cell";
 
 import "./Map.css";
 
+const size = 16;
+
 class Map extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            mousedown : false,
+            selectedIndexs: []
         };
 
-        this.onMouseDown = this.onMouseDown.bind(this);
+        this.cellMouseMove = this.cellMouseMove.bind(this);
     }
 
-    onMouseDown(event) {
-        this.setState({mouseDown: !this.state.mouseDown});
-        // console.log(event.node.props.i);
+
+    cellMouseMove(i) {
+
+
+        if (this.props.mapargs.selectionMode) { //looking inside a dic of dic
+            if ((i % size) < 1) {
+                i++;
+            }
+            if ((i % size) === size - 1) {
+                i--;
+            }
+            if (i < size) {
+                i += size
+            }
+            if (i > size * (size - 1)) {
+                i -= size
+            }
+            this.setState({selectedIndexs: [i, i + 1, i - 1, i - size, i - size + 1, i - size - 1, i + size, i + size + 1, i + size - 1]})
+        }
     }
+
+
+
 
     render() {
-        let args = this.props.mapargs;
 
-        let cells = new Array(16*16);
+        let cells = new Array(size * size);
         for (let i = 0; i < cells.length; i++) {
-            if (args[0] === 10) {
-                cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={10} key={i} />);
+            if (this.props.mapargs.selectionMode && this.state.selectedIndexs.includes(i)) {
+                cells[i] = (<Cell cellMouseMove={this.cellMouseMove} selected={true} i={i} key={i}/>);
             } else {
-                cells[i] = (<Cell onMouseDown={onmousedown} onMouseUp i={i} key={i}/>);
+                cells[i] = (<Cell cellMouseMove={this.cellMouseMove} selected={false} i={i} key={i}/>);
             }
         }
 
@@ -52,7 +72,7 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-    mapargs: PropTypes.arrayOf(PropTypes.number),
+    mapargs: PropTypes.any,
 };
 
 export default Map;
