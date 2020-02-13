@@ -12,7 +12,7 @@ export const buildings = {
         ],
         effects: [
             {resource: FOOD, income: 100},
-        ]
+        ],
     },
     fishingBoat: {
         name: "Fishing Boat",
@@ -21,7 +21,7 @@ export const buildings = {
             {resource: WOOD, amount: 200},
             {resource: MONEY, amount: 100},
         ],
-        effects: []
+        effects: [],
     },
     huntingShack: {
         name: "Hunting Shack",
@@ -32,7 +32,7 @@ export const buildings = {
         ],
         effects: [
             {resource: FOOD, income: 100},
-        ]
+        ],
     },
     cheapLumberMill: {
         name: "Cheap Lumber Mill",
@@ -42,20 +42,8 @@ export const buildings = {
     },
     expensiveLumberMill: {
         name: "Expensive Lumber mill",
-        description: "Cuts down trees to produce wood sustainably with less pollution.",
+        description: "Cuts down trees to produce wood sustainably.",
         costs: [],
         effects: [],
     },
-    coalPowerPlant: {
-        name: "Coal Power Plant",
-        description: "Generate electricity by burning coal.",
-        costs: [],
-        effects: [],
-    },
-    windTurbine: {
-        name: "Wind Turbine",
-        description: "Generate electricity by harnessing the wind.",
-        costs: [],
-        effects: [],
-    }
 };
