@@ -5,10 +5,6 @@
     overflow: hidden;
 }
 
-.Decisions-root .filler {
-    flex-grow: 1;
-}
-
 .Decisions-nextTurn.MuiButton-root {
     border-top: 1px solid lightgray;
     border-radius: 0;

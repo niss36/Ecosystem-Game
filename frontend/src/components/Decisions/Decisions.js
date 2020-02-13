@@ -133,7 +133,7 @@ class Decisions extends React.Component {
                         </ul>
                     </div>
                 </TabsPane>
-                <div className="filler"/>
+                <div className="flex-grow-1"/>
                 <NextTurn/>
             </div>
         );

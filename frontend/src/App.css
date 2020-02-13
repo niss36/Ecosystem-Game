@@ -1,7 +1,3 @@
-.App-root {
-    padding-top: 16px;
-}
-
 .panel {
     position: relative;
 
@@ -10,4 +6,8 @@
 
     border-radius: 5px;
     border: var(--border) solid lightgray;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
 }

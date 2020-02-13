@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import {Decisions, EcosystemData, Map, Resources} from "./components";
 
-import "./App.css";
+import "./Game.css";
 
 class Game extends React.Component {
     constructor(props) {
@@ -54,11 +54,8 @@ class Game extends React.Component {
     }
 
     render() {
-
-        console.log("Render");
-
         return (
-            <Container maxWidth={false} className="App-root">
+            <Container maxWidth={false} className="Game-root">
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
                         <Resources/>
