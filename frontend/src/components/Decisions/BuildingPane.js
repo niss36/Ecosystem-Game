@@ -71,6 +71,7 @@ class BuildingPane extends React.Component {
 }
 
 BuildingPane.propTypes = {
+    id: PropTypes.string,
     building: PropTypes.any,
     numberBuilt: PropTypes.number,
     canBuy: PropTypes.bool,
