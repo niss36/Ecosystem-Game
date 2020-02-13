@@ -56,11 +56,12 @@ const ExpansionPanelDetails = withStyles(theme => ({
     },
 }), {name: "ExpansionPanelDetails"})(MuiExpansionPanelDetails);
 
-export function ResourcePane({name, amount, income}) {
+export function ResourcePane({name, icon,amount, income}) {
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
+                <img src={icon} height={25}/>
                 <div>{name}:</div>
                 <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income}/month)</div>
             </ExpansionPanelSummary>
@@ -93,7 +94,7 @@ const useHappinessStyles = makeStyles({
     }
 });
 
-export function HappinessPane({happiness}) {
+export function HappinessPane({happiness,icon}) {
 
     const classes = useHappinessStyles();
 
@@ -106,6 +107,7 @@ export function HappinessPane({happiness}) {
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
+                <img src={icon} height={25}/>
                 <div>Happiness:</div>
                 <div className={classes.root + " " + className}>{happiness}%</div>
             </ExpansionPanelSummary>
@@ -118,11 +120,12 @@ export function HappinessPane({happiness}) {
     );
 }
 
-export function PopulationPane({population, food}) {
+export function PopulationPane({population, food,icon}) {
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
+                <img src={icon} height={25}/>
                 <div>Population:</div>
                 <div>{population}</div>
             </ExpansionPanelSummary>
