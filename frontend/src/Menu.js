@@ -17,7 +17,7 @@ class Menu extends React.Component {
         return (
             <Container style={{minHeight: "100vh"}}>
                         <Box className="bgimg" style={{minHeight: "100vh"}}>
-                            <h1 style={{position: 'center'}}>Ecosystem Game</h1>
+                            <h1 style={{position: 'center', margin : '0'}}>Ecosystem Game</h1>
                             <Button className={'test'} variant="contained" color="primary" onClick={this.renderApp}>
                                 Start
                             </Button>

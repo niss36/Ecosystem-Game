@@ -6,8 +6,9 @@
     height: 48px;
 }
 .bgimg {
-    background-image: url('./logo.svg');
+    background-image: url('./logo.jpg');
     min-height: 100%;
     background-position: center;
     background-size: cover;
+
 }
