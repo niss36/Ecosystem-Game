@@ -19,15 +19,6 @@ class App extends React.Component {
         this.nextTurn = this.nextTurn.bind(this);
     }
 
-    objectPlaceholder = {
-        name: 'Animal Farm',
-        icon: 'unknown.svg',
-        income: 0,
-        cost: 100,
-        killRate: 10,
-        cellNos: {}
-    };
-
     decisionsCall(name) {
         if (name === "fish") {
             this.setState({mapargs : [10]})
