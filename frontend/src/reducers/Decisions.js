@@ -29,6 +29,8 @@ function normalBuilding(id) {
 
 const animalFarm = normalBuilding("animalFarm");
 const huntingShack = normalBuilding("huntingShack");
+const cheapLumberMill = normalBuilding("cheapLumberMill");
+const expensiveLumberMill = normalBuilding("expensiveLumberMill");
 
 const fishInitialState = {
     ...initialState,
@@ -51,4 +53,6 @@ export const buildings = combineReducers({
     animalFarm,
     fishingBoat,
     huntingShack,
+    cheapLumberMill,
+    expensiveLumberMill,
 });
