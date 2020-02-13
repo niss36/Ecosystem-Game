@@ -86,7 +86,7 @@ class Decisions extends React.Component {
 
         const {onNextTurn, onDecisionStuff} = this.props;
 
-        const tabs = ["Food", "Forestry", "Population", "Energy"];
+        const tabs = ["Food", "Forestry", "Population"];
 
         const content = (
             <div className="Decisions-root panel">
