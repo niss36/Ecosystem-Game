@@ -56,12 +56,12 @@ const ExpansionPanelDetails = withStyles(theme => ({
     },
 }), {name: "ExpansionPanelDetails"})(MuiExpansionPanelDetails);
 
-export function ResourcePane({name, icon,amount, income}) {
+export function ResourcePane({name, icon, amount, income}) {
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} height={25}/>
+                <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">{name}:</div>
                 <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income}/month)</div>
             </ExpansionPanelSummary>
@@ -94,7 +94,7 @@ const useHappinessStyles = makeStyles({
     }
 });
 
-export function HappinessPane({happiness,icon}) {
+export function HappinessPane({happiness, icon}) {
 
     const classes = useHappinessStyles();
 
@@ -107,7 +107,7 @@ export function HappinessPane({happiness,icon}) {
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} height={25}/>
+                <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">Happiness:</div>
                 <div className={classes.root + " " + className}>{happiness}%</div>
             </ExpansionPanelSummary>
@@ -120,12 +120,12 @@ export function HappinessPane({happiness,icon}) {
     );
 }
 
-export function PopulationPane({population, food,icon}) {
+export function PopulationPane({population, food, icon}) {
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} height={25}/>
+                <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">Population:</div>
                 <div>{population}</div>
             </ExpansionPanelSummary>
