@@ -8,7 +8,8 @@ export default class Cell extends React.Component {
         super(props);
 
         this.state = {
-            toggled: false
+            // REMOVING ALL STATE FROM CELL
+            // all state will be controled by map.js
         };
     }
 
@@ -18,8 +19,9 @@ export default class Cell extends React.Component {
         let i = this.props.i;
 
 
+
         let classes = "Cell-root";
-        if (this.state.toggled) {
+        if (this.props.selected) {
             classes += " toggled";
         }
 
