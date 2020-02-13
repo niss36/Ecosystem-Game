@@ -12,7 +12,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            mapargs : []
+            mapargs : {selectionMode : false }
         };
 
         this.decisionsCall = this.decisionsCall.bind(this);
@@ -21,16 +21,18 @@ class App extends React.Component {
 
     decisionsCall(name) {
         if (name === "fish") {
-            this.setState({mapargs : [10]})
+            this.setState({mapargs : {selectionMode : true}})
         }
 
     }
 
     nextTurn() {
         console.log("Next turn!!"); // TODO
+        this.setState({mapargs : {selectionMode : false}});
     }
 
     render() {
+
         return (
             <Container maxWidth={false} className="App-root">
                 <Grid container spacing={2}>
