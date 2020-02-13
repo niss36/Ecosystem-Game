@@ -12,8 +12,11 @@ export default class Cell extends React.Component {
         };
     }
 
+
+
     render() {
         let i = this.props.i;
+
 
         let classes = "Cell-root";
         if (this.state.toggled) {
@@ -21,7 +24,9 @@ export default class Cell extends React.Component {
         }
 
         return (
-            <p className={classes} onClick={() => this.setState({toggled: !this.state.toggled})}>
+            <p className={classes} onClick={() =>this.props.cellMouseclick(i)}
+            onMouseEnter={() => this.props.cellMouseMove(i)} /*Stops it calling its self when not o mouse move event*/
+            >
                 {i}
             </p>
         );

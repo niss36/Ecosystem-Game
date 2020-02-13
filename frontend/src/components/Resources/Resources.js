@@ -17,11 +17,11 @@ export default class Resources extends React.Component {
             <div className="Resources-root">
                 <h3>Resources</h3>
 
-                <PopulationPane population={42} food={1337}/>
-                <HappinessPane happiness={70}/>
-                <ResourcePane name="Money" amount={100000} income={1000}/>
-                <ResourcePane name="Food" amount={100000} income={1000}/>
-                <ResourcePane name="Wood" amount={100000} income={1000}/>
+                <PopulationPane icon={"/population.svg"} population={42} food={1337}/>
+                <HappinessPane icon={"/smile.svg"} happiness={70}/>
+                <ResourcePane icon={"/coin.svg"} name="Money" amount={100000} income={1000}/>
+                <ResourcePane icon={"/meat.svg"} name="Food" amount={100000} income={1000} />
+                <ResourcePane icon={"/logs.svg"} name="Wood" amount={100000} income={1000}/>
 
                 {/*<ul>
                     <li>Money: {this.money}</li>

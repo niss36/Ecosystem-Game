@@ -58,7 +58,7 @@ class BuildingPane extends React.Component {
                     }
                 </div>
                 <div className="BuildingPane-footer">
-                    <Button onClick={onBuy} disabled={!canBuy} variant="outlined" className="BuildingPane-buy">
+                    <Button onClick={onBuy} disabled={!canBuy} variant="outlined" className="BuildingPane-buy" >
                         Buy
                     </Button>
                     <Button onClick={onSell} disabled={numberBuilt === 0} variant="outlined" className="BuildingPane-sell">
