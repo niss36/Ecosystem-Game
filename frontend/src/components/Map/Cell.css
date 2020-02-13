@@ -11,7 +11,7 @@
 
 .Cell-root.toggled {
     color: red;
-    background-image: url("unknown.svg");
+    background-image: url("/boat.svg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

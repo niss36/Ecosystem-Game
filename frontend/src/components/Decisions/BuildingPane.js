@@ -23,7 +23,7 @@ class BuildingPane extends React.Component {
 
         const {building, extraEffects, numberBuilt, canBuy, onBuy, onSell, children} = this.props;
 
-        const {name, description, costs, effects} = building;
+        const {name, description, costs, icon,effects} = building;
 
         return (
             <div className="BuildingPane-root">
