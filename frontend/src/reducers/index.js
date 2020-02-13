@@ -1,3 +1,8 @@
 import {buildings} from "./Decisions";
+import {resources} from "./Resources";
+import {combineReducers} from "redux";
 
-export default buildings; // TODO
+export default combineReducers({
+    buildings,
+    resources
+});

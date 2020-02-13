@@ -15,7 +15,7 @@ import "./Decisions.css";
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        ...state[ownProps.id],
+        ...state.buildings[ownProps.id],
         canBuy: true, // TODO update based on available resources / space on the map
     };
 };
