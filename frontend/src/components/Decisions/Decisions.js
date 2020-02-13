@@ -9,7 +9,7 @@ import MuiSlider from "@material-ui/core/Slider";
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
 import {buildings} from "./Buildings";
-import {buyBuilding, sellBuilding, setEffort} from "../../actions";
+import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
 
 import "./Decisions.css";
 
@@ -68,6 +68,18 @@ function MakeFishingBoatPane() {
     return <ABuildingPane id={id} building={buildings[id]}/>
 }
 
+const NextTurn = connect()(({dispatch}) => (
+    <Button
+        className="Decisions-nextTurn"
+        onClick={() => dispatch(nextTurn())}
+        size="large"
+        fullWidth
+        startIcon={<PlayArrow/>}
+    >
+        Next turn
+    </Button>
+));
+
 class Decisions extends React.Component {
 
     objectPlaceholder = {
@@ -79,9 +91,6 @@ class Decisions extends React.Component {
     };
 
     render() {
-
-        const {onNextTurn, onDecisionStuff} = this.props;
-
         const tabs = ["Food", "Forestry", "Population"];
 
         return (
@@ -125,9 +134,7 @@ class Decisions extends React.Component {
                     </div>
                 </TabsPane>
                 <div className="filler"/>
-                <div className="Decisions-nextTurn">
-                    <Button onClick={onNextTurn} size="large" fullWidth startIcon={<PlayArrow/>}>Next turn</Button>
-                </div>
+                <NextTurn/>
             </div>
         );
     }
