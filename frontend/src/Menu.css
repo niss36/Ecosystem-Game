@@ -1,14 +1,23 @@
+.Menu-root {
+    min-height: 100vh;
+}
 
-.test{
+.Menu-bgimg {
+    min-height: 100vh;
+
+    background-image: url('./logo.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.Menu-header {
+    position: center;
+    margin-top: 0;
+}
+
+.Menu-button {
     background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
     border: 0;
     color: white;
     height: 48px;
-}
-.bgimg {
-    background-image: url('./logo.jpg');
-    min-height: 100%;
-    background-position: center;
-    background-size: cover;
-
 }
