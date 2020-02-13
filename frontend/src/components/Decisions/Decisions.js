@@ -3,11 +3,21 @@ import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
+import MuiSlider from "@material-ui/core/Slider";
 
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
+import {buildings} from "./Buildings";
 
 import "./Decisions.css";
+
+function MakeBuildingPane({id, children, ...props}) {
+    return (
+        <BuildingPane building={buildings[id]} {...props} numberBuilt={0} canBuy> {/*TODO*/}
+            {children}
+        </BuildingPane>
+    )
+}
 
 class Decisions extends React.Component {
 
@@ -18,6 +28,20 @@ class Decisions extends React.Component {
         killRate: 10,
         cellNo: 0
     };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            fishBoatEffort: 50,
+        };
+
+        this.onFishBoatEffortChange = this.onFishBoatEffortChange.bind(this);
+    }
+
+    onFishBoatEffortChange(e, v) {
+        this.setState({fishBoatEffort: v});
+    }
 
     render() {
 
@@ -31,35 +55,33 @@ class Decisions extends React.Component {
                     {/*Food*/}
                     <div>
                         {/*Agriculture*/}
-                        <BuildingPane name="Animal Farm" numberBuilt={3} canBuy onBuy={() => console.log("buy")} onSell={() => console.log("sell")}>
-                            Rear animals to produce food.
-                        </BuildingPane>
+                        <MakeBuildingPane id="animalFarm"/>
 
                         {/*Fisheries*/}
-                        <BuildingPane name="Fishing Boat" numberBuilt={2} canBuy onBuy={() => onDecisionStuff("fish")} onSell={() => console.log("sell")}>
-                            A boat to catch fish in the ocean.
-                        </BuildingPane>
-                        {/*TODO Slider for effort*/}
-
+                        <MakeBuildingPane id="fishingBoat" extraEffects={[{resource: "food", income: this.state.fishBoatEffort}]}>
+                            <div style={{textAlign: "center"}} id="fish-effort-slider">
+                                Effort
+                            </div>
+                            <MuiSlider value={this.state.fishBoatEffort} onChange={this.onFishBoatEffortChange} aria-labelledby="fish-effort-slider"/>
+                        </MakeBuildingPane>
                         {/*Hunting*/}
-                        <BuildingPane name="Hunting Shack" numberBuilt={4} canBuy>
-                            Hire hunters to harvest wild animals.
-                        </BuildingPane>
+                        <MakeBuildingPane id="huntingShack"/>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <BuildingPane name="Cheap Lumber mill" numberBuilt={2} canBuy>
-                            Cuts down trees to produce wood. Substantial impact on the ecosystem.
-                        </BuildingPane>
-                        <BuildingPane name="Expensive Lumber mill" numberBuilt={0} canBuy>
-                            Cuts down trees to produce wood sustainably with less pollution.
-                        </BuildingPane>
+                        <MakeBuildingPane id="cheapLumberMill"/>
+                        <MakeBuildingPane id="expensiveLumberMill"/>
                     </div>
 
                     {/*Population*/}
                     <div>
-                        {/*TODO*/}
+                        <div>
+                            <div style={{textAlign: "center"}}>
+                                Tax
+                            </div>
+                            <MuiSlider value={100}/>
+                        </div>
                         <ul>
                             <li>
                                 Taxes
@@ -73,12 +95,8 @@ class Decisions extends React.Component {
 
                     {/*Energy*/}
                     <div>
-                        <BuildingPane name="Coal Power Plant" numberBuilt={2} canBuy>
-                            Generate electricity by burning coal.
-                        </BuildingPane>
-                        <BuildingPane name="Wind Turbine" numberBuilt={1} canBuy>
-                            Generate electricity by harnessing the wind.
-                        </BuildingPane>
+                        <MakeBuildingPane id="coalPowerPlant"/>
+                        <MakeBuildingPane id="windTurbine"/>
                     </div>
                 </TabsPane>
                 <div className="filler"/>
