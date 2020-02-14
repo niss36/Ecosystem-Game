@@ -8,7 +8,7 @@ import MuiSlider from "@material-ui/core/Slider";
 
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
-import {buildings} from "./Buildings";
+import buildings from "../../definitions/Buildings";
 import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
 
 import "./Decisions.css";

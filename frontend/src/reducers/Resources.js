@@ -1,6 +1,7 @@
 import {BUY_BUILDING, NEXT_TURN} from "../actions";
 
-import {buildings} from "../components/Decisions/Buildings";
+import buildings from "../definitions/Buildings";
+import {MONEY, FOOD, WOOD} from "../definitions/Resources";
 
 export function getIncome(resourceId, allBuildingStates) {
     let total = 0;
@@ -47,9 +48,9 @@ function normalResource(id) {
     }
 }
 
-const money = normalResource("money");
-const food = normalResource("food");
-const wood = normalResource("wood");
+const money = normalResource(MONEY);
+const food = normalResource(FOOD);
+const wood = normalResource(WOOD);
 
 export function resources(state = {}, action, allBuildingStates) {
     return {
