@@ -34,6 +34,9 @@ class Decisions extends React.Component {
 
         this.state = {
             fishBoatEffort: 50,
+            selectedAnimal: 'none',
+            fishList: this.props.fishList,
+            animalList: this.props.animalList,
         };
 
         this.onFishBoatEffortChange = this.onFishBoatEffortChange.bind(this);
