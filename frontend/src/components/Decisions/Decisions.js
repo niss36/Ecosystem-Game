@@ -11,13 +11,14 @@ import BuildingPane from "./BuildingPane";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
+import {canBuy} from "../util";
 
 import "./Decisions.css";
 
 const mapStateToProps = (state, ownProps) => {
     return {
         ...state.buildings[ownProps.id],
-        canBuy: true, // TODO update based on available resources / space on the map
+        canBuy: canBuy(ownProps.id, state),
     };
 };
 

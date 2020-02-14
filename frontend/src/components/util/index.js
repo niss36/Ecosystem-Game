@@ -1,3 +1,5 @@
+import buildings from "../../definitions/Buildings";
+
 export function getIncome(resourceId, allBuildingStates) {
     let total = 0;
 
@@ -21,4 +23,15 @@ export function getIncome(resourceId, allBuildingStates) {
     }
 
     return {total, breakdown};
+}
+
+export function canBuy(buildingId, state) {
+    const costs = buildings[buildingId].costs;
+
+    for (const [resource, cost] of Object.entries(costs)) {
+        if (cost > state.resources[resource].amount)
+            return false;
+    }
+
+    return true;
 }
