@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 
+import resources from "../../definitions/Resources";
+
 import "./BuildingPane.css";
 
 class BuildingPane extends React.Component {
@@ -10,13 +12,20 @@ class BuildingPane extends React.Component {
     constructor(props) {
         super(props);
 
+        this.makeCost = this.makeCost.bind(this);
         this.makeEffect = this.makeEffect.bind(this);
     }
 
-    makeEffect([resource, effect], i) {
-        return (
-            <div key={i}>{resource}: {effect.income >= 0 && "+"}{effect.income}/month</div>
-        );
+    makeCost([id, amount]) {
+        const {name} = resources[id];
+
+        return (<div key={id}>{name}: {amount}</div>);
+    }
+
+    makeEffect([id, effect]) {
+        const {name} = resources[id];
+
+        return (<div key={id}>{name}: {effect.income >= 0 && "+"}{effect.income}/month</div>);
     }
 
     render() {
@@ -43,7 +52,7 @@ class BuildingPane extends React.Component {
                         Costs
                     </div>
                     {
-                        Object.entries(costs).map(([resource, amount], i) => <div key={i}>{resource}: {amount}</div>)
+                        Object.entries(costs).map(this.makeCost)
                     }
                 </div>
                 <div className="BuildingPane-effects">

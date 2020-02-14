@@ -11,6 +11,7 @@ import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import buildings from "../../definitions/Buildings";
 import resources from "../../definitions/Resources";
 
 import "./ResourcePanes.css";
@@ -83,7 +84,7 @@ export function ResourcePane({id, amount, income}) {
     return (
         <GenericResourcePane id={id} value={value}>
             {
-                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id}: +{v}/month</div>)
+                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{buildings[id].name}: +{v}/month</div>)
             }
         </GenericResourcePane>
     );
