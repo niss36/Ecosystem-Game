@@ -8,7 +8,8 @@ import MuiSlider from "@material-ui/core/Slider";
 
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
-import buildings from "../../definitions/Buildings";
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
+import {FOOD} from "../../definitions/Resources";
 import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
 
 import "./Decisions.css";
@@ -34,7 +35,7 @@ const ConnectedBuildingPane = connect(
 
 function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolete args
     return (
-        <ConnectedBuildingPane id={id} building={buildings[id]} {...props}>
+        <ConnectedBuildingPane id={id} {...props}>
             {children}
         </ConnectedBuildingPane>
     );
@@ -42,7 +43,7 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
 
 function MakeFishingBoatPane() {
 
-    const id = "fishingBoat";
+    const id = FISHING_BOAT;
 
     // TODO don't do this on every render
     const ABuildingPane = connect(
@@ -60,12 +61,12 @@ function MakeFishingBoatPane() {
                 <div style={{textAlign: "center"}} id="fish-effort-slider">
                     Effort
                 </div>
-                <MuiSlider value={props.effects.food.income} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
+                <MuiSlider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
             </BuildingPane>
         )
     });
 
-    return <ABuildingPane id={id} building={buildings[id]}/>
+    return <ABuildingPane id={id}/>
 }
 
 const NextTurn = connect()(({dispatch}) => (
@@ -99,19 +100,19 @@ class Decisions extends React.Component {
                     {/*Food*/}
                     <div>
                         {/*Agriculture*/}
-                        <MakeBuildingPane id="animalFarm"/>
+                        <MakeBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
                         <MakeFishingBoatPane/>
 
                         {/*Hunting*/}
-                        <MakeBuildingPane id="huntingShack"/>
+                        <MakeBuildingPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <MakeBuildingPane id="cheapLumberMill"/>
-                        <MakeBuildingPane id="expensiveLumberMill"/>
+                        <MakeBuildingPane id={CHEAP_LUMBER_MILL}/>
+                        <MakeBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
                     </div>
 
                     {/*Population*/}

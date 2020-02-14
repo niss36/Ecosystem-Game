@@ -1,13 +1,25 @@
 import {combineReducers} from 'redux';
 
 import {BUY_BUILDING, SELL_BUILDING, SET_EFFORT} from "../actions";
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../definitions/Buildings";
+import {FOOD, WOOD} from "../definitions/Resources";
 
 const initialEffects = {
-    animalFarm: {food: {income: 100}},
-    fishingBoat: {food: {income: 50}},
-    huntingShack: {food: {income: 100}},
-    cheapLumberMill: {wood: {income: 100}},
-    expensiveLumberMill: {wood: {income: 100}},
+    [ANIMAL_FARM]: {
+        [FOOD]: {income: 100}
+    },
+    [FISHING_BOAT]: {
+        [FOOD]: {income: 50}
+    },
+    [HUNTING_SHACK]: {
+        [FOOD]: {income: 100}
+    },
+    [CHEAP_LUMBER_MILL]: {
+        [WOOD]: {income: 100}
+    },
+    [EXPENSIVE_LUMBER_MILL]: {
+        [WOOD]: {income: 100}
+    },
 };
 
 function genericBuilding(state, action) {
@@ -31,15 +43,15 @@ function normalBuilding(id) {
     }
 }
 
-const animalFarm = normalBuilding("animalFarm");
-const huntingShack = normalBuilding("huntingShack");
-const cheapLumberMill = normalBuilding("cheapLumberMill");
-const expensiveLumberMill = normalBuilding("expensiveLumberMill");
+const animalFarm = normalBuilding(ANIMAL_FARM);
+const huntingShack = normalBuilding(HUNTING_SHACK);
+const cheapLumberMill = normalBuilding(CHEAP_LUMBER_MILL);
+const expensiveLumberMill = normalBuilding(EXPENSIVE_LUMBER_MILL);
 
-function fishingBoat(state = {numberBuilt: 0, effects: initialEffects["fishingBoat"]}, action) {
-    if (action.id === "fishingBoat") {
+function fishingBoat(state = {numberBuilt: 0, effects: initialEffects[FISHING_BOAT]}, action) {
+    if (action.id === FISHING_BOAT) {
         if (action.type === SET_EFFORT) {
-            return {...state, effects: {...state.effects, food: {...state.effects.food, income: action.effort}}};
+            return {...state, effects: {...state.effects, [FOOD]: {...state.effects[FOOD], income: action.effort}}};
         } else {
             return genericBuilding(state, action);
         }

@@ -1,11 +1,11 @@
 import React from "react";
+import {connect} from "react-redux";
 
 import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
+import {getIncome} from "../../reducers/Resources";
 
 import "./Resources.css";
-import {connect} from "react-redux";
-import {getIncome} from "../../reducers/Resources";
-import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
 
 function ResourcesContainer({money, food, wood, population, happiness}) {
     return (
@@ -24,20 +24,20 @@ function mapStateToProps(state) {
     const buildings = state.buildings;
 
     return {
-        money: {
-            ...resources.money,
-            income: getIncome("money", buildings),
+        [MONEY]: {
+            ...resources[MONEY],
+            income: getIncome(MONEY, buildings),
         },
-        food: {
-            ...resources.food,
-            income: getIncome("food", buildings),
+        [FOOD]: {
+            ...resources[FOOD],
+            income: getIncome(FOOD, buildings),
         },
-        wood: {
-            ...resources.wood,
-            income: getIncome("wood", buildings),
+        [WOOD]: {
+            ...resources[WOOD],
+            income: getIncome(WOOD, buildings),
         },
-        population: resources.population,
-        happiness: resources.happiness,
+        [POPULATION]: resources[POPULATION],
+        [HAPPINESS]: resources[HAPPINESS],
     }
 }
 

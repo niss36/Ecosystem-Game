@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 
+import buildings from "../../definitions/Buildings";
 import resources from "../../definitions/Resources";
 
 import "./BuildingPane.css";
@@ -30,9 +31,9 @@ class BuildingPane extends React.Component {
 
     render() {
 
-        const {building, numberBuilt, effects, canBuy, onBuy, onSell, children} = this.props;
+        const {id, numberBuilt, effects, canBuy, onBuy, onSell, children} = this.props;
 
-        const {name, description, costs} = building;
+        const {name, description, costs} = buildings[id];
 
         return (
             <div className="BuildingPane-root">
@@ -78,7 +79,6 @@ class BuildingPane extends React.Component {
 
 BuildingPane.propTypes = {
     id: PropTypes.string,
-    building: PropTypes.any,
     numberBuilt: PropTypes.number,
     effects: PropTypes.any,
     canBuy: PropTypes.bool,

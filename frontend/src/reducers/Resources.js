@@ -54,8 +54,8 @@ const wood = normalResource(WOOD);
 
 export function resources(state = {}, action, allBuildingStates) {
     return {
-        money: money(state.money, action, allBuildingStates),
-        food: food(state.food, action, allBuildingStates),
-        wood: wood(state.wood, action, allBuildingStates),
+        [MONEY]: money(state[MONEY], action, allBuildingStates),
+        [FOOD]: food(state[FOOD], action, allBuildingStates),
+        [WOOD]: wood(state[WOOD], action, allBuildingStates),
     }
 }
