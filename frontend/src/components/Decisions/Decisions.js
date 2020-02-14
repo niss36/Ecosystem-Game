@@ -56,11 +56,11 @@ function MakeFishingBoatPane() {
         }
     )(props => {
         return (
-            <BuildingPane {...props} extraEffects={[{resource: "food", income: props.effort}]}>
+            <BuildingPane {...props}>
                 <div style={{textAlign: "center"}} id="fish-effort-slider">
                     Effort
                 </div>
-                <MuiSlider value={props.effort} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
+                <MuiSlider value={props.effects.food.income} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
             </BuildingPane>
         )
     });

@@ -13,17 +13,17 @@ class BuildingPane extends React.Component {
         this.makeEffect = this.makeEffect.bind(this);
     }
 
-    makeEffect(effect, i) {
+    makeEffect([resource, effect], i) {
         return (
-            <div key={i}>{effect.resource}: {effect.income >= 0 && "+"}{effect.income}/month</div>
+            <div key={i}>{resource}: {effect.income >= 0 && "+"}{effect.income}/month</div>
         );
     }
 
     render() {
 
-        const {building, extraEffects, numberBuilt, canBuy, onBuy, onSell, children} = this.props;
+        const {building, numberBuilt, effects, canBuy, onBuy, onSell, children} = this.props;
 
-        const {name, description, costs, effects} = building;
+        const {name, description, costs} = building;
 
         return (
             <div className="BuildingPane-root">
@@ -43,7 +43,7 @@ class BuildingPane extends React.Component {
                         Costs
                     </div>
                     {
-                        costs.map((cost, i) => <div key={i}>{cost.resource}: {cost.amount}</div>)
+                        Object.entries(costs).map(([resource, amount], i) => <div key={i}>{resource}: {amount}</div>)
                     }
                 </div>
                 <div className="BuildingPane-effects">
@@ -51,10 +51,7 @@ class BuildingPane extends React.Component {
                         Effects
                     </div>
                     {
-                        effects.map(this.makeEffect)
-                    }
-                    {
-                        extraEffects && extraEffects.map(this.makeEffect)
+                        effects && Object.entries(effects).map(this.makeEffect)
                     }
                 </div>
                 <div className="BuildingPane-footer">
@@ -74,6 +71,7 @@ BuildingPane.propTypes = {
     id: PropTypes.string,
     building: PropTypes.any,
     numberBuilt: PropTypes.number,
+    effects: PropTypes.any,
     canBuy: PropTypes.bool,
     onBuy: PropTypes.func,
     onSell: PropTypes.func,
