@@ -11,6 +11,8 @@ import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import resources from "../../definitions/Resources";
+
 import "./ResourcePanes.css";
 
 const ExpansionPanel = withStyles({
@@ -56,21 +58,34 @@ const ExpansionPanelDetails = withStyles(theme => ({
     },
 }), {name: "ExpansionPanelDetails"})(MuiExpansionPanelDetails);
 
-export function ResourcePane({name, icon, amount, income}) {
+function GenericResourcePane({id, value, children}) {
+
+    const {name, icon} = resources[id];
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">{name}:</div>
-                <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income.total}/month)</div>
+                <div className="ResourcePanes-value">{value}</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {
-                    Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id}: +{v}/month</div>)
-                }
+                {children}
             </ExpansionPanelDetails>
         </ExpansionPanel>
+    );
+}
+
+export function ResourcePane({id, amount, income}) {
+
+    const value = <>{amount} (+{income.total}/month)</>;
+
+    return (
+        <GenericResourcePane id={id} value={value}>
+            {
+                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id}: +{v}/month</div>)
+            }
+        </GenericResourcePane>
     );
 }
 
@@ -95,44 +110,32 @@ const useHappinessStyles = makeStyles({
     }
 });
 
-export function HappinessPane({happiness, icon}) {
+export function HappinessPane({id, happiness}) {
 
     const classes = useHappinessStyles();
-
     const classesArray = [classes.veryLow, classes.low, classes.medium, classes.high, classes.veryHigh];
 
     const ix = Math.min(4, Math.max(0, Math.floor(happiness / 20)));
-
     const className = classesArray[ix];
 
+    const value = <div className={classes.root + " " + className}>{happiness}%</div>;
+
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} alt="" height={25}/>
-                <div className="flex-grow-1 ResourcePanes-name">Happiness:</div>
-                <div className={classes.root + " " + className}>{happiness}%</div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <div>Base: 100%</div>
-                <div>Taxes: -20%</div>
-                <div>Pollution: -10%</div>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+        <GenericResourcePane id={id} value={value}>
+            <div>Base: 100%</div>
+            <div>Taxes: -20%</div>
+            <div>Pollution: -10%</div>
+        </GenericResourcePane>
     );
 }
 
-export function PopulationPane({population, food, icon}) {
+export function PopulationPane({id, population, food}) {
+
+    const value = <>{population}</>;
 
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} alt="" height={25}/>
-                <div className="flex-grow-1 ResourcePanes-name">Population:</div>
-                <div>{population}</div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <div></div>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+        <GenericResourcePane id={id} value={value}>
+            <div/>
+        </GenericResourcePane>
     );
 }

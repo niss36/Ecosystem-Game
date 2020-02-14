@@ -5,15 +5,16 @@ import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 import "./Resources.css";
 import {connect} from "react-redux";
 import {getIncome} from "../../reducers/Resources";
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
 
 function ResourcesContainer({money, food, wood, population, happiness}) {
     return (
         <>
-            <PopulationPane icon={"/population.svg"} {...population}/>
-            <HappinessPane icon={"/smile.svg"} {...happiness}/>
-            <ResourcePane icon={"/coin.svg"} name="Money" {...money}/>
-            <ResourcePane icon={"/meat.svg"} name="Food" {...food}/>
-            <ResourcePane icon={"/logs.svg"} name="Wood" {...wood}/>
+            <PopulationPane id={POPULATION} {...population}/>
+            <HappinessPane id={HAPPINESS} {...happiness}/>
+            <ResourcePane id={MONEY} {...money}/>
+            <ResourcePane id={FOOD} {...food}/>
+            <ResourcePane id={WOOD} {...wood}/>
         </>
     )
 }
