@@ -4,6 +4,7 @@ import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
 import "./Resources.css";
 import {connect} from "react-redux";
+import {getIncome} from "../../reducers/Resources";
 
 function ResourcesContainer({money, food, wood, population, happiness}) {
     return (
@@ -17,8 +18,30 @@ function ResourcesContainer({money, food, wood, population, happiness}) {
     )
 }
 
+function mapStateToProps(state) {
+    const resources = state.resources;
+    const buildings = state.buildings;
+
+    return {
+        money: {
+            ...resources.money,
+            income: getIncome("money", buildings),
+        },
+        food: {
+            ...resources.food,
+            income: getIncome("food", buildings),
+        },
+        wood: {
+            ...resources.wood,
+            income: getIncome("wood", buildings),
+        },
+        population: resources.population,
+        happiness: resources.happiness,
+    }
+}
+
 const ConnectedResourcesContainer = connect(
-    state => state.resources,
+    mapStateToProps,
     dispatch => ({}),
 )(ResourcesContainer);
 

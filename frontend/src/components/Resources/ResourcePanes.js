@@ -63,11 +63,12 @@ export function ResourcePane({name, icon, amount, income}) {
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">{name}:</div>
-                <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income}/month)</div>
+                <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income.total}/month)</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                Taxes: ...
-                {/*TODO*/}
+                {
+                    Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id}: +{v}/month</div>)
+                }
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );
