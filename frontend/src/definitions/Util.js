@@ -1,4 +1,4 @@
-import buildings from "../../definitions/Buildings";
+import buildings from "./Buildings";
 
 export function getIncome(resourceId, allBuildingStates) {
     let total = 0;

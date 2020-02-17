@@ -11,7 +11,7 @@ import BuildingPane from "./BuildingPane";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
-import {canBuy} from "../util";
+import {canBuy} from "../../definitions/Util";
 
 import "./Decisions.css";
 
