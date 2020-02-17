@@ -1,4 +1,4 @@
-import {BUY_BUILDING, NEXT_TURN} from "../actions";
+import {BUY_BUILDING, SELL_BUILDING, NEXT_TURN} from "../actions";
 
 import buildings from "../definitions/Buildings";
 import {MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -16,6 +16,14 @@ function normalResource(id) {
                 const cost = buildings[action.id].costs[id];
                 if (cost) {
                     return {...state, amount: state.amount - cost};
+                }
+
+                return state;
+            case SELL_BUILDING:
+                const sellValue = buildings[action.id].costs[id];
+                // TODO decide what portion of the original value to refund
+                if (sellValue) {
+                    return {...state, amount: state.amount + sellValue};
                 }
 
                 return state;
