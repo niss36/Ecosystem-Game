@@ -92,7 +92,7 @@ export function ResourcePane({id, amount, income}) {
 
 const useHappinessStyles = makeStyles({
     root: {
-        fontWeight: 'bold',
+        fontWeight: 500,
     },
     veryHigh: {
         color: green[800],
@@ -122,7 +122,7 @@ export function HappinessPane({id, happiness}) {
     const value = <div className={classes.root + " " + className}>{happiness}%</div>;
 
     return (
-        <GenericResourcePane id={id} value={value}>
+        <GenericResourcePane id={id} value={value}> {/*TODO breakdown & computation*/}
             <div>Base: 100%</div>
             <div>Taxes: -20%</div>
             <div>Pollution: -10%</div>
@@ -130,9 +130,36 @@ export function HappinessPane({id, happiness}) {
     );
 }
 
-export function PopulationPane({id, population, food}) {
+const usePopulationStyles = makeStyles({
+    root: {
+        fontWeight: 500,
+    },
+    mild: {
+        color: yellow[800],
+    },
+    medium: {
+        color: orange[800],
+    },
+    high: {
+        color: red[800],
+    }
+});
 
-    const value = <>{population}</>;
+export function PopulationPane({id, amount, max}) {
+
+    const classes = usePopulationStyles();
+    const classesArray = [classes.mild, classes.medium, classes.high];
+
+    let className = "";
+
+    const excessPopulation = amount > max ? amount - max : 0;
+    if (excessPopulation) {
+        const ix = Math.min(2, Math.floor(3 * (excessPopulation - 1) / max));
+
+        className = classesArray[ix];
+    }
+
+    const value = <><span className={classes.root + " " + className}>{amount}</span> / {max}</>;
 
     return (
         <GenericResourcePane id={id} value={value}>
