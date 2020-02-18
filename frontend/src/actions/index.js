@@ -2,6 +2,8 @@ export const BUY_BUILDING = "BUY_BUILDING";
 export const SELL_BUILDING = "SELL_BUILDING";
 export const SET_EFFORT = "SET_EFFORT";
 export const NEXT_TURN = "NEXT_TURN";
+export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
+export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 
 export function buyBuilding(id) {
     return {
@@ -28,5 +30,19 @@ export function setEffort(id, effort) {
 export function nextTurn() {
     return {
         type: NEXT_TURN,
+    }
+}
+
+export function cellMouseEnter(i) {
+    return {
+        type: CELL_MOUSE_ENTER,
+        i: i,
+    }
+}
+
+export function cellMouseClick(i) {
+    return {
+        type: CELL_MOUSE_CLICK,
+        i: i,
     }
 }
