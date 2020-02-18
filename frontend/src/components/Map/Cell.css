@@ -7,20 +7,24 @@
     margin: 0;
 
     color: blue;
+    background-color: lightblue;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.Cell-root.land {
+    color: yellow;
+    background-color: lightgreen;
 }
 
 .Cell-root.fish {
     color: red;
     background-image: url("/boat.svg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .Cell-root.hunt {
     color: red;
     background-image: url("/boat.svg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }

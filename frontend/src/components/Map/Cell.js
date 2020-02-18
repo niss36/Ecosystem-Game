@@ -8,18 +8,15 @@ export default class Cell extends React.Component {
         const {i, land, mode, selected, onMouseEnter, onMouseClick} = this.props;
 
         let classes = "Cell-root";
+        if (land) {
+            classes += " land";
+        }
         if (selected) {
             classes += " " + mode;
         }
-        let style;
-
-        if (land) {
-            style = {backgroundColor:"lightgreen",color:"yellow"};
-        } else
-            style = {color:"blue", backgroundColor:"lightblue" };
 
         return (
-            <p className={classes} onClick={onMouseClick} onMouseEnter={onMouseEnter} style={style}>
+            <p className={classes} onClick={onMouseClick} onMouseEnter={onMouseEnter}>
                 {i}
             </p>
         );
