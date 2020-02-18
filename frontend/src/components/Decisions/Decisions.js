@@ -68,7 +68,7 @@ class Decisions extends React.Component {
                             <MuiSlider value={this.state.fishBoatEffort} onChange={this.onFishBoatEffortChange} aria-labelledby="fish-effort-slider"/>
                         </MakeBuildingPane>
                         {/*Hunting*/}
-                        <MakeBuildingPane id="huntingShack"/>
+                        <MakeBuildingPane id="huntingShack" onBuy={() => onDecisionStuff("hunting")} />
                     </div>
 
                     {/*Forestry*/}

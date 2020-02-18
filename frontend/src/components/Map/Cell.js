@@ -19,8 +19,11 @@ export default class Cell extends React.Component {
         let i = this.props.i;
 
         let classes = "Cell-root";
-        if (this.props.selected) {
-            classes += " toggled";
+        if (this.props.fishingSelected) {
+            classes += " boat";
+        }
+        else if (this.props.huntingSelected) {
+            classes += " hunting";
         }
         let style;
 

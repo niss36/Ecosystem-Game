@@ -25,7 +25,7 @@ class Game extends React.Component {
         let fishList = [];
 
         this.state = {
-            mapargs : {selectionMode : false },
+            mapargs : {fishing : false, hunting : false },
             dataCells: dataCells,
             desiredChanges: desiredChanges,
             selectedAnimal: 'none',
@@ -68,13 +68,17 @@ class Game extends React.Component {
 
     decisionsCall(name) {
         if (name === "fish") {
-            this.setState({mapargs : {selectionMode : true}})
+            this.setState({mapargs : {fishing : true}})
         }
+        if (name === "hunting") {
+            this.setState({mapargs : {hunting : true}})
+        }
+
     }
 
     nextTurn() {
         console.log("Next turn!!"); // TODO
-        this.setState({mapargs : {selectionMode : false}});
+        this.setState({mapargs : {fishing : false, hunting : false}});
     }
 
     render() {

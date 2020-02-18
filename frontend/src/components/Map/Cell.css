@@ -9,7 +9,15 @@
     color: blue;
 }
 
-.Cell-root.toggled {
+.Cell-root.boat {
+    color: red;
+    background-image: url("/boat.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.Cell-root.hunting {
     color: red;
     background-image: url("/boat.svg");
     background-size: cover;
