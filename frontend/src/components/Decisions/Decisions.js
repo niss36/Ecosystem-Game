@@ -41,9 +41,7 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
     );
 }
 
-function MakeFishingBoatPane() {
-
-    const id = FISHING_BOAT;
+function MakeFishingBoatPane({id}) {
 
     // TODO don't do this on every render
     const ABuildingPane = connect(
@@ -103,10 +101,11 @@ class Decisions extends React.Component {
                         <MakeBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeFishingBoatPane/>
+                        <MakeFishingBoatPane id={FISHING_BOAT}/>
 
                         {/*Hunting*/}
-                        <MakeBuildingPane id={HUNTING_SHACK}/>
+                        {/*TODO name*/}
+                        <MakeFishingBoatPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}

@@ -25,7 +25,7 @@ class Game extends React.Component {
         let fishList = [];
 
         this.state = {
-            mapargs : {selectionMode : false },
+            mapargs : {fishing : false, hunting : false },
             dataCells: dataCells,
             desiredChanges: desiredChanges,
             selectedAnimal: 'none',
@@ -40,7 +40,7 @@ class Game extends React.Component {
     }
 
     changeSelectedAnimal(animal){
-        this.state.selectedAnimal = animal;
+        this.setState({selectedAnimal :animal});
     }
 
     animalFarm(selectedIndices, value){
