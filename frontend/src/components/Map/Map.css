@@ -10,13 +10,13 @@
 
 .Map-grid {
     display: grid;
-    grid-template-columns: repeat(16, auto);
+    grid-template-columns: repeat(20, auto);
     grid-auto-rows: 1fr;
 
     color: blue;
     background-color: gray;
 
-    background-image: url("/uk.svg");
+    /*background-image: url("/uk.svg");*/
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
