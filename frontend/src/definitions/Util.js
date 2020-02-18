@@ -38,21 +38,30 @@ export function canBuy(buildingId, state) {
 }
 
 export function getSelection(i, mode) {
+    const [row, col] = [Math.floor(i / SIZE), i % SIZE];
+
     switch (mode) {
         case "fish":
-            if ((i % SIZE) < 1) i++;
-            if ((i % SIZE) === SIZE - 1) i--;
-            if (i < SIZE) i += SIZE;
-            if (i > SIZE * (SIZE - 1)) i -= SIZE;
+            if (col === 0) i++;
+            if (col === SIZE - 1) i--;
+            if (row === 0) i += SIZE;
+            if (row === SIZE - 1) i -= SIZE;
 
-            return [i, i + 1, i - 1, i - SIZE, i - SIZE + 1, i - SIZE - 1, i + SIZE, i + SIZE + 1, i + SIZE - 1];
+            return [
+                i - SIZE - 1, i - SIZE, i - SIZE + 1,
+                i - 1,        i,        i + 1,
+                i + SIZE - 1, i + SIZE, i + SIZE + 1
+            ];
         case "hunt":
-            if ((i % SIZE) < 1) { i++;}
-            if ((i % SIZE) === SIZE - 1) {i--;}
-            if (i < SIZE) {i += SIZE}
-            if (i > SIZE * (SIZE - 1)) {i -= SIZE}
+            if (col === 0) i++;
+            if (col === SIZE - 1) i--;
+            if (row === 0) i += SIZE;
+            if (row === SIZE - 1) i -= SIZE;
 
-            return [i, i + 1, i + SIZE, i + SIZE + 1];
+            return [
+                i,        i + 1,
+                i + SIZE, i + SIZE + 1
+            ];
         default:
             return [];
     }
