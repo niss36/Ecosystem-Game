@@ -37,13 +37,22 @@ export const buildings = {
     cheapLumberMill: {
         name: "Cheap Lumber Mill",
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
-        costs: [],
-        effects: [],
+        costs: [
+            {resource: FOOD, amount: 100,icon:"/meat.svg"},
+            {resource: MONEY, amount: 100,icon:"/coin.svg"},],
+        effects: [
+            {resource: WOOD, income: 200,icon:"/logs.svg"},
+        ],
     },
     expensiveLumberMill: {
         name: "Expensive Lumber mill",
         description: "Cuts down trees to produce wood sustainably.",
-        costs: [],
-        effects: [],
+        costs: [
+            {resource: FOOD, amount: 100,icon:"/meat.svg"},
+            {resource: MONEY, amount: 100,icon:"/coin.svg"},
+        ],
+        effects: [
+            {resource: WOOD, income: 100,icon:"/logs.svg"}
+        ],
     },
 };
