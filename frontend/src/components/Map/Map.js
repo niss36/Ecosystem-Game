@@ -13,13 +13,10 @@ import {SIZE} from "../../definitions/Map";
 import "./Map.css";
 
 function mapStateToProps(state, ownProps) {
-    const land = state.map.island.includes(ownProps.i);
-    const mode = state.map.selection.mode;
-    const selected = (land && mode === "hunt" || !land && mode === "fish") && state.map.selection.cells.includes(ownProps.i);
     return {
-        land: land,
-        mode: mode,
-        selected: selected,
+        land: state.map.island.includes(ownProps.i),
+        mode: state.map.selection.mode,
+        selected: state.map.selection.cells.includes(ownProps.i),
     }
 }
 
