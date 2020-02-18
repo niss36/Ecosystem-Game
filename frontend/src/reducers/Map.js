@@ -47,6 +47,8 @@ export function map(state = initialState, action) {
                 nextIsland = state.island.filter(item => item !== action.i);
             }
 
+            const nextSelection = getFilteredSelection(action.i, state.selection.mode, nextIsland);
+
             let log = "[";
             for (const x of nextIsland) {
                 log += x + ",";
@@ -54,7 +56,7 @@ export function map(state = initialState, action) {
             log += "]";
             console.log(log);
 
-            return {...state, island: nextIsland};
+            return {...state, island: nextIsland, selection: {...state.selection, cells: nextSelection}};
         default:
             return state;
     }

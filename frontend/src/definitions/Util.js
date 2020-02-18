@@ -53,5 +53,7 @@ export function getSelection(i, mode) {
             if (i > SIZE * (SIZE - 1)) {i -= SIZE}
 
             return [i, i + 1, i + SIZE, i + SIZE + 1];
+        default:
+            return [];
     }
 }
