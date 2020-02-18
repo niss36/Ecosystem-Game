@@ -43,22 +43,25 @@ function normalBuilding(id) {
     }
 }
 
+function effortBuilding(id, affectedResource) {
+    return function (state = {numberBuilt: 0, effects: initialEffects[id]}, action) {
+        if (action.id === id) {
+            if (action.type === SET_EFFORT) {
+                return {...state, effects: {...state.effects, [affectedResource]: {...state.effects[affectedResource], income: action.effort}}};
+            } else {
+                return genericBuilding(state, action);
+            }
+        }
+
+        return state;
+    }
+}
+
 const animalFarm = normalBuilding(ANIMAL_FARM);
-const huntingShack = normalBuilding(HUNTING_SHACK);
+const fishingBoat = effortBuilding(FISHING_BOAT, FOOD);
+const huntingShack = effortBuilding(HUNTING_SHACK, FOOD);
 const cheapLumberMill = normalBuilding(CHEAP_LUMBER_MILL);
 const expensiveLumberMill = normalBuilding(EXPENSIVE_LUMBER_MILL);
-
-function fishingBoat(state = {numberBuilt: 0, effects: initialEffects[FISHING_BOAT]}, action) {
-    if (action.id === FISHING_BOAT) {
-        if (action.type === SET_EFFORT) {
-            return {...state, effects: {...state.effects, [FOOD]: {...state.effects[FOOD], income: action.effort}}};
-        } else {
-            return genericBuilding(state, action);
-        }
-    }
-
-    return state;
-}
 
 export const buildings = combineReducers({
     animalFarm,

@@ -37,11 +37,21 @@ export function canBuy(buildingId, state) {
     return true;
 }
 
-export function getSelection(i) {
-    if ((i % SIZE) < 1) i++;
-    if ((i % SIZE) === SIZE - 1) i--;
-    if (i < SIZE) i += SIZE;
-    if (i > SIZE * (SIZE - 1)) i -= SIZE;
+export function getSelection(i, mode) {
+    switch (mode) {
+        case "fish":
+            if ((i % SIZE) < 1) i++;
+            if ((i % SIZE) === SIZE - 1) i--;
+            if (i < SIZE) i += SIZE;
+            if (i > SIZE * (SIZE - 1)) i -= SIZE;
 
-    return [i, i + 1, i - 1, i - SIZE, i - SIZE + 1, i - SIZE - 1, i + SIZE, i + SIZE + 1, i + SIZE - 1];
+            return [i, i + 1, i - 1, i - SIZE, i - SIZE + 1, i - SIZE - 1, i + SIZE, i + SIZE + 1, i + SIZE - 1];
+        case "hunt":
+            if ((i % SIZE) < 1) { i++;}
+            if ((i % SIZE) === SIZE - 1) {i--;}
+            if (i < SIZE) {i += SIZE}
+            if (i > SIZE * (SIZE - 1)) {i -= SIZE}
+
+            return [i, i + 1, i + SIZE, i + SIZE + 1];
+    }
 }

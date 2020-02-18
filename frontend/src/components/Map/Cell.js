@@ -5,18 +5,15 @@ import "./Cell.css";
 export default class Cell extends React.Component {
 
     render() {
-        const {i, fishingSelected, onMouseEnter, onMouseClick} = this.props;
+        const {i, land, mode, selected, onMouseEnter, onMouseClick} = this.props;
 
         let classes = "Cell-root";
-        if (fishingSelected) {
-            classes += " boat";
-        }
-        else if (this.props.huntingSelected) {
-            classes += " hunting";
+        if (selected) {
+            classes += " " + mode;
         }
         let style;
 
-        if (this.props.island.includes(i)) {
+        if (land) {
             style = {backgroundColor:"lightgreen",color:"yellow"};
         } else
             style = {color:"blue", backgroundColor:"lightblue" };
