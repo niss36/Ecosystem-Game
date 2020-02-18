@@ -18,15 +18,15 @@ class BuildingPane extends React.Component {
     }
 
     makeCost([id, amount]) {
-        const {name} = resources[id];
+        const {name, icon} = resources[id];
 
-        return (<div key={id}>{name}: {amount}</div>);
+        return (<div key={id}><img src={icon} alt="" height={25}/>{name}: {amount}</div>);
     }
 
     makeEffect([id, effect]) {
-        const {name} = resources[id];
+        const {name, icon} = resources[id];
 
-        return (<div key={id}>{name}: {effect.income >= 0 && "+"}{effect.income}/month</div>);
+        return (<div key={id}><img src={icon} alt="" height={25}/>{name}: {effect.income >= 0 && "+"}{effect.income}/month</div>);
     }
 
     render() {
