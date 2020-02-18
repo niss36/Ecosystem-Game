@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Button from "@material-ui/core/Button";
@@ -122,7 +121,7 @@ class Decisions extends React.Component {
                             <div style={{textAlign: "center"}}>
                                 Tax
                             </div>
-                            <MuiSlider value={100}/>
+                            <MuiSlider value={100}/> {/*TODO state*/}
                         </div>
                         <ul>
                             <li>
@@ -141,10 +140,5 @@ class Decisions extends React.Component {
         );
     }
 }
-
-Decisions.propTypes = {
-    onNextTurn: PropTypes.func,
-    onDecisionStuff: PropTypes.func,
-};
 
 export default Decisions;

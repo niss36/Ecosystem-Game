@@ -26,8 +26,6 @@ class Game extends React.Component {
             desiredChanges: desiredChanges,
         };
 
-        this.decisionsCall = this.decisionsCall.bind(this);
-        this.nextTurn = this.nextTurn.bind(this);
         this.submitChange = this.submitChange.bind(this);
     }
 
@@ -41,18 +39,6 @@ class Game extends React.Component {
         }
     }
 
-    decisionsCall(name) {
-        if (name === "fish") {
-            this.setState({mapargs : {selectionMode : true}})
-        }
-
-    }
-
-    nextTurn() {
-        console.log("Next turn!!"); // TODO
-        this.setState({mapargs : {selectionMode : false}});
-    }
-
     render() {
         return (
             <Container maxWidth={false} className="Game-root">
@@ -62,10 +48,10 @@ class Game extends React.Component {
                     </Grid>
                     <Grid item xs={8} container spacing={2}>
                         <Grid item xs={12} md={4}>
-                            <Decisions onNextTurn={this.nextTurn} onDecisionStuff={this.decisionsCall}/>
+                            <Decisions/>
                         </Grid>
                         <Grid item xs={12} md={8}>
-                            <Map mapargs = {this.state.mapargs} submitChange={this.submitChange}/>
+                            <Map/>
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <EcosystemData/>
