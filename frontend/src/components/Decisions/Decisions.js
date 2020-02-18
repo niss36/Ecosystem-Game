@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
@@ -7,17 +8,79 @@ import MuiSlider from "@material-ui/core/Slider";
 
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
-import {buildings} from "./Buildings";
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
+import {FOOD} from "../../definitions/Resources";
+import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
+import {canBuy} from "../util";
 
 import "./Decisions.css";
 
-function MakeBuildingPane({id, children, ...props}) {
+const mapStateToProps = (state, ownProps) => {
+    return {
+        ...state.buildings[ownProps.id],
+        canBuy: canBuy(ownProps.id, state),
+    };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        onBuy: () => dispatch(buyBuilding(ownProps.id)),
+        onSell: () => dispatch(sellBuilding(ownProps.id)),
+    }
+};
+
+const ConnectedBuildingPane = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(BuildingPane);
+
+function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolete args
     return (
-        <BuildingPane building={buildings[id]} {...props} numberBuilt={0} canBuy> {/*TODO*/}
+        <ConnectedBuildingPane id={id} {...props}>
             {children}
-        </BuildingPane>
-    )
+        </ConnectedBuildingPane>
+    );
 }
+
+function MakeFishingBoatPane() {
+
+    const id = FISHING_BOAT;
+
+    // TODO don't do this on every render
+    const ABuildingPane = connect(
+        mapStateToProps,
+        (dispatch, ownProps) => {
+            return {
+                onBuy: () => dispatch(buyBuilding(ownProps.id)),
+                onSell: () => dispatch(sellBuilding(ownProps.id)),
+                onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
+            }
+        }
+    )(props => {
+        return (
+            <BuildingPane {...props}>
+                <div style={{textAlign: "center"}} id="fish-effort-slider">
+                    Effort
+                </div>
+                <MuiSlider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
+            </BuildingPane>
+        )
+    });
+
+    return <ABuildingPane id={id}/>
+}
+
+const NextTurn = connect()(({dispatch}) => (
+    <Button
+        className="Decisions-nextTurn"
+        onClick={() => dispatch(nextTurn())}
+        size="large"
+        fullWidth
+        startIcon={<PlayArrow/>}
+    >
+        Next turn
+    </Button>
+));
 
 class Decisions extends React.Component {
 
@@ -29,27 +92,7 @@ class Decisions extends React.Component {
         cellNo: 0
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            fishBoatEffort: 50,
-            selectedAnimal: 'none',
-            fishList: this.props.fishList,
-            animalList: this.props.animalList,
-        };
-
-        this.onFishBoatEffortChange = this.onFishBoatEffortChange.bind(this);
-    }
-
-    onFishBoatEffortChange(e, v) {
-        this.setState({fishBoatEffort: v});
-    }
-
     render() {
-
-        const {onNextTurn, onDecisionStuff} = this.props;
-
         const tabs = ["Food", "Forestry", "Population"];
 
         return (
@@ -58,23 +101,19 @@ class Decisions extends React.Component {
                     {/*Food*/}
                     <div>
                         {/*Agriculture*/}
-                        <MakeBuildingPane id="animalFarm"/>
+                        <MakeBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeBuildingPane id="fishingBoat" onBuy={() => onDecisionStuff("fish")} extraEffects={[{resource: "food", income: this.state.fishBoatEffort}]}>
-                            <div style={{textAlign: "center"}} id="fish-effort-slider">
-                                Effort
-                            </div>
-                            <MuiSlider value={this.state.fishBoatEffort} onChange={this.onFishBoatEffortChange} aria-labelledby="fish-effort-slider"/>
-                        </MakeBuildingPane>
+                        <MakeFishingBoatPane/>
+
                         {/*Hunting*/}
-                        <MakeBuildingPane id="huntingShack"/>
+                        <MakeBuildingPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <MakeBuildingPane id="cheapLumberMill"/>
-                        <MakeBuildingPane id="expensiveLumberMill"/>
+                        <MakeBuildingPane id={CHEAP_LUMBER_MILL}/>
+                        <MakeBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
                     </div>
 
                     {/*Population*/}
@@ -97,9 +136,7 @@ class Decisions extends React.Component {
                     </div>
                 </TabsPane>
                 <div className="flex-grow-1"/>
-                <div className="Decisions-nextTurn">
-                    <Button onClick={onNextTurn} size="large" fullWidth startIcon={<PlayArrow/>}>Next turn</Button>
-                </div>
+                <NextTurn/>
             </div>
         );
     }

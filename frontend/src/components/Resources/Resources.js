@@ -1,36 +1,60 @@
 import React from "react";
+import {connect} from "react-redux";
+
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
 
 import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
+import {getIncome} from "../util";
 
 import "./Resources.css";
 
+function ResourcesContainer({money, food, wood, population, happiness}) {
+    return (
+        <>
+            <PopulationPane id={POPULATION} {...population}/>
+            <HappinessPane id={HAPPINESS} {...happiness}/>
+            <ResourcePane id={MONEY} {...money}/>
+            <ResourcePane id={FOOD} {...food}/>
+            <ResourcePane id={WOOD} {...wood}/>
+        </>
+    )
+}
+
+function mapStateToProps(state) {
+    const resources = state.resources;
+    const buildings = state.buildings;
+
+    return {
+        [MONEY]: {
+            ...resources[MONEY],
+            income: getIncome(MONEY, buildings),
+        },
+        [FOOD]: {
+            ...resources[FOOD],
+            income: getIncome(FOOD, buildings),
+        },
+        [WOOD]: {
+            ...resources[WOOD],
+            income: getIncome(WOOD, buildings),
+        },
+        [POPULATION]: resources[POPULATION],
+        [HAPPINESS]: resources[HAPPINESS],
+    }
+}
+
+const ConnectedResourcesContainer = connect(
+    mapStateToProps,
+    dispatch => ({}),
+)(ResourcesContainer);
+
 export default class Resources extends React.Component {
-    money = 0;
-    food = 0;
-    population = 0;
-    happiness = 0;
-    electricity = 0;
-    wood = 0;
 
     render() {
         return (
             <div className="Resources-root">
                 <h3>Resources</h3>
 
-                <PopulationPane icon={"/population.svg"} population={42} food={1337}/>
-                <HappinessPane icon={"/smile.svg"} happiness={70}/>
-                <ResourcePane icon={"/coin.svg"} name="Money" amount={100000} income={1000}/>
-                <ResourcePane icon={"/meat.svg"} name="Food" amount={100000} income={1000} />
-                <ResourcePane icon={"/logs.svg"} name="Wood" amount={100000} income={1000}/>
-
-                {/*<ul>
-                    <li>Money: {this.money}</li>
-                    <li>Food: {this.food}</li>
-                    <li>Population: {this.population}</li>
-                    <li>Happiness: {this.happiness}</li>
-                    <li>Electricity: {this.electricity}</li>
-                    <li>Wood: {this.wood}</li>
-                </ul>*/}
+                <ConnectedResourcesContainer/>
             </div>
         );
     }

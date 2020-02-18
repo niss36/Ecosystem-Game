@@ -5,14 +5,7 @@
     overflow: hidden;
 }
 
-.Decisions-nextTurn {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-
+.Decisions-nextTurn.MuiButton-root {
     border-top: 1px solid lightgray;
-}
-
-.Decisions-nextTurn .MuiButton-root {
     border-radius: 0;
 }

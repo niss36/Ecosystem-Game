@@ -11,6 +11,9 @@ import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import buildings from "../../definitions/Buildings";
+import resources from "../../definitions/Resources";
+
 import "./ResourcePanes.css";
 
 const ExpansionPanel = withStyles({
@@ -56,26 +59,40 @@ const ExpansionPanelDetails = withStyles(theme => ({
     },
 }), {name: "ExpansionPanelDetails"})(MuiExpansionPanelDetails);
 
-export function ResourcePane({name, icon, amount, income}) {
+function GenericResourcePane({id, value, children}) {
+
+    const {name, icon} = resources[id];
 
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
                 <img src={icon} alt="" height={25}/>
                 <div className="flex-grow-1 ResourcePanes-name">{name}:</div>
-                <div style={{whiteSpace: "nowrap", overflow: "ellipsis"}}>{amount} (+{income}/month)</div>
+                <div className="ResourcePanes-value">{value}</div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                Taxes: ...
-                {/*TODO*/}
+                {children}
             </ExpansionPanelDetails>
         </ExpansionPanel>
     );
 }
 
+export function ResourcePane({id, amount, income}) {
+
+    const value = <>{amount} (+{income.total}/month)</>;
+
+    return (
+        <GenericResourcePane id={id} value={value}>
+            {
+                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{buildings[id].name}: +{v}/month</div>)
+            }
+        </GenericResourcePane>
+    );
+}
+
 const useHappinessStyles = makeStyles({
     root: {
-        fontWeight: 'bold',
+        fontWeight: 500,
     },
     veryHigh: {
         color: green[800],
@@ -94,44 +111,59 @@ const useHappinessStyles = makeStyles({
     }
 });
 
-export function HappinessPane({happiness, icon}) {
+export function HappinessPane({id, happiness}) {
 
     const classes = useHappinessStyles();
-
     const classesArray = [classes.veryLow, classes.low, classes.medium, classes.high, classes.veryHigh];
 
     const ix = Math.min(4, Math.max(0, Math.floor(happiness / 20)));
-
     const className = classesArray[ix];
 
+    const value = <div className={classes.root + " " + className}>{happiness}%</div>;
+
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} alt="" height={25}/>
-                <div className="flex-grow-1 ResourcePanes-name">Happiness:</div>
-                <div className={classes.root + " " + className}>{happiness}%</div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <div>Base: 100%</div>
-                <div>Taxes: -20%</div>
-                <div>Pollution: -10%</div>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+        <GenericResourcePane id={id} value={value}> {/*TODO breakdown & computation*/}
+            <div>Base: 100%</div>
+            <div>Taxes: -20%</div>
+            <div>Pollution: -10%</div>
+        </GenericResourcePane>
     );
 }
 
-export function PopulationPane({population, food, icon}) {
+const usePopulationStyles = makeStyles({
+    root: {
+        fontWeight: 500,
+    },
+    mild: {
+        color: yellow[800],
+    },
+    medium: {
+        color: orange[800],
+    },
+    high: {
+        color: red[800],
+    }
+});
+
+export function PopulationPane({id, amount, max}) {
+
+    const classes = usePopulationStyles();
+    const classesArray = [classes.mild, classes.medium, classes.high];
+
+    let className = "";
+
+    const excessPopulation = amount > max ? amount - max : 0;
+    if (excessPopulation) {
+        const ix = Math.min(2, Math.floor(3 * (excessPopulation - 1) / max));
+
+        className = classesArray[ix];
+    }
+
+    const value = <><span className={classes.root + " " + className}>{amount}</span> / {max}</>;
 
     return (
-        <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} IconButtonProps={{edge: false, disableTouchRipple: true}}>
-                <img src={icon} alt="" height={25}/>
-                <div className="flex-grow-1 ResourcePanes-name">Population:</div>
-                <div>{population}</div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <div></div>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
+        <GenericResourcePane id={id} value={value}>
+            <div/>
+        </GenericResourcePane>
     );
 }
