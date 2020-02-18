@@ -61,7 +61,7 @@ class Decisions extends React.Component {
                         <MakeBuildingPane id="animalFarm"/>
 
                         {/*Fisheries*/}
-                        <MakeBuildingPane id="fishingBoat" onBuy={() => onDecisionStuff("fish")} extraEffects={[{resource: "food", income: this.state.fishBoatEffort}]}>
+                        <MakeBuildingPane id="fishingBoat" onBuy={() => onDecisionStuff("fish")} extraEffects={[{resource: "food", income: this.state.fishBoatEffort,icon:"/meat.svg"}]}>
                             <div style={{textAlign: "center"}} id="fish-effort-slider">
                                 Effort
                             </div>

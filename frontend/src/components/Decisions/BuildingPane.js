@@ -15,7 +15,7 @@ class BuildingPane extends React.Component {
 
     makeEffect(effect, i) {
         return (
-            <div key={i}>{effect.resource}: {effect.income >= 0 && "+"}{effect.income}/month</div>
+            <div key={i}><img src={effect.icon} alt="" height={25}/>{effect.resource}: {effect.income >= 0 && "+"}{effect.income}/month</div>
         );
     }
 
@@ -23,7 +23,7 @@ class BuildingPane extends React.Component {
 
         const {building, extraEffects, numberBuilt, canBuy, onBuy, onSell, children} = this.props;
 
-        const {name, description, costs,effects} = building;
+        const {name, description, costs, effects} = building;
 
         return (
             <div className="BuildingPane-root">
@@ -43,7 +43,8 @@ class BuildingPane extends React.Component {
                         Costs
                     </div>
                     {
-                        costs.map((cost, i) => <div key={i}>{cost.resource}: {cost.amount}</div>)
+                        costs.map((cost, i) => <div key={i}>
+                            <img src={cost.icon} alt="" height={25}/>{cost.resource}: {cost.amount}</div>)
                     }
                 </div>
                 <div className="BuildingPane-effects">
@@ -51,6 +52,7 @@ class BuildingPane extends React.Component {
                         Effects
                     </div>
                     {
+
                         effects.map(this.makeEffect)
                     }
                     {
