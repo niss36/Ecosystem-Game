@@ -30,9 +30,7 @@ export const buildings = {
             {resource: WOOD, amount: 100,icon:"/logs.svg"},
             {resource: MONEY, amount: 400,icon:"/coin.svg"},
         ],
-        effects: [
-            {resource: FOOD, income: 100,icon:"/meat.svg"},
-        ],
+        effects: [],
     },
     cheapLumberMill: {
         name: "Cheap Lumber Mill",
