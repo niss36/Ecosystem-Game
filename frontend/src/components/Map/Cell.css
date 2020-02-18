@@ -21,10 +21,10 @@
 
 .Cell-root.fish {
     color: red;
-    background-image: url("/boat.svg");
+    background-image: url("/icons/boat.svg");
 }
 
 .Cell-root.hunt {
     color: red;
-    background-image: url("/boat.svg");
+    background-image: url("/icons/boat.svg");
 }
