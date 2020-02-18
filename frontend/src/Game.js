@@ -42,7 +42,7 @@ class Game extends React.Component {
     }
 
     changeSelectedAnimal(animal){
-        this.state.selectedAnimal = animal;
+        this.setState({selectedAnimal :animal});
     }
 
     animalFarm(selectedIndices, value){

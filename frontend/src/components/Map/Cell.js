@@ -18,16 +18,21 @@ export default class Cell extends React.Component {
     render() {
         let i = this.props.i;
 
-
-
         let classes = "Cell-root";
         if (this.props.selected) {
             classes += " toggled";
         }
+        let style;
+
+        if (this.props.island.includes(i)) {
+            style = {backgroundColor:"lightgreen",color:"yellow"};
+        } else
+            style = {color:"blue", backgroundColor:"lightblue" };
 
         return (
             <p className={classes} onClick={() =>this.props.cellMouseclick(i)}
             onMouseEnter={() => this.props.cellMouseMove(i)} /*Stops it calling its self when not o mouse move event*/
+                style = {style}
             >
                 {i}
             </p>
