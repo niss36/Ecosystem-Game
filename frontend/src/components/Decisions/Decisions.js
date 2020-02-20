@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {setEffort, nextTurn, startBuyBuilding,startRemoveBuilding} from "../../actions";
+import {setEffort, nextTurn, startBuyBuilding,startRemoveBuilding, logItemSelect, logItemConfirm} from "../../actions";
 
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
@@ -15,6 +15,9 @@ import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
 
 import "./Decisions.css";
+import {ListItemText} from "@material-ui/core";
+import {ListItem} from "@material-ui/core";
+import {List} from "@material-ui/core";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -81,6 +84,57 @@ const NextTurn = connect()(({dispatch}) => (
     </Button>
 ));
 
+function MakeLog(list, onLogClick){
+    let array = new Array(list.length);
+    for (let i = 0; i < list.length; i++) {
+        const index = i;
+        const id = list[i].buildingType;
+        const cells = list[i].cells;
+        const changeValue = list[i].changeValue;
+        array[i] = (<ListItem button key={index} id={id} cells={cells} changevalue={changeValue}>
+            <ListItemText onClick={onLogClick(index)} primary={'Change Number: ' + (index + 1) + ' Building: ' + id + '; Located Cells: ' + cells  + '; Value: ' + changeValue + ";"}/>
+        </ListItem>)
+    }
+    return array;
+}
+
+function makeLogPlane({...props}){
+    console.log(props);
+    return (
+        <div>
+            <List>
+              {MakeLog(props.commitChange.storedChanges, props.onLogSelect)}
+            </List>
+            <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
+                Commit Log
+            </Button>
+        </div>
+    )
+}
+
+const mapStateToLogProps = (state, ownProps) => {
+    return {
+        ...state.data,
+        canConfirm : canConfirmLog(state.data.commitChange.selectedLogIndex),
+    };
+};
+
+const mapDispatchToLogProps = (dispatch, ownProps) => {
+    return {
+        onLogSelect: (index) => function(){ dispatch(logItemSelect(index));},
+        onLogConfirm: (selectedItem) => function(){ dispatch(logItemConfirm(selectedItem.index, [...selectedItem.selectedDel]))},
+    }
+};
+
+const ConnectedLogList = connect(
+    mapStateToLogProps,
+    mapDispatchToLogProps,
+)(makeLogPlane);
+
+function canConfirmLog(state){
+    return (state === "undefined");
+}
+
 class Decisions extends React.Component {
 
     objectPlaceholder = {
@@ -92,7 +146,7 @@ class Decisions extends React.Component {
     };
 
     render() {
-        const tabs = ["Food", "Forestry", "Population"];
+        const tabs = ["Food", "Forestry", "Population", "Log"];
 
         return (
             <div className="Decisions-root panel">
@@ -133,6 +187,11 @@ class Decisions extends React.Component {
                             </li>
                         </ul>
                     </div>
+
+                    {/*Log*/}
+                    <div style={{maxHeight: 700, overflow: 'auto'}}>
+                        <ConnectedLogList/>
+                    </div>
                 </TabsPane>
                 <div className="flex-grow-1"/>
                 <NextTurn/>
@@ -141,4 +200,9 @@ class Decisions extends React.Component {
     }
 }
 
+/*
+<List>
+{MakeLog([1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8])}
+</List>
+ */
 export default Decisions;

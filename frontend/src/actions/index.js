@@ -7,6 +7,23 @@ export const SET_DIFF = "SET_DIFF";
 export const END_BUY_BUILDING = "END_BUY_BUILDING";
 export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
+export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
+export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
+
+export function logItemSelect(index){
+    return{
+        type: LOG_ITEM_SELECT,
+        index: index,
+    }
+}
+
+export function logItemConfirm(index, selectedItems){
+    return{
+        type: LOG_ITEM_CONFIRM,
+        selectedItems: selectedItems,
+        index: index,
+    }
+}
 
 export function endBuyBuilding(id,selectedCells) {
     return {
@@ -21,8 +38,6 @@ export function startBuyBuilding(id) {
     return {
         type: START_BUY_BUILDING,
         id: id,
-        // cells: cellsArray,
-        // changeValue: changeValue,
     }
 }
 

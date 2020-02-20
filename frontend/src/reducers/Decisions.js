@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 
 import {
     END_BUY_BUILDING,
+    LOG_ITEM_CONFIRM,
     START_REMOVE_BUILDING,
     SET_EFFORT,
     START_BUY_BUILDING,
@@ -36,6 +37,12 @@ function genericBuilding(state, action) {
             return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
         case END_BUY_BUILDING:
             return {...state, numberBuilt: state.numberBuilt +action.selectedCells.length};// TODO CHANGE TO BE NUMBER MADE
+        case LOG_ITEM_CONFIRM:  //TODO for some reason this is never reached when LOG_ITEM_CONFIRM is dispatched?
+            let newNumber = state.numberBuilt;
+            for(let i = 0; i < action.selectedItems.length; i++){
+                newNumber = newNumber - 1;
+            }
+            return {...state, numberBuilt: newNumber};
         default:
             return state;
     }
