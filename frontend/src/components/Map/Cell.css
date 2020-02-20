@@ -21,13 +21,13 @@
     background-image: url("/icons/land.jpg");
 }
 
-.Cell-root.fish {
+.Cell-root.fishingBoat {
     color: red;
     background-image: url("/icons/boat.svg");
     background-color: #64a5c1;
 }
 
-.Cell-root.hunt {
+.Cell-root.huntingShack {
     color: red;
     background-image: url("/icons/shack.svg");
     background-color: #cff181;

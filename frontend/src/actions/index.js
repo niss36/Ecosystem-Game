@@ -5,13 +5,22 @@ export const NEXT_TURN = "NEXT_TURN";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFF = "SET_DIFF";
+export const END_BUY_BUILDING = "END_BUY_BUILDING";
+export const START_BUY_BUILDING = "START_BUY_BUILDING";
 
-export function buyBuilding(id, cellsArray, changeValue) {
+export function endBuyBuilding(id) {
     return {
-        type: BUY_BUILDING,
+        type: END_BUY_BUILDING,
         id: id,
-        cells: cellsArray,
-        changeValue: changeValue,
+    }
+}
+
+export function startBuyBuilding(id) {
+    return {
+        type: START_BUY_BUILDING,
+        id: id,
+        // cells: cellsArray,
+        // changeValue: changeValue,
     }
 }
 
@@ -21,6 +30,7 @@ export function changeDiff(difficulty) {
         id: difficulty,
     }
 }
+
 
 export function sellBuilding(id) {
     return {
@@ -51,8 +61,17 @@ export function cellMouseEnter(i) {
 }
 
 export function cellMouseClick(i) {
-    return {
-        type: CELL_MOUSE_CLICK,
-        i: i,
+
+    return (dispatch, getState) => {
+        // if buying smth then dispatch end buy that
+        let state = getState()
+        if (state.map.selection.mode) {
+            dispatch(endBuyBuilding(state.map.selection.mode));
+        } else {
+            return {
+                type: CELL_MOUSE_CLICK,
+                i: i,
+            }
+        }
     }
 }

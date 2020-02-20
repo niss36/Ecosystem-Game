@@ -7,23 +7,25 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Cell from "./Cell";
-import {cellMouseClick, cellMouseEnter, changeDiff} from "../../actions";
+import {cellMouseClick, cellMouseEnter,endBuyBuilding, changeDiff} from "../../actions";
 import {SIZE} from "../../definitions/Map";
 
 import "./Map.css";
+import {FISHING_BOAT} from "../../definitions/Buildings";
 
 function mapStateToProps(state, ownProps) {
     return {
         land: state.map.island.includes(ownProps.i),
         mode: state.map.selection.mode,
         selected: state.map.selection.cells.includes(ownProps.i),
+        celldata: state.map.cells[ownProps.i],
     }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         onMouseEnter: () => dispatch(cellMouseEnter(ownProps.i)),
-        onMouseClick: () => dispatch(cellMouseClick(ownProps.i)),
+        onMouseClick: () => {dispatch(cellMouseClick(ownProps.i));},
     }
 }
 

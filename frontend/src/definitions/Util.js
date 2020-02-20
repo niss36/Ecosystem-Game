@@ -1,4 +1,4 @@
-import buildings from "./Buildings";
+import buildings, {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK} from "./Buildings";
 import {SIZE} from "./Map";
 
 export function getIncome(resourceId, state) {
@@ -37,7 +37,7 @@ export function getSelection(i, mode) {
     const [row, col] = [Math.floor(i / SIZE), i % SIZE];
 
     switch (mode) {
-        case "fish":
+        case FISHING_BOAT:
             if (col === 0) i++;
             if (col === SIZE - 1) i--;
             if (row === 0) i += SIZE;
@@ -48,7 +48,7 @@ export function getSelection(i, mode) {
                 i - 1,        i,        i + 1,
                 i + SIZE - 1, i + SIZE, i + SIZE + 1
             ];
-        case "hunt":
+        case HUNTING_SHACK:
             if (col === SIZE - 1) i--;
             if (row === SIZE - 1) i -= SIZE;
 
@@ -56,7 +56,7 @@ export function getSelection(i, mode) {
                 i,        i + 1,
                 i + SIZE, i + SIZE + 1
             ];
-        case "farm":
+        case ANIMAL_FARM:
             if (col === SIZE - 1) i--;
             if (row === SIZE - 1) i -= SIZE;
 

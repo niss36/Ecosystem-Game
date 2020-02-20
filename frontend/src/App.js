@@ -4,11 +4,12 @@ import Game from "./Game";
 import Menu from "./Menu";
 
 import "./App.css";
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import appReducer from "./reducers";
 import {Provider} from "react-redux";
+import thunk from 'redux-thunk';
 
-const store = createStore(appReducer);
+const store = createStore(appReducer, applyMiddleware(thunk));
 
 class App extends React.Component {
 

@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 
-import {BUY_BUILDING, SELL_BUILDING, NEXT_TURN} from "../actions";
+import {END_BUY_BUILDING, SELL_BUILDING, NEXT_TURN} from "../actions";
 
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -8,7 +8,7 @@ import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
 function normalResource(id) {
     return function (state = {amount: 1000}, action) {
         switch (action.type) {
-            case BUY_BUILDING:
+            case END_BUY_BUILDING:
                 const cost = buildings[action.id].costs[id];
                 if (cost) {
                     return {...state, amount: state.amount - cost};
