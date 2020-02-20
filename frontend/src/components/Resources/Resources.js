@@ -22,20 +22,19 @@ function ResourcesContainer({money, food, wood, population, happiness}) {
 
 function mapStateToProps(state) {
     const resources = state.resources;
-    const buildings = state.buildings;
 
     return {
         [MONEY]: {
             ...resources[MONEY],
-            income: getIncome(MONEY, buildings),
+            income: getIncome(MONEY, state),
         },
         [FOOD]: {
             ...resources[FOOD],
-            income: getIncome(FOOD, buildings),
+            income: getIncome(FOOD, state),
         },
         [WOOD]: {
             ...resources[WOOD],
-            income: getIncome(WOOD, buildings),
+            income: getIncome(WOOD, state),
         },
         [POPULATION]: resources[POPULATION],
         [HAPPINESS]: resources[HAPPINESS],

@@ -1,16 +1,12 @@
 import buildings from "./Buildings";
 import {SIZE} from "./Map";
 
-export function getIncome(resourceId, allBuildingStates) {
+export function getIncome(resourceId, state) {
     let total = 0;
 
     const breakdown = {};
 
-    for (const building in allBuildingStates) {
-        if (!allBuildingStates.hasOwnProperty(building))
-            continue;
-
-        const buildingState = allBuildingStates[building];
+    for (const [building, buildingState] of Object.entries(state.buildings)) {
 
         if (buildingState.numberBuilt) {
             const effect = buildingState.effects[resourceId];
