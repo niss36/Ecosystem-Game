@@ -5,7 +5,7 @@ import {data} from "./DataAccess";
 import {NEXT_TURN} from "../actions";
 import {combineReducers} from "redux";
 import {getIncome} from "../definitions/Util";
-import {MONEY, FOOD, WOOD} from "../definitions/Resources";
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 
 function nextTurnReducer(state, action) {
 
@@ -26,16 +26,58 @@ function nextTurnReducer(state, action) {
     return state;
 }
 
+function graphDataReducer(state, action) {
+
+    console.log(!state.graphData);
+
+    if (!state.graphData.length) {
+        const nextGraphData = [{
+            timestamp: 0,
+            pop: state.resources[POPULATION].amount,
+            happiness: state.resources[HAPPINESS],
+            money: state.resources[MONEY].amount,
+            food: state.resources[FOOD].amount,
+            wood: state.resources[WOOD].amount,
+        }];
+
+        return {...state, graphData: nextGraphData};
+    }
+
+    if (action.type === NEXT_TURN) {
+        const nextTimestamp = state.graphData[state.graphData.length-1].timestamp + 1;
+        const nextGraphData = [...state.graphData, {
+            timestamp: nextTimestamp,
+            pop: state.resources[POPULATION].amount,
+            happiness: state.resources[HAPPINESS],
+            money: state.resources[MONEY].amount,
+            food: state.resources[FOOD].amount,
+            wood: state.resources[WOOD].amount,
+        }];
+
+        return {...state, graphData:nextGraphData};
+    }
+
+    return state;
+}
+
+function graphData(state = [], action) {
+    return state;
+}
+
 const mainReducer = combineReducers({
     buildings,
     resources,
     map,
     data,
+    graphData,
 });
 
 export default function(state = {}, action) {
     state = mainReducer(state, action);
     state = nextTurnReducer(state, action);
+    state = graphDataReducer(state, action);
+
+    console.log(state);
 
     return state;
 }
