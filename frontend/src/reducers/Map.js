@@ -1,12 +1,13 @@
 import {BUY_BUILDING, CELL_MOUSE_ENTER, CELL_MOUSE_CLICK} from "../actions";
 
-import {FISHING_BOAT, HUNTING_SHACK} from "../definitions/Buildings";
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK} from "../definitions/Buildings";
 
 import {getSelection} from "../definitions/Util";
 
 const filters = {
     fish: land => !land,
     hunt: land => land,
+    farm: land=>land,
 };
 
 function getFilteredSelection(i, mode, island) {
@@ -27,7 +28,10 @@ export function map(state = initialState, action) {
                 nextMode = "fish"; // TODO constants
             } else if (action.id === HUNTING_SHACK) {
                 nextMode = "hunt";
-            } else {
+            }else if (action.id === ANIMAL_FARM) {
+                nextMode = "farm";
+            }
+            else {
                 return state;
             }
 

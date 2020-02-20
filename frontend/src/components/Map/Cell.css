@@ -32,3 +32,9 @@
     background-image: url("/icons/shack.svg");
     background-color: #cff181;
 }
+
+.Cell-root.farm{
+    color: red;
+    background-image:url("/icons/barn.svg");
+    background-color:#cff181;
+}
