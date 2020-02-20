@@ -3,7 +3,7 @@ import {BUY_BUILDING, SELL_BUILDING, NEXT_TURN} from "../actions";
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
 
-import {getIncome} from "../components/util";
+import {getIncome} from "../definitions/Util";
 
 function normalResource(id) {
     return function (state = {amount: 1000}, action, allBuildingStates) {

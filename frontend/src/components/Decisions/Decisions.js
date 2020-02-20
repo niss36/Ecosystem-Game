@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Button from "@material-ui/core/Button";
@@ -11,7 +10,7 @@ import BuildingPane from "./BuildingPane";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {buyBuilding, sellBuilding, setEffort, nextTurn} from "../../actions";
-import {canBuy} from "../util";
+import {canBuy} from "../../definitions/Util";
 
 import "./Decisions.css";
 
@@ -42,9 +41,7 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
     );
 }
 
-function MakeFishingBoatPane() {
-
-    const id = FISHING_BOAT;
+function MakeFishingBoatPane({id}) {
 
     // TODO don't do this on every render
     const ABuildingPane = connect(
@@ -104,10 +101,11 @@ class Decisions extends React.Component {
                         <MakeBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeFishingBoatPane/>
+                        <MakeFishingBoatPane id={FISHING_BOAT}/>
 
                         {/*Hunting*/}
-                        <MakeBuildingPane id={HUNTING_SHACK}/>
+                        {/*TODO name*/}
+                        <MakeFishingBoatPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
@@ -122,7 +120,7 @@ class Decisions extends React.Component {
                             <div style={{textAlign: "center"}}>
                                 Tax
                             </div>
-                            <MuiSlider value={100}/>
+                            <MuiSlider value={100}/> {/*TODO state*/}
                         </div>
                         <ul>
                             <li>
@@ -141,10 +139,5 @@ class Decisions extends React.Component {
         );
     }
 }
-
-Decisions.propTypes = {
-    onNextTurn: PropTypes.func,
-    onDecisionStuff: PropTypes.func,
-};
 
 export default Decisions;

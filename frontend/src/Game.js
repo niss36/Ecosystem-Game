@@ -25,7 +25,7 @@ class Game extends React.Component {
         let fishList = [];
 
         this.state = {
-            mapargs : {selectionMode : false },
+            mapargs : {fishing : false, hunting : false },
             dataCells: dataCells,
             desiredChanges: desiredChanges,
             selectedAnimal: 'none',
@@ -33,8 +33,6 @@ class Game extends React.Component {
             animalList: animalList,
         };
 
-        this.decisionsCall = this.decisionsCall.bind(this);
-        this.nextTurn = this.nextTurn.bind(this);
         this.changeSelectedAnimal = this.changeSelectedAnimal.bind(this);
         this.animalFarm = this.animalFarm.bind(this);
         this.huntingShack = this.huntingShack.bind(this);
@@ -42,7 +40,7 @@ class Game extends React.Component {
     }
 
     changeSelectedAnimal(animal){
-        this.state.selectedAnimal = animal;
+        this.setState({selectedAnimal :animal});
     }
 
     animalFarm(selectedIndices, value){
@@ -66,17 +64,6 @@ class Game extends React.Component {
         }
     }
 
-    decisionsCall(name) {
-        if (name === "fish") {
-            this.setState({mapargs : {selectionMode : true}})
-        }
-    }
-
-    nextTurn() {
-        console.log("Next turn!!"); // TODO
-        this.setState({mapargs : {selectionMode : false}});
-    }
-
     render() {
         return (
             <Container maxWidth={false} className="Game-root">
@@ -86,10 +73,10 @@ class Game extends React.Component {
                     </Grid>
                     <Grid item xs={8} container spacing={2}>
                         <Grid item xs={12} md={4}>
-                            <Decisions onNextTurn={this.nextTurn} onDecisionStuff={this.decisionsCall} changeSelectedAnimal={this.changeSelectedAnimal} animalList={this.state.animalList} fishList={this.state.fishList}/>
+                            <Decisions/>
                         </Grid>
                         <Grid item xs={12} md={8}>
-                            <Map mapargs = {this.state.mapargs} fishingBoat={this.fishingBoat} huntingShack={this.huntingShack} animalFarm={this.animalFarm}/>
+                            <Map/>
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <EcosystemData/>

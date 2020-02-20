@@ -7,22 +7,22 @@ export const WOOD = "wood";
 export default {
     [POPULATION]: {
         name: "Population",
-        icon: "/population.svg",
+        icon: "/icons/population.svg",
     },
     [HAPPINESS]: {
         name: "Happiness",
-        icon: "/smile.svg",
+        icon: "/icons/smile.svg",
     },
     [MONEY]: {
         name: "Money",
-        icon: "/coin.svg",
+        icon: "/icons/coin.svg",
     },
     [FOOD]: {
         name: "Food",
-        icon: "/meat.svg",
+        icon: "/icons/meat.svg",
     },
     [WOOD]: {
         name: "Wood",
-        icon: "/logs.svg",
+        icon: "/icons/logs.svg",
     }
 }
