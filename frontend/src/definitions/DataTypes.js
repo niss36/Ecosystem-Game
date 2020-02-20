@@ -1,5 +1,7 @@
-export const ABUNDANCE_DENSITY = "abundance_density";
-export const BIOMASS_DENSITY = "biomass_density";
+export const ABUNDANCE_DENSITY_CARNIVORE = "abundance_density_carnivore";
+export const BIOMASS_DENSITY_CARNIVORE = "biomass_density_carnivore";
+export const ABUNDANCE_DENSITY_HERBIVORE = "abundance_density_herbivore";
+export const BIOMASS_DENSITY_HERBIVORE = "biomass_density_herbivore";
 export const BIOMASS_EVENNESS = "biomass_evenness";
 export const BIOMASS_RICHNESS = "biomass_richness";
 export const FRACTION_YEAR_FROST = "fraction_year_frost";
@@ -13,13 +15,27 @@ export const REALM = "realm";
 export const TROPHIC_EVENNESS = "trophic_evenness";
 
 export default {
-    [ABUNDANCE_DENSITY]:{
+
+
+    [ABUNDANCE_DENSITY_CARNIVORE]:{
         name: "Abundance Density",
         description: "Number of individuals per sample",
         //This is measured individually for animal types and also overall.
     },
 
-    [BIOMASS_DENSITY]:{
+    [BIOMASS_DENSITY_CARNIVORE]:{
+        name: "Biomass Density",
+        description: "Mass of animal/plant material per meter squared",
+        //This is measured individually for animal types and also overall.
+    },
+
+    [ABUNDANCE_DENSITY_HERBIVORE]:{
+        name: "Abundance Density",
+        description: "Number of individuals per sample",
+        //This is measured individually for animal types and also overall.
+    },
+
+    [BIOMASS_DENSITY_HERBIVORE]:{
         name: "Biomass Density",
         description: "Mass of animal/plant material per meter squared",
         //This is measured individually for animal types and also overall.
