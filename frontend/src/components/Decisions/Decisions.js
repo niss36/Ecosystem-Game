@@ -41,30 +41,30 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
     );
 }
 
-function MakeFishingBoatPane({id}) {
+function EffortBuildingPane({id, ...props}) {
+    return (
+        <BuildingPane id={id} {...props}>
+            <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
+                Effort
+            </div>
+            <MuiSlider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
+        </BuildingPane>
+    );
+}
 
-    // TODO don't do this on every render
-    const ABuildingPane = connect(
-        mapStateToProps,
-        (dispatch, ownProps) => {
-            return {
-                onBuy: () => dispatch(buyBuilding(ownProps.id)),
-                onSell: () => dispatch(sellBuilding(ownProps.id)),
-                onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
-            }
+const ConnectedEffortBuildingPane = connect(
+    mapStateToProps,
+    (dispatch, ownProps) => {
+        return {
+            onBuy: () => dispatch(buyBuilding(ownProps.id)),
+            onSell: () => dispatch(sellBuilding(ownProps.id)),
+            onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
         }
-    )(props => {
-        return (
-            <BuildingPane {...props}>
-                <div style={{textAlign: "center"}} id="fish-effort-slider">
-                    Effort
-                </div>
-                <MuiSlider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby="fish-effort-slider"/>
-            </BuildingPane>
-        )
-    });
+    }
+)(EffortBuildingPane);
 
-    return <ABuildingPane id={id}/>
+function MakeEffortBuildingPane({id}) {
+    return (<ConnectedEffortBuildingPane id={id}/>);
 }
 
 const NextTurn = connect()(({dispatch}) => (
@@ -101,11 +101,10 @@ class Decisions extends React.Component {
                         <MakeBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeFishingBoatPane id={FISHING_BOAT}/>
+                        <MakeEffortBuildingPane id={FISHING_BOAT}/>
 
                         {/*Hunting*/}
-                        {/*TODO name*/}
-                        <MakeFishingBoatPane id={HUNTING_SHACK}/>
+                        <MakeEffortBuildingPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
