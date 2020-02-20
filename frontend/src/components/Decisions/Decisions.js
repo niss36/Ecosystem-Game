@@ -9,7 +9,7 @@ import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
-import {endBuyBuilding, sellBuilding, setEffort, nextTurn, startBuyBuilding} from "../../actions";
+import {sellBuilding, setEffort, nextTurn, startBuyBuilding} from "../../actions";
 import {canBuy} from "../../definitions/Util";
 
 import "./Decisions.css";

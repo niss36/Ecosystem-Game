@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {CELL_MOUSE_CLICK, END_BUY_BUILDING, SELL_BUILDING, SET_EFFORT, START_BUY_BUILDING} from "../actions";
+import {END_BUY_BUILDING, SELL_BUILDING, SET_EFFORT, START_BUY_BUILDING} from "../actions";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../definitions/Buildings";
 import {FOOD, WOOD} from "../definitions/Resources";
 

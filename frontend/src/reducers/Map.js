@@ -4,7 +4,7 @@ import {
     CELL_MOUSE_CLICK,
     NEXT_TURN,
     START_BUY_BUILDING,
-    endBuyBuilding
+    // endBuyBuilding
 } from "../actions";
 
 
@@ -34,6 +34,8 @@ const initialState = {
 
 export function map(state = initialState, action) {
     switch (action.type) {
+        case NEXT_TURN:
+            return {...state,selection: {...state.selection, mode :undefined,cells: []},cells :[]};
         case START_BUY_BUILDING:
             let nextMode = action.id;
             console.log(nextMode);
@@ -53,6 +55,8 @@ export function map(state = initialState, action) {
                         newcells[x] = HUNTING_SHACK;
                     }
                     return {...state, selection: {mode: undefined, cells: []}, cells: newcells};
+                default:
+                    return state;
             }
 
         case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE

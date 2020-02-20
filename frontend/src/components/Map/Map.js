@@ -7,11 +7,10 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Cell from "./Cell";
-import {cellMouseClick, cellMouseEnter,endBuyBuilding, changeDiff} from "../../actions";
+import {cellMouseClick, cellMouseEnter, changeDiff} from "../../actions";
 import {SIZE} from "../../definitions/Map";
 
 import "./Map.css";
-import {FISHING_BOAT} from "../../definitions/Buildings";
 
 function mapStateToProps(state, ownProps) {
     return {
