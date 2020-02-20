@@ -6,11 +6,19 @@ export const PUT_CHANGE = "PUT_CHANGE";
 export const PUT_ANIMAL = "PUT_ANIMAL";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
+export const SET_DIFF = "SET_DIFF";
 
 export function buyBuilding(id) {
     return {
         type: BUY_BUILDING,
         id: id,
+    }
+}
+
+export function changeDiff(difficulty) {
+    return {
+        type: SET_DIFF,
+        id: difficulty,
     }
 }
 

@@ -7,7 +7,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Cell from "./Cell";
-import {cellMouseClick, cellMouseEnter} from "../../actions";
+import {cellMouseClick, cellMouseEnter, changeDiff} from "../../actions";
 import {SIZE} from "../../definitions/Map";
 
 import "./Map.css";
@@ -41,7 +41,7 @@ class Map extends React.Component {
 
         return (
             <div className="Map-root panel">
-                <SettingsMenu/>
+                <ConnectedSettingsMenu/>
                 <div className="Map-grid">
                     {cells}
                 </div>
@@ -59,6 +59,8 @@ class SettingsMenu extends React.Component {
 
         this.state = {
             anchor: null,
+            diffDisplay: 'none',
+            mainDisplay: 'block',
         };
 
         this.open = this.open.bind(this);
@@ -71,6 +73,17 @@ class SettingsMenu extends React.Component {
 
     close() {
         this.setState({anchor: null});
+    }
+
+    swapCSS(main, diff){
+        let anchor = this.state.anchor;
+        this.setState({anchor: anchor, mainDisplay: main, diffDisplay: diff});
+    }
+
+    diffMethod(diff){
+        changeDiff(diff);
+        this.swapCSS('block', 'none');
+        this.close();
     }
 
     render() {
@@ -95,11 +108,19 @@ class SettingsMenu extends React.Component {
                     open={Boolean(this.state.anchor)}
                     onClose={this.close}
                 >
-                    <MenuItem onClick={this.close}>Colour blind mode</MenuItem>
-                    <MenuItem onClick={this.close}>Overlay</MenuItem>
-                    <MenuItem onClick={this.close}>Difficulty</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Colour blind mode</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Overlay</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={() => {this.swapCSS('none', 'block')}}>Difficulty</MenuItem>
+                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('easy')}}>Easy</MenuItem>
+                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('medium')}}>Medium</MenuItem>
+                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('hard')}}>Hard</MenuItem>
                 </Menu>
             </div>
         );
     }
 }
+
+const ConnectedSettingsMenu = connect(
+    null,
+    dispatch => ({setDifficulty: diff => dispatch(changeDiff(diff))})
+)(SettingsMenu);
