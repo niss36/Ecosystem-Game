@@ -5,11 +5,10 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {sellBuilding, setEffort, nextTurn, startBuyBuilding} from "../../actions";
+import {setEffort, nextTurn, startBuyBuilding,startRemoveBuilding} from "../../actions";
 
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
-
 import {canBuy} from "../../definitions/Util";
 
 import TabsPane from "../util/TabsPane";
@@ -27,7 +26,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-        onSell: () => dispatch(sellBuilding(ownProps.id)),
+        onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
     }
 };
 
@@ -48,7 +47,7 @@ function EffortBuildingPane({id, ...props}) {
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
-                Effort
+                Effort- Change this to size!
             </div>
             <Slider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
         </BuildingPane>
@@ -60,7 +59,7 @@ const ConnectedEffortBuildingPane = connect(
     (dispatch, ownProps) => {
         return {
             onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-            onSell: () => dispatch(sellBuilding(ownProps.id)),
+            onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
             onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
         }
     }

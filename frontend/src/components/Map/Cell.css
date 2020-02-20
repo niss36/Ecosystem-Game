@@ -8,7 +8,7 @@
 
     color: blue;
     background-color: #64a5c1;
-    background-image: url("/icons/sea.jpg");
+    /*background-image: url("/icons/sea.jpg");*/
 
     background-size: cover;
     background-position: center;
@@ -18,7 +18,12 @@
 .Cell-root.land {
     color: yellow;
     background-color: #cff181;
-    background-image: url("/icons/land.jpg");
+    /*background-image: url("/icons/land.jpg");*/
+    background-color: lightgreen;
+}
+.Cell-root.remove {
+    color: blue;
+    background-color: red;
 }
 
 .Cell-root.fishingBoat {

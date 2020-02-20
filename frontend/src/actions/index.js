@@ -1,33 +1,54 @@
-export const BUY_BUILDING = "BUY_BUILDING";
-export const START_BUY_BUILDING = "START_BUY_BUILDING";
-export const END_BUY_BUILDING = "END_BUY_BUILDING";
-export const SELL_BUILDING = "SELL_BUILDING";
+export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
 export const SET_EFFORT = "SET_EFFORT";
 export const NEXT_TURN = "NEXT_TURN";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
+export const SET_DIFF = "SET_DIFF";
+export const END_BUY_BUILDING = "END_BUY_BUILDING";
+export const START_BUY_BUILDING = "START_BUY_BUILDING";
+export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
+
+export function endBuyBuilding(id,selectedCells) {
+    return {
+        type: END_BUY_BUILDING,
+        id: id,
+        selectedCells: selectedCells,
+    }
+}
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
 
 export function startBuyBuilding(id) {
     return {
         type: START_BUY_BUILDING,
         id: id,
+        // cells: cellsArray,
+        // changeValue: changeValue,
     }
 }
 
-export function endBuyBuilding(id) {
+export function endRemoveBuilding(id,selectedCells) {
     return {
-        type: END_BUY_BUILDING,
+        type: END_REMOVE_BUILDING,
         id: id,
+        selectedCells: selectedCells,
     }
 }
 
-export function sellBuilding(id) {
+export function startRemoveBuilding(id) {
     return {
-        type: SELL_BUILDING,
+        type: START_REMOVE_BUILDING,
         id: id,
     }
 }
+export function changeDiff(difficulty) {
+    return {
+        type: SET_DIFF,
+        id: difficulty,
+    }
+}
+
+
+
 
 export function setEffort(id, effort) {
     return {
@@ -57,17 +78,26 @@ export function cellMouseEnter(i) {
     }
 }
 
+export function cellMouseClickNotMode(i) {
+    return {
+        type: CELL_MOUSE_CLICK,
+        i: i,
+    }
+}
+
 export function cellMouseClick(i) {
+
     return (dispatch, getState) => {
-        const state = getState();
-        const mode = state.map.selection.mode;
-        if (mode) {
-            dispatch(endBuyBuilding(mode));
+        // if buying smth then dispatch end buy that
+        let state = getState();
+        if (state.map.selection.mode) {
+            if (state.map.addOrRemove === "add") {
+                dispatch(endBuyBuilding(state.map.selection.mode,state.map.selectedCellsThatMatch));
+            } else if (state.map.addOrRemove === "remove") {
+                dispatch(endRemoveBuilding(state.map.selection.mode,state.map.selectedCellsThatMatch));
+            }
         } else {
-            dispatch({
-                type: CELL_MOUSE_CLICK,
-                i: i,
-            });
+            dispatch(cellMouseClickNotMode(i));
         }
     }
 }

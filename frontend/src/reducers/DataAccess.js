@@ -1,5 +1,5 @@
 // import {HERBIVORE, CARNIVORE} from "../definitions/AnimalTypes";
-import {NEXT_TURN, BUY_BUILDING, SELL_BUILDING} from "../actions";
+import {NEXT_TURN,END_BUY_BUILDING, START_REMOVE_BUILDING} from "../actions";
 import {ABUNDANCE_DENSITY_CARNIVORE, BIOMASS_DENSITY_CARNIVORE, ABUNDANCE_DENSITY_HERBIVORE, BIOMASS_DENSITY_HERBIVORE, TROPHIC_EVENNESS, REALM, MEAN_TROPHIC_LEVEL, MIN_TROPHIC_INDEX, MAX_TROPHIC_INDEX, MAX_BODYMASS,
     HANPP, FUNCTIONAL_RICHNESS, FRACTION_YEAR_FROST, BIOMASS_RICHNESS, BIOMASS_EVENNESS} from "../definitions/DataTypes";
 import {combineReducers} from "redux";
@@ -45,17 +45,19 @@ export function nextTurnData(state = initialStores, action){
             }
             return state;
         default:
+
             return state;
     }
 }
 
 export function commitChange(state = initialStores, action){
         switch(action.type){
-            case BUY_BUILDING:
+            case END_BUY_BUILDING:// THIS MIGHT BE WRONG TODO THIS IS PROB WRONG AND THE START REMOVE BUILDING
                 let newLog1 = [...state.storedChanges];
                 newLog1.push({buildingType: action.id, changedCells: action.cells, changeValue: action.changeValue});
                 return {...state, storedChanges: newLog1};
-            case SELL_BUILDING:
+
+            case START_REMOVE_BUILDING:
                 let newLog = [...state.storedChanges];
                 let index = 0;
                 for(let i = newLog.length - 1; i >= 0; i--){

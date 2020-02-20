@@ -1,7 +1,13 @@
 import {combineReducers} from 'redux';
 
-import {END_BUY_BUILDING, SELL_BUILDING, SET_EFFORT} from "../actions";
-
+import {
+    END_BUY_BUILDING,
+    START_REMOVE_BUILDING,
+    SET_EFFORT,
+    START_BUY_BUILDING,
+    endRemoveBuilding,
+    END_REMOVE_BUILDING
+} from "../actions";
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../definitions/Buildings";
 import {FOOD, WOOD} from "../definitions/Resources";
 
@@ -25,12 +31,11 @@ const initialEffects = {
 
 function genericBuilding(state, action) {
     switch (action.type) {
+
+        case END_REMOVE_BUILDING:
+            return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
         case END_BUY_BUILDING:
-            return {...state, numberBuilt: state.numberBuilt + 1};
-
-        case SELL_BUILDING:
-            return {...state, numberBuilt: state.numberBuilt - 1};
-
+            return {...state, numberBuilt: state.numberBuilt +action.selectedCells.length};// TODO CHANGE TO BE NUMBER MADE
         default:
             return state;
     }

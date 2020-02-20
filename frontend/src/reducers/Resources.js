@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 
-import {END_BUY_BUILDING, SELL_BUILDING, NEXT_TURN} from "../actions";
+import {END_BUY_BUILDING, START_REMOVE_BUILDING, NEXT_TURN} from "../actions";
 
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -15,8 +15,7 @@ function normalResource(id) {
                 }
 
                 return state;
-
-            case SELL_BUILDING:
+            case START_REMOVE_BUILDING:
                 const sellValue = buildings[action.id].costs[id];
                 // TODO decide what portion of the original value to refund
                 if (sellValue) {
