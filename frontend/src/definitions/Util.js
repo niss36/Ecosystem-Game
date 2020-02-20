@@ -56,6 +56,14 @@ export function getSelection(i, mode) {
                 i,        i + 1,
                 i + SIZE, i + SIZE + 1
             ];
+        case "farm":
+            if (col === SIZE - 1) i--;
+            if (row === SIZE - 1) i -= SIZE;
+
+            return [
+                i,        i + 1,
+                i + SIZE, i + SIZE + 1
+            ];
         default:
             return [];
     }

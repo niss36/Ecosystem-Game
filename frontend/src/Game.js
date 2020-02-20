@@ -25,7 +25,7 @@ class Game extends React.Component {
         let fishList = [];
 
         this.state = {
-            mapargs : {fishing : false, hunting : false },
+            mapargs : {fishing : false, hunting : false , farming : false},
             dataCells: dataCells,
             desiredChanges: desiredChanges,
             selectedAnimal: 'none',
@@ -44,14 +44,14 @@ class Game extends React.Component {
     }
 
     animalFarm(selectedIndices, value){
-        let farmingChanges = this.state.desiredChanges.hunting;
+        let farmingChanges = this.state.desiredChanges.farming;
         for(let i = 0; i < selectedIndices.length; i++){
             farmingChanges.push({index: selectedIndices[i],changeVal: value,animalType: this.state.selectedAnimal});
         }
     }
 
     huntingShack(selectedIndices, value){
-        let huntingChanges = this.state.desiredChanges.farming;
+        let huntingChanges = this.state.desiredChanges.hunting;
         for(let i = 0; i < selectedIndices.length; i++){
             huntingChanges.push({index: selectedIndices[i], changeVal: value, animalType: this.state.selectedAnimal})
         }
