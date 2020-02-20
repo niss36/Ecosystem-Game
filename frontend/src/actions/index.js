@@ -61,17 +61,16 @@ export function cellMouseEnter(i) {
 }
 
 export function cellMouseClick(i) {
-
     return (dispatch, getState) => {
-        // if buying smth then dispatch end buy that
-        let state = getState()
-        if (state.map.selection.mode) {
-            dispatch(endBuyBuilding(state.map.selection.mode));
+        const state = getState();
+        const mode = state.map.selection.mode;
+        if (mode) {
+            dispatch(endBuyBuilding(mode));
         } else {
-            return {
+            dispatch({
                 type: CELL_MOUSE_CLICK,
                 i: i,
-            }
+            });
         }
     }
 }
