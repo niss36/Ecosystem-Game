@@ -6,9 +6,11 @@ import Settings from "@material-ui/icons/Settings";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import Cell from "./Cell";
-import {cellMouseClick, cellMouseEnter, changeDiff} from "../../actions";
+import {cellMouseClick, cellMouseEnter, setDifficulty} from "../../actions";
+
 import {SIZE} from "../../definitions/Map";
+
+import Cell from "./Cell";
 
 import "./Map.css";
 
@@ -17,7 +19,7 @@ function mapStateToProps(state, ownProps) {
         land: state.map.island.includes(ownProps.i),
         mode: state.map.selection.mode,
         selected: state.map.selection.cells.includes(ownProps.i),
-        celldata: state.map.cells[ownProps.i],
+        cellData: state.map.cells[ownProps.i],
     }
 }
 
@@ -82,7 +84,7 @@ class SettingsMenu extends React.Component {
     }
 
     diffMethod(diff){
-        changeDiff(diff);
+        this.props.setDifficulty(diff);
         this.swapCSS('block', 'none');
         this.close();
     }
@@ -123,5 +125,5 @@ class SettingsMenu extends React.Component {
 
 const ConnectedSettingsMenu = connect(
     null,
-    dispatch => ({setDifficulty: diff => dispatch(changeDiff(diff))})
+    dispatch => ({setDifficulty: diff => dispatch(setDifficulty(diff))})
 )(SettingsMenu);

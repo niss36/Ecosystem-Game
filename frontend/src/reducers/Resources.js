@@ -15,6 +15,7 @@ function normalResource(id) {
                 }
 
                 return state;
+
             case SELL_BUILDING:
                 const sellValue = buildings[action.id].costs[id];
                 // TODO decide what portion of the original value to refund
@@ -23,6 +24,7 @@ function normalResource(id) {
                 }
 
                 return state;
+
             default:
                 return state;
         }

@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
 
-import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 import {getIncome} from "../../definitions/Util";
+
+import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
 import "./Resources.css";
 

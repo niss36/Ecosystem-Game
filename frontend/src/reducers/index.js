@@ -1,11 +1,15 @@
+import {combineReducers} from "redux";
+
 import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
 import {data} from "./DataAccess";
+
 import {NEXT_TURN} from "../actions";
-import {combineReducers} from "redux";
-import {getIncome} from "../definitions/Util";
+
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
+
+import {getIncome} from "../definitions/Util";
 
 function nextTurnReducer(state, action) {
 
@@ -27,8 +31,6 @@ function nextTurnReducer(state, action) {
 }
 
 function graphDataReducer(state, action) {
-
-    console.log(!state.graphData);
 
     if (!state.graphData.length) {
         const nextGraphData = [{
@@ -77,7 +79,40 @@ export default function(state = {}, action) {
     state = nextTurnReducer(state, action);
     state = graphDataReducer(state, action);
 
-    console.log(state);
-
     return state;
 }
+
+/**
+ * Structure of the state:
+ * {
+ *     buildings: {
+ *         [<building>]: {
+ *             numberBuilt: number,
+ *             effects: {
+ *                 [<resource>]: {income: number},
+ *             },
+ *         },
+ *     },
+ *     resources: {
+ *         [POPULATION]: {amount: number, max: number},
+ *         [<resource>]: {amount: number},
+ *     },
+ *     map: {
+ *         selection: {
+ *             mode: string,
+ *             cells: [number],
+ *         },
+ *         island: [number],
+ *         cells: [string],
+ *     },
+ *     data: {
+ *         ??
+ *     },
+ *     graphData: [
+ *         {
+ *             timestamp: number,
+ *             [<resource>]: number,
+ *         },
+ *     ]
+ * }
+ */

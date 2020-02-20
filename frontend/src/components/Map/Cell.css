@@ -7,8 +7,8 @@
     margin: 0;
 
     color: blue;
-    /*background-color: lightblue;*/
-    background-image:url("/icons/sea.jpg");
+    background-color: #64a5c1;
+    background-image: url("/icons/sea.jpg");
 
     background-size: cover;
     background-position: center;
@@ -17,24 +17,21 @@
 
 .Cell-root.land {
     color: yellow;
-    /*background-color: lightgreen;*/
+    background-color: #cff181;
     background-image: url("/icons/land.jpg");
 }
 
 .Cell-root.fishingBoat {
     color: red;
     background-image: url("/icons/boat.svg");
-    background-color: #64a5c1;
 }
 
 .Cell-root.huntingShack {
     color: red;
     background-image: url("/icons/shack.svg");
-    background-color: #cff181;
 }
 
-.Cell-root.farm{
+.Cell-root.animalFarm{
     color: red;
     background-image:url("/icons/barn.svg");
-    background-color:#cff181;
 }

@@ -15,11 +15,6 @@
 
     color: blue;
     background-color: gray;
-
-    /*background-image: url("/uk.svg");*/
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .Map-grid::before {

@@ -3,14 +3,17 @@ import {connect} from "react-redux";
 
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
-import MuiSlider from "@material-ui/core/Slider";
+import Slider from "@material-ui/core/Slider";
+
+import {sellBuilding, setEffort, nextTurn, startBuyBuilding} from "../../actions";
+
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
+import {FOOD} from "../../definitions/Resources";
+
+import {canBuy} from "../../definitions/Util";
 
 import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
-import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
-import {FOOD} from "../../definitions/Resources";
-import {sellBuilding, setEffort, nextTurn, startBuyBuilding} from "../../actions";
-import {canBuy} from "../../definitions/Util";
 
 import "./Decisions.css";
 
@@ -47,7 +50,7 @@ function EffortBuildingPane({id, ...props}) {
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
                 Effort
             </div>
-            <MuiSlider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
+            <Slider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
         </BuildingPane>
     );
 }
@@ -119,7 +122,7 @@ class Decisions extends React.Component {
                             <div style={{textAlign: "center"}}>
                                 Tax
                             </div>
-                            <MuiSlider value={100}/> {/*TODO state*/}
+                            <Slider value={100}/> {/*TODO state*/}
                         </div>
                         <ul>
                             <li>
