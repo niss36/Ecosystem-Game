@@ -8,8 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {green, lime, orange, red, yellow} from "@material-ui/core/colors";
 
-import {NEXT_TURN} from "../../actions";
-import {POPULATION} from "../../definitions/Resources";
 import {connect} from "react-redux";
 
 const CustomizedDot = (props) => {
@@ -41,12 +39,6 @@ const CustomizedDot = (props) => {
     );
 };
 
-function getDate(timestamp) {
-    //currently initial date is June 2020, can change later, and timesteps are simply yearly
-    return "June " + (2020 + timestamp)
-}
-
-
 class EcosystemData extends React.Component {
 
     constructor(props) {
@@ -61,17 +53,6 @@ class EcosystemData extends React.Component {
             foodChecked: false,
             woodChecked: false,
 
-
-            /*//Dummy dataset:
-            data: [
-                {timestamp: 0, date: getDate(0), pop: 100, happiness: 100, money: 150, food: 240, wood: 170},
-                {timestamp: 1, date: getDate(1), pop: 200, happiness: 91, money: 500, food: 200, wood: 220},
-                {timestamp: 2, date: getDate(2), pop: 350, happiness: 72, money: 400, food: 150, wood: 270},
-                {timestamp: 3, date: getDate(3), pop: 600, happiness: 63, money: 350, food: 100, wood: 120},
-                {timestamp: 4, date: getDate(4), pop: 500, happiness: 45, money: 700, food: 50, wood: 20},
-                {timestamp: 5, date: getDate(5), pop: 150, happiness: 24, money: 200, food: 20, wood: 120},
-                {timestamp: 6, date: getDate(6), pop: 50, happiness: 5, money: 100, food: 10, wood: 220},
-            ],*/
         }
     }
 
@@ -110,18 +91,19 @@ class EcosystemData extends React.Component {
                                         {(this.state.currentPopTab === "happiness" ?
                                             //if happiness graph
                                             <Line type="monotone" stroke={green[400]} dataKey="happiness"
-                                                  dot={<CustomizedDot/>}/>
+                                                  dot={<CustomizedDot/>} isAnimationActive={false}/>
                                             :
                                             //if population graph
-                                            <Line type="monotone" stroke="green" dataKey="pop"/>)
+                                            <Line type="monotone" stroke="green" dataKey="pop"
+                                                  isAnimationActive={false}/>)
                                         }
 
                                         {(this.state.currentPopTab === "pop") &&
-                                            //if population graph, add a grid
-                                            <CartesianGrid strokeDasharray="3 3"/>
+                                        //if population graph, add a grid
+                                        <CartesianGrid strokeDasharray="3 3"/>
                                         }
                                         <YAxis/>
-                                        <XAxis dataKey="date"/>
+                                        <XAxis dataKey="timestamp"/>
                                         <Tooltip/>
                                     </LineChart>
                                 </ResponsiveContainer>
@@ -182,7 +164,7 @@ class EcosystemData extends React.Component {
                                         <YAxis/>
                                         <Tooltip/>
                                         <CartesianGrid strokeDasharray="3 3"/>
-                                        <XAxis dataKey="date"/>
+                                        <XAxis dataKey="timestamp"/>
                                     </LineChart>
                                 </ResponsiveContainer>
                             </Grid>
