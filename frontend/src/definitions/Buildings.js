@@ -13,6 +13,7 @@ export default {
         name: "Animal Farm",
         description: "Rear animals to produce food.",
         requiredCellType: LAND,
+        selectionSize: 2,
         costs: {
             [WOOD]: 200,
             [MONEY]: 100,
@@ -23,6 +24,7 @@ export default {
         name: "Fishing Boat",
         description: "A boat to catch fish in the ocean.",
         requiredCellType: SEA,
+        selectionSize: 3,
         costs: {
             [WOOD]: 200,
             [MONEY]: 100,
@@ -33,6 +35,7 @@ export default {
         name: "Hunting Shack",
         description: "Hire hunters to harvest wild animals.",
         requiredCellType: LAND,
+        selectionSize: 2,
         costs: {
             [WOOD]: 100,
             [MONEY]: 400,
@@ -43,6 +46,7 @@ export default {
         name: "Cheap Lumber Mill",
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
         requiredCellType: LAND,
+        selectionSize: 2,
         costs: {},
         affectedDataTypes: [],
     },
@@ -50,6 +54,7 @@ export default {
         name: "Expensive Lumber mill",
         description: "Cuts down trees to produce wood sustainably.",
         requiredCellType: LAND,
+        selectionSize: 2,
         costs: {},
         affectedDataTypes: [],
     },
