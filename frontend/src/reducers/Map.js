@@ -8,23 +8,20 @@ import {
 } from "../actions";
 
 
-import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK} from "../definitions/Buildings";
+import buildings from "../definitions/Buildings";
+import {LAND, SIZE} from "../definitions/Map";
 
 import {getSelection} from "../definitions/Util";
-import {SIZE} from "../definitions/Map";
-
-const landFilters = {
-    [FISHING_BOAT]: land => !land,
-    [HUNTING_SHACK]: land => land,
-    [ANIMAL_FARM]: land => land,
-};
 
 function makeFilter(state) {
     // assert mode not undefined
 
     const {mode, building} = state.selection;
 
-    const doesLandMatch = i => landFilters[building](state.island.includes(i));
+    const requiresLand = buildings[building].requiredCellType === LAND;
+
+    // requiresLand iff cell i is land.
+    const doesLandMatch = i => requiresLand === state.island.includes(i);
 
     switch (mode) {
         case "add":
