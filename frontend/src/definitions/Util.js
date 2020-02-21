@@ -33,10 +33,10 @@ export function canBuy(buildingId, state) {
     return true;
 }
 
-export function getSelection(i, mode) {
+export function getSelection(i, building) {
     const [row, col] = [Math.floor(i / SIZE), i % SIZE];
 
-    switch (mode) {
+    switch (building) {
         case FISHING_BOAT:
             if (col === 0) i++;
             if (col === SIZE - 1) i--;

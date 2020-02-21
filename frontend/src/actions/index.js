@@ -88,15 +88,14 @@ export function cellMouseClickNotMode(i) {
 export function cellMouseClick(i) {
 
     return (dispatch, getState) => {
-        // if buying smth then dispatch end buy that
-        let state = getState();
-        if (state.map.selection.mode) {
-            if (state.map.addOrRemove === "add") {
-                dispatch(endBuyBuilding(state.map.selection.mode,state.map.selectedCellsThatMatch));
-            } else if (state.map.addOrRemove === "remove") {
-                dispatch(endRemoveBuilding(state.map.selection.mode,state.map.selectedCellsThatMatch));
-            }
-        } else {
+        const state = getState();
+        const {mode, building, cells} = state.map.selection;
+
+        if (mode === "add") { // buying buildings
+            dispatch(endBuyBuilding(building, cells));
+        } else if (mode === "remove") { // removing buildings
+            dispatch(endRemoveBuilding(building, cells));
+        } else { // mode undefined or invalid
             dispatch(cellMouseClickNotMode(i));
         }
     }

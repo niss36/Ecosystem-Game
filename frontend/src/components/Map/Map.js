@@ -18,9 +18,9 @@ function mapStateToProps(state, ownProps) {
     return {
         land: state.map.island.includes(ownProps.i),
         mode: state.map.selection.mode,
+        building: state.map.selection.building,
         selected: state.map.selection.cells.includes(ownProps.i),
-        addOrRemove: state.map.addOrRemove,
-        celldata: state.map.cells[ownProps.i], // if hunting or fishing...
+        cellData: state.map.cells[ownProps.i], // if hunting or fishing...
     }
 }
 
