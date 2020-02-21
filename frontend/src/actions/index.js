@@ -62,9 +62,6 @@ export function changeDiff(difficulty) {
     }
 }
 
-
-
-
 export function setEffort(id, effort) {
     return {
         type: SET_EFFORT,
