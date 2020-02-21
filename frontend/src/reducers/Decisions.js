@@ -30,17 +30,27 @@ const initialEffects = {
     },
 };
 
-function genericBuilding(state, action) {
+function genericBuilding(state, action, id) {
     switch (action.type) {
-
         case END_REMOVE_BUILDING:
             return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
         case END_BUY_BUILDING:
             return {...state, numberBuilt: state.numberBuilt +action.selectedCells.length};// TODO CHANGE TO BE NUMBER MADE
-        case LOG_ITEM_CONFIRM:  //TODO for some reason this is never reached when LOG_ITEM_CONFIRM is dispatched?
+        case LOG_ITEM_CONFIRM:
             let newNumber = state.numberBuilt;
-            for(let i = 0; i < action.selectedItems.length; i++){
-                newNumber = newNumber - 1;
+            for(let i = action.selectedDel.length - 1; i >= 0; i--){
+                let currAction = action.selectedDel[i];
+                console.log(id);
+                console.log(currAction.buildingType);
+                if(id === currAction.buildingType) {
+                    let actionType = currAction.actionType;
+                    let cells = currAction.selectedCells;
+                    if (actionType === 'Buy') {
+                        newNumber = newNumber - cells.length;
+                    } else {
+                        newNumber = newNumber + cells.length;
+                    }
+                }
             }
             return {...state, numberBuilt: newNumber};
         default:
@@ -50,8 +60,8 @@ function genericBuilding(state, action) {
 
 function normalBuilding(id) {
     return function (state = {numberBuilt: 0, effects: initialEffects[id]}, action) {
-        if (action.id === id) {
-            return genericBuilding(state, action);
+        if (action.id === id || action.type === LOG_ITEM_CONFIRM) {
+            return genericBuilding(state, action, id);
         }
 
         return state;
@@ -60,11 +70,11 @@ function normalBuilding(id) {
 
 function effortBuilding(id, affectedResource) {
     return function (state = {numberBuilt: 0, effects: initialEffects[id]}, action) {
-        if (action.id === id) {
+        if (action.id === id || action.type === LOG_ITEM_CONFIRM) {
             if (action.type === SET_EFFORT) {
                 return {...state, effects: {...state.effects, [affectedResource]: {...state.effects[affectedResource], income: action.effort}}};
             } else {
-                return genericBuilding(state, action);
+                return genericBuilding(state, action, id);
             }
         }
 

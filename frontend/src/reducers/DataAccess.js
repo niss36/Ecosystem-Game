@@ -1,5 +1,5 @@
 // import {HERBIVORE, CARNIVORE} from "../definitions/AnimalTypes";
-import {NEXT_TURN, END_BUY_BUILDING,START_REMOVE_BUILDING ,  LOG_ITEM_SELECT, LOG_ITEM_CONFIRM} from "../actions";
+import {NEXT_TURN, END_BUY_BUILDING, END_REMOVE_BUILDING,  LOG_ITEM_SELECT, LOG_ITEM_CONFIRM} from "../actions";
 import {ABUNDANCE_DENSITY_CARNIVORE, BIOMASS_DENSITY_CARNIVORE, ABUNDANCE_DENSITY_HERBIVORE, BIOMASS_DENSITY_HERBIVORE, TROPHIC_EVENNESS, REALM, MEAN_TROPHIC_LEVEL, MIN_TROPHIC_INDEX, MAX_TROPHIC_INDEX, MAX_BODYMASS,
     HANPP, FUNCTIONAL_RICHNESS, FRACTION_YEAR_FROST, BIOMASS_RICHNESS, BIOMASS_EVENNESS} from "../definitions/DataTypes";
 import {combineReducers} from "redux";
@@ -55,25 +55,16 @@ export function commitChange(state = initialStores, action){
         switch(action.type){
             case END_BUY_BUILDING:// THIS MIGHT BE WRONG TODO THIS IS PROB WRONG AND THE START REMOVE BUILDING
                 let newLog1 = [...state.storedChanges];
-                newLog1.push({buildingType: action.id, changedCells: action.cells, changeValue: action.changeValue});
+                newLog1.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Buy'});
                 return {...state, storedChanges: newLog1};
-
-            case START_REMOVE_BUILDING:
+            case END_REMOVE_BUILDING:
                 let newLog = [...state.storedChanges];
-                let index = 0;
-                for(let i = newLog.length - 1; i >= 0; i--){
-                    if(index === 0){
-                        if (newLog[i].buildingType === action.id){
-                            index = i;
-                        }
-                    }
-                }
-                newLog = newLog.slice(0, index).concat(newLog.slice(index + 1, newLog.length));
+                newLog.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Sell'});
                 return {...state, storedChanges: newLog};
             case LOG_ITEM_SELECT:
                 let selectedDel = [];
                 for(let i = action.index; i < state.storedChanges.length; i++){
-                    selectedDel.push(state.storedChanges[i].buildingType)
+                    selectedDel.push({buildingType: state.storedChanges[i].buildingType, actionType: state.storedChanges[i].actionType, selectedCells: state.storedChanges[i].selectedCells})
                 }
                 return {...state, selectedLogIndex: {index: action.index, selectedDel: selectedDel}};
             case LOG_ITEM_CONFIRM:

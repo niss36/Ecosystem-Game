@@ -17,10 +17,10 @@ export function logItemSelect(index){
     }
 }
 
-export function logItemConfirm(index, selectedItems){
+export function logItemConfirm(index, selectedDel){
     return{
         type: LOG_ITEM_CONFIRM,
-        selectedItems: selectedItems,
+        selectedDel: selectedDel,
         index: index,
     }
 }

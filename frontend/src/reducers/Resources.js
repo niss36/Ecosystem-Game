@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 
-import {END_BUY_BUILDING, START_REMOVE_BUILDING, NEXT_TURN} from "../actions";
+import {END_BUY_BUILDING, START_REMOVE_BUILDING, NEXT_TURN, LOG_ITEM_CONFIRM} from "../actions";
 
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -23,7 +23,25 @@ function normalResource(id) {
                 }
 
                 return state;
-
+            case LOG_ITEM_CONFIRM:
+                let final = 0;
+                for(let i = action.selectedDel.length - 1; i >= 0; i--){
+                    let actionType = action.selectedDel[i].actionType;
+                    let buildingType = action.selectedDel[i].buildingType;
+                    if(actionType === 'Buy'){
+                        const sellValue = buildings[buildingType].costs[id];
+                        if(sellValue){
+                            final = final + sellValue;
+                        }
+                    }
+                    else{
+                        const cost = buildings[buildingType].costs[id];
+                        if(cost){
+                            final = final - cost;
+                        }
+                    }
+                }
+                return {...state, amount: state.amount + final};
             default:
                 return state;
         }

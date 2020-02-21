@@ -3,7 +3,7 @@ import {
     CELL_MOUSE_ENTER,
     CELL_MOUSE_CLICK,
     NEXT_TURN,
-    START_BUY_BUILDING, START_REMOVE_BUILDING, END_REMOVE_BUILDING,
+    START_BUY_BUILDING, START_REMOVE_BUILDING, END_REMOVE_BUILDING, LOG_ITEM_CONFIRM,
     // endBuyBuilding
 } from "../actions";
 
@@ -117,7 +117,25 @@ export function map(state = initialState, action) {
             }
 
             return state;
-
+        case LOG_ITEM_CONFIRM:
+            const nextCells = [...state.cells];
+            for(let i = action.selectedDel.length - 1; i >= 0; i--) {
+                let changeCells = action.selectedDel[i].selectedCells;
+                let buildingType = action.selectedDel[i].buildingType;
+                let actionType = action.selectedDel[i].actionType;
+                if(actionType === 'Sell') {
+                    for (const x of changeCells) {
+                        nextCells[x] = buildingType;
+                    }
+                }
+                else{
+                    for (const x of changeCells) {
+                        nextCells[x] = undefined;
+                    }
+                }
+            }
+            const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
+            return {...state, selection: nextSelection, cells: nextCells};
         default:
             return state;
         }
