@@ -27,7 +27,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         onMouseEnter: () => dispatch(cellMouseEnter(ownProps.i)),
-        onMouseClick: () => {dispatch(cellMouseClick(ownProps.i));},
+        onMouseClick: () => dispatch(cellMouseClick(ownProps.i)),
     }
 }
 

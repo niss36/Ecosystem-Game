@@ -100,6 +100,7 @@ export default function(state = {}, action) {
  *     map: {
  *         selection: {
  *             mode: string,
+ *             building: string,
  *             cells: [number],
  *         },
  *         island: [number],

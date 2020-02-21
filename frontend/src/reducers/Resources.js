@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 
-import {END_BUY_BUILDING, START_REMOVE_BUILDING, NEXT_TURN, LOG_ITEM_CONFIRM} from "../actions";
+import {END_BUY_BUILDING, END_REMOVE_BUILDING, NEXT_TURN, LOG_ITEM_CONFIRM} from "../actions";
 
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -11,15 +11,15 @@ function normalResource(id) {
             case END_BUY_BUILDING:
                 const cost = buildings[action.id].costs[id];
                 if (cost) {
-                    return {...state, amount: state.amount - cost};
+                    return {...state, amount: state.amount - cost}; /*TODO should we multiply cost by number actually built?*/
                 }
 
                 return state;
-            case START_REMOVE_BUILDING:
+            case END_REMOVE_BUILDING:
                 const sellValue = buildings[action.id].costs[id];
                 // TODO decide what portion of the original value to refund
                 if (sellValue) {
-                    return {...state, amount: state.amount + sellValue};
+                    return {...state, amount: state.amount + sellValue}; /*TODO same as cost; multiply by number removed?*/
                 }
 
                 return state;

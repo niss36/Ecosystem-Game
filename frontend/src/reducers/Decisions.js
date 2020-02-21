@@ -1,14 +1,7 @@
 import {combineReducers} from 'redux';
 
-import {
-    END_BUY_BUILDING,
-    LOG_ITEM_CONFIRM,
-    START_REMOVE_BUILDING,
-    SET_EFFORT,
-    START_BUY_BUILDING,
-    endRemoveBuilding,
-    END_REMOVE_BUILDING
-} from "../actions";
+import {END_BUY_BUILDING, END_REMOVE_BUILDING, SET_EFFORT, LOG_ITEM_CONFIRM} from "../actions";
+
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../definitions/Buildings";
 import {FOOD, WOOD} from "../definitions/Resources";
 
