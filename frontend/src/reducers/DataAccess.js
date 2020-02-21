@@ -30,7 +30,7 @@ const initialStores = {
         [BIOMASS_EVENNESS]:     [],
     },
     storedChanges: [],
-    selectedLogIndex: "undefined",
+    selectedLogIndex: {index: "undefined", selectedDel: []}
 };
 
 
@@ -72,7 +72,7 @@ export function commitChange(state = initialStores, action){
                 for(let i = action.index; i < state.storedChanges.length; i++){
                     newChanges.pop();
                 }
-                return {...state, storedChanges: newChanges, selectedLogIndex: "undefined"};
+                return {...state, storedChanges: newChanges, selectedLogIndex: {index: "undefined", selectedDel: []}};
             default:
                 return state;
         }

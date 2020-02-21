@@ -29,23 +29,6 @@ function genericBuilding(state, action, id) {
             return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
         case END_BUY_BUILDING:
             return {...state, numberBuilt: state.numberBuilt +action.selectedCells.length};// TODO CHANGE TO BE NUMBER MADE
-        case LOG_ITEM_CONFIRM:
-            let newNumber = state.numberBuilt;
-            for(let i = action.selectedDel.length - 1; i >= 0; i--){
-                let currAction = action.selectedDel[i];
-                console.log(id);
-                console.log(currAction.buildingType);
-                if(id === currAction.buildingType) {
-                    let actionType = currAction.actionType;
-                    let cells = currAction.selectedCells;
-                    if (actionType === 'Buy') {
-                        newNumber = newNumber - cells.length;
-                    } else {
-                        newNumber = newNumber + cells.length;
-                    }
-                }
-            }
-            return {...state, numberBuilt: newNumber};
         default:
             return state;
     }

@@ -68,21 +68,33 @@ export function map(state = initialState, action) {
         }
 
         case END_BUY_BUILDING: {
-            const nextCells = [...state.cells];
-            for (const x of state.selection.cells) {
-                nextCells[x] = state.selection.building;
+                const nextCells = [...state.cells];
+            if (action.isLog === undefined) {
+                for (const x of state.selection.cells) {
+                    nextCells[x] = state.selection.building;
+                }
             }
-
+            else{
+                for (const x of action.selectedCells){
+                    nextCells[x] = action.id;
+                }
+            }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, cells: nextCells};
         }
 
         case END_REMOVE_BUILDING: {
             const nextCells = [...state.cells];
-            for (const x of state.selection.cells) {
-                nextCells[x] = undefined;
+            if (action.isLog === undefined) {
+                for (const x of state.selection.cells) {
+                    nextCells[x] = undefined;
+                }
             }
-
+            else{
+                for (const x of action.selectedCells){
+                    nextCells[x] = undefined;
+                }
+            }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, cells: nextCells};
         }
@@ -113,25 +125,6 @@ export function map(state = initialState, action) {
             }
 
             return state;
-        case LOG_ITEM_CONFIRM:
-            const nextCells = [...state.cells];
-            for(let i = action.selectedDel.length - 1; i >= 0; i--) {
-                let changeCells = action.selectedDel[i].selectedCells;
-                let buildingType = action.selectedDel[i].buildingType;
-                let actionType = action.selectedDel[i].actionType;
-                if(actionType === 'Sell') {
-                    for (const x of changeCells) {
-                        nextCells[x] = buildingType;
-                    }
-                }
-                else{
-                    for (const x of changeCells) {
-                        nextCells[x] = undefined;
-                    }
-                }
-            }
-            const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, cells: nextCells};
         default:
             return state;
         }

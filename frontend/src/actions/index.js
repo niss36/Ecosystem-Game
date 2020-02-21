@@ -17,19 +17,32 @@ export function logItemSelect(index){
     }
 }
 
-export function logItemConfirm(index, selectedDel){
-    return{
-        type: LOG_ITEM_CONFIRM,
-        selectedDel: selectedDel,
-        index: index,
-    }
+export function logItemConfirm(index, selectedDel, dispatch){
+
+    return () => {
+        if(selectedDel !== undefined) {
+            for (let x = selectedDel.length - 1; x >= 0; x--) {
+                if (selectedDel[x].actionType === 'Buy') {
+                    dispatch(endRemoveBuilding(selectedDel[x].buildingType, selectedDel[x].selectedCells, true))
+                } else {
+                    dispatch(endBuyBuilding(selectedDel[x].buildingType, selectedDel[x].selectedCells, true))
+                }
+            }
+        }
+        dispatch({
+            type: LOG_ITEM_CONFIRM,
+            selectedDel: selectedDel,
+            index: index,
+        })
+    };
 }
 
-export function endBuyBuilding(id,selectedCells) {
+export function endBuyBuilding(id,selectedCells, isLog) {
     return {
         type: END_BUY_BUILDING,
         id: id,
         selectedCells: selectedCells,
+        isLog: isLog
     }
 }
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
@@ -41,11 +54,12 @@ export function startBuyBuilding(id) {
     }
 }
 
-export function endRemoveBuilding(id,selectedCells) {
+export function endRemoveBuilding(id,selectedCells, isLog) {
     return {
         type: END_REMOVE_BUILDING,
         id: id,
         selectedCells: selectedCells,
+        isLog: isLog,
     }
 }
 

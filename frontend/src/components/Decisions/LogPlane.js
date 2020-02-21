@@ -50,7 +50,7 @@ function makeLogPlane({...props}){
 const mapStateToLogProps = (state, ownProps) => {
     return {
         ...state.data,
-        canConfirm : canConfirmLog(state.data.commitChange.selectedLogIndex),
+        canConfirm : canConfirmLog(state.data.commitChange.selectedLogIndex.index),
         selectedIndex: state.data.commitChange.selectedLogIndex.index,
     };
 };
@@ -58,7 +58,7 @@ const mapStateToLogProps = (state, ownProps) => {
 const mapDispatchToLogProps = (dispatch, ownProps) => {
     return {
         onLogSelect: (index) => function(){ dispatch(logItemSelect(index));},
-        onLogConfirm: (selectedItem) => function(){ dispatch(logItemConfirm(selectedItem.index, [...selectedItem.selectedDel]))},
+        onLogConfirm: (selectedItem) => (logItemConfirm(selectedItem.index, [...selectedItem.selectedDel], dispatch)),
     }
 };
 
@@ -67,8 +67,8 @@ const ConnectedLogList = connect(
     mapDispatchToLogProps,
 )(makeLogPlane);
 
-function canConfirmLog(state){
-    return (state === "undefined");
+function canConfirmLog(indexState){
+    return (indexState === "undefined");
 }
 
 class LogPlane extends React.Component {
