@@ -1,5 +1,5 @@
 // import {HERBIVORE, CARNIVORE} from "../definitions/AnimalTypes";
-import {NEXT_TURN,END_BUY_BUILDING, START_REMOVE_BUILDING} from "../actions";
+import {NEXT_TURN, END_BUY_BUILDING,START_REMOVE_BUILDING ,  LOG_ITEM_SELECT, LOG_ITEM_CONFIRM} from "../actions";
 import {ABUNDANCE_DENSITY_CARNIVORE, BIOMASS_DENSITY_CARNIVORE, ABUNDANCE_DENSITY_HERBIVORE, BIOMASS_DENSITY_HERBIVORE, TROPHIC_EVENNESS, REALM, MEAN_TROPHIC_LEVEL, MIN_TROPHIC_INDEX, MAX_TROPHIC_INDEX, MAX_BODYMASS,
     HANPP, FUNCTIONAL_RICHNESS, FRACTION_YEAR_FROST, BIOMASS_RICHNESS, BIOMASS_EVENNESS} from "../definitions/DataTypes";
 import {combineReducers} from "redux";
@@ -30,6 +30,7 @@ const initialStores = {
         [BIOMASS_EVENNESS]:     [],
     },
     storedChanges: [],
+    selectedLogIndex: "undefined",
 };
 
 
@@ -69,6 +70,18 @@ export function commitChange(state = initialStores, action){
                 }
                 newLog = newLog.slice(0, index).concat(newLog.slice(index + 1, newLog.length));
                 return {...state, storedChanges: newLog};
+            case LOG_ITEM_SELECT:
+                let selectedDel = [];
+                for(let i = action.index; i < state.storedChanges.length; i++){
+                    selectedDel.push(state.storedChanges[i].buildingType)
+                }
+                return {...state, selectedLogIndex: {index: action.index, selectedDel: selectedDel}};
+            case LOG_ITEM_CONFIRM:
+                let newChanges = [...state.storedChanges];
+                for(let i = action.index; i < state.storedChanges.length; i++){
+                    newChanges.pop();
+                }
+                return {...state, storedChanges: newChanges, selectedLogIndex: "undefined"};
             default:
                 return state;
         }
