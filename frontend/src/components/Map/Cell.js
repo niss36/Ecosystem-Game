@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./Cell.css";
 
-export default class Cell extends React.Component {
+class Cell extends React.Component {
 
     render() {
         const {i, land, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
@@ -31,3 +32,16 @@ export default class Cell extends React.Component {
         );
     }
 }
+
+Cell.propTypes = {
+    i: PropTypes.number,
+    land: PropTypes.bool,
+    mode: PropTypes.string,
+    building: PropTypes.string,
+    selected: PropTypes.bool,
+    cellData: PropTypes.string,
+    onMouseEnter: PropTypes.func,
+    onMouseClick: PropTypes.func
+};
+
+export default Cell;
