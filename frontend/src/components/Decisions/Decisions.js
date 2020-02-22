@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {setEffort, nextTurn, startBuyBuilding,startRemoveBuilding, logItemSelect, logItemConfirm} from "../../actions";
+import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes} from "../../actions";
 
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
@@ -15,9 +15,6 @@ import TabsPane from "../util/TabsPane";
 import BuildingPane from "./BuildingPane";
 
 import "./Decisions.css";
-import {ListItemText} from "@material-ui/core";
-import {ListItem} from "@material-ui/core";
-import {List} from "@material-ui/core";
 
 import LogPlane from "./LogPlane";
 
@@ -74,6 +71,22 @@ function MakeEffortBuildingPane({id}) {
     return (<ConnectedEffortBuildingPane id={id}/>);
 }
 
+function TaxesPane(props) {
+    return (
+        <div>
+            <div style={{textAlign: "center"}} id="taxes-effort-slider">
+                Taxes
+            </div>
+            <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
+        </div>
+    );
+}
+
+const ConnectedTaxesPane = connect(
+    state => ({taxes: state.resources.taxes}),
+    dispatch => ({setTaxes: (e, v) => dispatch(setTaxes(v))})
+)(TaxesPane);
+
 const NextTurn = connect()(({dispatch}) => (
     <Button
         className="Decisions-nextTurn"
@@ -122,12 +135,7 @@ class Decisions extends React.Component {
 
                     {/*Population*/}
                     <div>
-                        <div>
-                            <div style={{textAlign: "center"}}>
-                                Tax
-                            </div>
-                            <Slider value={100}/> {/*TODO state*/}
-                        </div>
+                        <ConnectedTaxesPane/>
                         <ul>
                             <li>
                                 Taxes
