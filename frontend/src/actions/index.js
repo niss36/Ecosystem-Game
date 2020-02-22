@@ -8,6 +8,7 @@ export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
 export const END_BUY_BUILDING = "END_BUY_BUILDING";
 export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
 export const SET_EFFORT = "SET_EFFORT";
+export const SET_TAXES = "SET_TAXES";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
@@ -61,6 +62,13 @@ export function setEffort(id, effort) {
         type: SET_EFFORT,
         id: id,
         effort: effort,
+    }
+}
+
+export function setTaxes(taxes) {
+    return {
+        type: SET_TAXES,
+        taxes: taxes,
     }
 }
 

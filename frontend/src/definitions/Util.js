@@ -1,4 +1,5 @@
 import buildings from "./Buildings";
+import {POPULATION, MONEY} from "./Resources";
 import {SIZE} from "./Map";
 
 export function getIncome(resourceId, state) {
@@ -19,7 +20,17 @@ export function getIncome(resourceId, state) {
         }
     }
 
+    if (resourceId === MONEY) {
+        const taxIncome = computeTaxIncome(state);
+        breakdown["taxes"] = taxIncome;
+        total += taxIncome;
+    }
+
     return {total, breakdown};
+}
+
+export function computeTaxIncome(state) {
+    return state.resources.taxes * state.resources[POPULATION].amount; // TODO
 }
 
 export function canBuy(buildingId, state) {

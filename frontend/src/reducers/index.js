@@ -96,6 +96,7 @@ export default function(state = {}, action) {
  *     resources: {
  *         [POPULATION]: {amount: number, max: number},
  *         [<resource>]: {amount: number},
+ *         taxes: number,
  *     },
  *     map: {
  *         selection: {

@@ -84,7 +84,7 @@ export function ResourcePane({id, amount, income}) {
     return (
         <GenericResourcePane id={id} value={value}>
             {
-                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{buildings[id].name}: +{v}/month</div>)
+                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id === "taxes" ? "Taxes" : buildings[id].name}: +{v}/month</div>)
             }
         </GenericResourcePane>
     );
