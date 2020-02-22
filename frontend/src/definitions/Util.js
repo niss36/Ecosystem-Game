@@ -33,6 +33,20 @@ export function canBuy(buildingId, state) {
     return true;
 }
 
+export function numCanBuy(buildingId, state) {
+    const costs = buildings[buildingId].costs;
+
+    let max = Infinity;
+
+    for (const [resource, cost] of Object.entries(costs)) {
+        const num = Math.floor(state.resources[resource].amount / cost);
+        if (num < max)
+            max = num;
+    }
+
+    return max;
+}
+
 export function getSelection(i, building) {
     const [row, col] = [Math.floor(i / SIZE), i % SIZE];
 

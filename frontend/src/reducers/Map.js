@@ -10,7 +10,7 @@ import {
 import buildings from "../definitions/Buildings";
 import {LAND, SIZE} from "../definitions/Map";
 
-import {getSelection} from "../definitions/Util";
+import {getSelection, numCanBuy} from "../definitions/Util";
 
 function makeFilter(state) {
     // assert mode not undefined
@@ -119,7 +119,11 @@ export function map(state = initialState, action) {
 
         case CELL_MOUSE_ENTER:
             if (state.selection.mode) { // if not undefined
-                const selectedCells = getFilteredSelection(action.i, state);
+                let selectedCells = getFilteredSelection(action.i, state);
+                if (state.selection.mode === "add") { // Check how many we can buy.
+                    const num = numCanBuy(state.selection.building, action.state);
+                    selectedCells = selectedCells.slice(0, num);
+                }
 
                 return {...state, selection: {...state.selection, cells: selectedCells}};
             }

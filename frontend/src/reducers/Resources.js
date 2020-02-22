@@ -9,17 +9,17 @@ function normalResource(id) {
     return function (state = {amount: 1000}, action) {
         switch (action.type) {
             case END_BUY_BUILDING:
-                const cost = buildings[action.id].costs[id];
+                const cost = buildings[action.id].costs[id] * action.selectedCells.length;
                 if (cost) {
-                    return {...state, amount: state.amount - cost}; /*TODO should we multiply cost by number actually built?*/
+                    return {...state, amount: state.amount - cost};
                 }
 
                 return state;
             case END_REMOVE_BUILDING:
-                const sellValue = buildings[action.id].costs[id];
+                const sellValue = buildings[action.id].costs[id] * action.selectedCells.length;
                 // TODO decide what portion of the original value to refund
                 if (sellValue) {
-                    return {...state, amount: state.amount + sellValue}; /*TODO same as cost; multiply by number removed?*/
+                    return {...state, amount: state.amount + sellValue};
                 }
 
                 return state;
