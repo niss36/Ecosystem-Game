@@ -3,7 +3,8 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
-import {Decisions, EcosystemData, Map, Resources} from "./components";
+import {Decisions, EcosystemData, Map, Resources, CellInfo} from "./components";
+import {SIZE} from "./definitions/Map";
 
 import "./Game.css";
 
@@ -11,9 +12,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
-        let dataCells = new Array(16 * 16);
+        let dataCells = new Array(SIZE * SIZE);
 
-        let desiredChanges = new Array(16 * 16);
+        let desiredChanges = new Array(SIZE * SIZE);
 
         for(let i = 0; i < dataCells.length; i++){
             dataCells[i] = {};
@@ -82,7 +83,9 @@ class Game extends React.Component {
                             <EcosystemData/>
                         </Grid>
                     </Grid>
-                    <Grid item xs={2}/>{/*Cell info + maybe events?*/}
+                    <Grid item xs={2}>{/*Cell info + maybe events?*/}
+                        <CellInfo/>
+                    </Grid>
                 </Grid>
             </Container>
         );

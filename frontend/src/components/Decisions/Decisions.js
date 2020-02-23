@@ -101,14 +101,6 @@ const NextTurn = connect()(({dispatch}) => (
 
 class Decisions extends React.Component {
 
-    objectPlaceholder = {
-        icon: 'unknown.svg',
-        income: 0,
-        cost: 100,
-        killRate: 10,
-        cellNo: 0
-    };
-
     render() {
         const tabs = ["Food", "Forestry", "Population", "Log"];
 
