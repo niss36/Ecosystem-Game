@@ -2,6 +2,22 @@ import buildings from "./Buildings";
 import {POPULATION, MONEY} from "./Resources";
 import {SIZE} from "./Map";
 
+export function getMaxPopulation(state) {
+    let max = 25;
+
+    for (const [building, buildingState] of Object.entries(state.buildings)) {
+
+        if (buildingState.numberBuilt) {
+            const effect = buildingState.effects[POPULATION];
+            if (effect && effect.max) {
+                max += buildingState.numberBuilt * effect.max;
+            }
+        }
+    }
+
+    return max;
+}
+
 export function getIncome(resourceId, state) {
     let total = 0;
 

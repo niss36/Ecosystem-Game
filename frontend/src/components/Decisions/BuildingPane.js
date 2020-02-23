@@ -26,7 +26,14 @@ class BuildingPane extends React.Component {
     makeEffect([id, effect]) {
         const {name, icon} = resources[id];
 
-        return (<div key={id}><img src={icon} alt="" height={25}/>{name}: {effect.income >= 0 && "+"}{effect.income}/month</div>);
+        let content;
+        if (effect.income) {
+            content = <>{name}: {effect.income >= 0 && "+"}{effect.income}/month</>;
+        } else if (effect.max) {
+            content = <>Max {name}: {effect.max}</>;
+        }
+
+        return (<div key={id}><img src={icon} alt="" height={25}/>{content}</div>);
     }
 
     render() {

@@ -29,7 +29,7 @@ function normalResource(id) {
     }
 }
 
-function population(state = {amount: 10, max: 25}, action) {
+function population(state = {amount: 10}, action) {
     switch (action.type) {
         case NEXT_TURN:
             // TODO determine how population should grow

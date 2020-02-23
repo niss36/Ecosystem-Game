@@ -89,12 +89,12 @@ export default function(state = {}, action) {
  *         [<building>]: {
  *             numberBuilt: number,
  *             effects: {
+ *                 [POPULATION]: {max: number},
  *                 [<resource>]: {income: number},
  *             },
  *         },
  *     },
  *     resources: {
- *         [POPULATION]: {amount: number, max: number},
  *         [<resource>]: {amount: number},
  *         taxes: number,
  *     },
