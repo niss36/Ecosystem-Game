@@ -87,7 +87,10 @@ class SettingsMenu extends React.Component {
     diffMethod(diff){
         this.props.setDifficulty(diff);
         this.swapCSS('block', 'none');
-        this.close();
+    }
+
+    overlayMethod(){
+
     }
 
     render() {
@@ -112,9 +115,9 @@ class SettingsMenu extends React.Component {
                     open={Boolean(this.state.anchor)}
                     onClose={this.close}
                 >
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Colour blind mode</MenuItem>
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Overlay</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod}>Overlay</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={() => {this.swapCSS('none', 'block')}}>Difficulty</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Close</MenuItem>
                     <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('easy')}}>Easy</MenuItem>
                     <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('medium')}}>Medium</MenuItem>
                     <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('hard')}}>Hard</MenuItem>
