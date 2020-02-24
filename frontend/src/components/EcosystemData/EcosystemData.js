@@ -9,6 +9,11 @@ import Button from "@material-ui/core/Button";
 import {green, lime, orange, red, yellow} from "@material-ui/core/colors";
 
 import {connect} from "react-redux";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {Radio} from "@material-ui/core";
 
 const CustomizedDot = (props) => {
     const {
@@ -63,22 +68,12 @@ class EcosystemData extends React.Component {
                     <div>
                         <Grid container>
                             <Grid item xs={3}>
-                                <div>
-                                    <Button
-                                        disabled={(this.state.currentPopTab === "pop")}
-                                        onClick={() => this.setState({currentPopTab: "pop"})}
-                                    >
-                                        Population
-                                    </Button>
-                                </div>
-                                <div>
-                                    <Button
-                                        disabled={(this.state.currentPopTab === "happiness")}
-                                        onClick={() => this.setState({currentPopTab: "happiness"})}
-                                    >
-                                        Happiness
-                                    </Button>
-                                </div>
+                                <FormControl component="fieldset" style={{padding: "10px"}}>
+                                    <RadioGroup defaultValue="pop" aria-label="resource" name="customized-radios" value={this.state.currentPopTab} onChange={(event) => this.setState({currentPopTab: event.target.value})}>
+                                        <FormControlLabel value="pop" control={<Radio/>} label="Population" />
+                                        <FormControlLabel value="happiness" control={<Radio/>} label="Happiness" />
+                                    </RadioGroup>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={9}>
                                 <ResponsiveContainer width="100%" height={400}>
