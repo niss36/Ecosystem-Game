@@ -46,6 +46,7 @@ const initialState = {
     cells: new Array(SIZE * SIZE),
     island:[],
     forest:[],
+    builtThisTurn: new Set(),
 };
 for (let x of initialState.land){
     initialState.landType[x] = LAND;
@@ -62,10 +63,10 @@ for (let x = 0; x < SIZE * SIZE; x ++){
 }
 export function map(state = initialState, action) {
     switch (action.type) {
-        /*case NEXT_TURN: {
+        case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, cells: []};
-        }*/
+            return {...state, selection: nextSelection, builtThisTurn: new Set()};
+        }
 
         case START_BUY_BUILDING: {
             let nextBuilding = action.id;
@@ -81,34 +82,40 @@ export function map(state = initialState, action) {
 
         case END_BUY_BUILDING: {
                 const nextCells = [...state.cells];
+                const nextBuiltThisTurn = new Set(state.builtThisTurn);
             if (action.isLog === undefined) {
                 for (const x of state.selection.cells) {
                     nextCells[x] = state.selection.building;
+                    nextBuiltThisTurn.add(x);
                 }
             }
             else{
                 for (const x of action.selectedCells){
                     nextCells[x] = action.id;
+                    nextBuiltThisTurn.add(x);
                 }
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, cells: nextCells};
+            return {...state, selection: nextSelection, cells: nextCells, builtThisTurn: nextBuiltThisTurn};
         }
 
         case END_REMOVE_BUILDING: {
             const nextCells = [...state.cells];
+            const nextBuiltThisTurn = new Set(state.builtThisTurn);
             if (action.isLog === undefined) {
                 for (const x of state.selection.cells) {
                     nextCells[x] = undefined;
+                    nextBuiltThisTurn.delete(x);
                 }
             }
             else{
                 for (const x of action.selectedCells){
                     nextCells[x] = undefined;
+                    nextBuiltThisTurn.delete(x);
                 }
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, cells: nextCells};
+            return {...state, selection: nextSelection, cells: nextCells, builtThisTurn: nextBuiltThisTurn};
         }
 
         /*case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE

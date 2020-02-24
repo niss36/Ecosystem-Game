@@ -49,12 +49,24 @@ export function endBuyBuilding(id,selectedCells, isLog) {
 }
 
 export function endRemoveBuilding(id,selectedCells, isLog) {
-    return {
-        type: END_REMOVE_BUILDING,
-        id: id,
-        selectedCells: selectedCells,
-        isLog: isLog,
-    }
+    return (dispatch, getState) => {
+        const state = getState();
+
+        let builtThisTurn = 0;
+        for (const cell of selectedCells) {
+            if (state.map.builtThisTurn.has(cell)) {
+                builtThisTurn++;
+            }
+        }
+
+        dispatch({
+            type: END_REMOVE_BUILDING,
+            id: id,
+            selectedCells: selectedCells,
+            builtThisTurn: builtThisTurn,
+            isLog: isLog,
+        });
+    };
 }
 
 export function setEffort(id, effort) {
