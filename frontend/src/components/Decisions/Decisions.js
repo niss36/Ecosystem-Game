@@ -95,7 +95,9 @@ function RationingPane(props) {
             <div style={{textAlign: "center"}} id="rationing-effort-slider">
                 Rationing
             </div>
+            <div style={{padding: "0px 20px"}}>
             <Slider value={props.rationing} onChange={props.setRationing} aria-labelledby="rationing-effort-slider"/>
+            </div>
         </div>
     );
 }
@@ -146,9 +148,9 @@ class Decisions extends React.Component {
                     {/*Population*/}
                     <div>
                         <MakeBuildingPane id={SETTLEMENT}/>
-                        <ConnectedTaxesPane/>
-                        <ul>
+                        <ul className={"sliderPanel"}>
                             <li>
+                                <ConnectedTaxesPane/>
                                 Taxes
                                 <ul>
                                     <li>Main source of money</li>
@@ -156,9 +158,9 @@ class Decisions extends React.Component {
                                 </ul>
                             </li>
                         </ul>
-                        <ConnectedRationingPane/>
-                        <ul>
+                        <ul className={"sliderPanel"}>
                             <li>
+                                <ConnectedRationingPane/>
                                 Rationing
                                 <ul>
                                     <li>Balance food consumption for happiness</li>
