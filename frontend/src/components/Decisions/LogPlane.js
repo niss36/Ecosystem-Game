@@ -15,17 +15,27 @@ function MakeLog(list, onLogClick, selectedIndex){
         if(i === selectedIndex) {
             array[i] = (
                 <ListItem button key={index} id={id} cells={cells} changevalue={changeValue} selected={true}>
-                    <ListItemText onClick={onLogClick(index)}
-                                  primary={'Change Number: ' + (index + 1) + '; Action Type: ' + actionType + '; Building: ' + id + '; Located Cells: ' + cells + '; Effort: ' + changeValue + ";"}/>
-                </ListItem>
+                    <ul onClick={onLogClick(index)} type="square">
+                        <li>{'Change Number: ' + (index + 1)}</li>
+                        <li>{'Action Type: ' + actionType}</li>
+                        <li>{'Building: ' + id}</li>
+                        <li>{'Located Cells: ' + cells}</li>
+                        <li>{' Effort: ' + changeValue}</li>
+                    </ul>
+                    </ListItem>
             )
         }
         else{
             array[i] = (
                 <ListItem button key={index} id={id} cells={cells} changevalue={changeValue}>
-                    <ListItemText onClick={onLogClick(index)}
-                                  primary={'Change Number: ' + (index + 1) + '; Action Type: ' + actionType + '; Building: ' + id + '; Located Cells: ' + cells + '; Effort: ' + changeValue + ";"}/>
-                </ListItem>
+                    <ul onClick={onLogClick(index)} type="square">
+                        <li>{'Change Number: ' + (index + 1)}</li>
+                        <li>{'Action Type: ' + actionType}</li>
+                        <li>{'Building: ' + id}</li>
+                        <li>{'Located Cells: ' + cells}</li>
+                        <li>{' Effort: ' + changeValue}</li>
+                    </ul>
+                    </ListItem>
             )
         }
     }
