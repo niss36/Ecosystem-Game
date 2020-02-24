@@ -44,14 +44,29 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
         </ConnectedBuildingPane>
     );
 }
-
+const marks = [
+    {
+        value: 50,
+        label: 'SMALL',
+    },
+    {
+        value: 100,
+        label: 'MEDIUM',
+    },
+    {
+        value: 150,
+        label: 'LARGE',
+    },
+];
 function EffortBuildingPane({id, ...props}) {
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
                 Effort- Change this to size!
             </div>
-            <Slider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
+            <Slider defaultValue={100} marks={marks} min={50} max={150} step={null} valueLabelDisplay="auto"
+
+                    value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
         </BuildingPane>
     );
 }
@@ -77,7 +92,7 @@ function TaxesPane(props) {
             <div style={{textAlign: "center"}} id="taxes-effort-slider">
                 Taxes
             </div>
-            <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
+            <Slider value={props.taxes} onChange={props.setTaxes}  aria-labelledby="taxes-effort-slider"/>
         </div>
     );
 }
