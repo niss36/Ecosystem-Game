@@ -19,9 +19,9 @@ class CellInfo extends React.Component {
                     <span>Cell Number {this.props.cellNo}</span>
                 </div>
                 <div className={"CellInfo-contents"}>
-                    {this.props.cellContents}
+                    {this.props.cellType}
                     <br/>
-                    Land? {this.props.cellType}
+                    {this.props.cellContents}
                 </div>
             </div>);
     }

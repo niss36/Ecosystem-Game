@@ -77,7 +77,7 @@ function TaxesPane(props) {
             <div style={{textAlign: "center"}} id="taxes-effort-slider">
                 Taxes
             </div>
-            <div style={{padding: "0px 20px"}}>
+            <div>
                 <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
             </div>
         </div>
@@ -95,7 +95,7 @@ function RationingPane(props) {
             <div style={{textAlign: "center"}} id="rationing-effort-slider">
                 Rationing
             </div>
-            <div style={{padding: "0px 20px"}}>
+            <div>
             <Slider value={props.rationing} onChange={props.setRationing} aria-labelledby="rationing-effort-slider"/>
             </div>
         </div>
@@ -149,8 +149,8 @@ class Decisions extends React.Component {
                     <div>
                         <MakeBuildingPane id={SETTLEMENT}/>
                         <ul className={"sliderPanel"}>
+                            <ConnectedTaxesPane/>
                             <li>
-                                <ConnectedTaxesPane/>
                                 Taxes
                                 <ul>
                                     <li>Main source of money</li>
@@ -159,8 +159,8 @@ class Decisions extends React.Component {
                             </li>
                         </ul>
                         <ul className={"sliderPanel"}>
+                            <ConnectedRationingPane/>
                             <li>
-                                <ConnectedRationingPane/>
                                 Rationing
                                 <ul>
                                     <li>Balance food consumption for happiness</li>
