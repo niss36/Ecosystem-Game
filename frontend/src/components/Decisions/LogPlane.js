@@ -1,5 +1,5 @@
 import React from "react";
-import {List, ListItem, ListItemText} from "@material-ui/core";
+import {List, ListItem} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {logItemConfirm, logItemSelect} from "../../actions";
 import {connect} from "react-redux";
@@ -62,9 +62,9 @@ function makeLogPlane({...props}){
 
 const mapStateToLogProps = (state, ownProps) => {
     return {
-        ...state.data,
-        canConfirm : canConfirmLog(state.data.commitChange.selectedLogIndex.index),
-        selectedIndex: state.data.commitChange.selectedLogIndex.index,
+        ...state.logStorage,
+        canConfirm : canConfirmLog(state.logStorage.commitChange.selectedLogIndex.index),
+        selectedIndex: state.logStorage.commitChange.selectedLogIndex.index,
     };
 };
 
