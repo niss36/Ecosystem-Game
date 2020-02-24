@@ -44,8 +44,7 @@ export function getIncome(resourceId, state) {
 
     if (resourceId === FOOD) {
         const foodEaten = computeFoodEaten(state);
-        //TODO: add food consumption to breakdown
-        //breakdown["eating"] = foodEaten;
+        breakdown["consumption"] = -foodEaten;
         total -= foodEaten;
     }
 
