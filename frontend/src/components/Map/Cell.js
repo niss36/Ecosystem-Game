@@ -6,11 +6,14 @@ import "./Cell.css";
 class Cell extends React.Component {
 
     render() {
-        const {i, land, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
+        const {i, land,forest, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
 
         let classes = "Cell-root";
         if (land) {
             classes += " land";
+        }
+        if(forest){
+            classes +=" forest";
         }
 
         if (selected) {
@@ -36,6 +39,7 @@ class Cell extends React.Component {
 Cell.propTypes = {
     i: PropTypes.number,
     land: PropTypes.bool,
+    forest:PropTypes.bool,
     mode: PropTypes.string,
     building: PropTypes.string,
     selected: PropTypes.bool,
