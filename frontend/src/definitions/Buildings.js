@@ -1,5 +1,5 @@
 import {MONEY, WOOD} from "./Resources";
-import {LAND, SEA} from "./Map";
+import {LAND, SEA,FOREST} from "./Map";
 
 export const ANIMAL_FARM = "animalFarm";
 export const FISHING_BOAT = "fishingBoat";
@@ -46,7 +46,7 @@ export default {
     [CHEAP_LUMBER_MILL]: {
         name: "Cheap Lumber Mill",
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
-        requiredCellType: LAND,
+        requiredCellType: FOREST,
         selectionSize: 2,
         costs: {},
         affectedDataTypes: [],
@@ -54,7 +54,7 @@ export default {
     [EXPENSIVE_LUMBER_MILL]: {
         name: "Expensive Lumber mill",
         description: "Cuts down trees to produce wood sustainably.",
-        requiredCellType: LAND,
+        requiredCellType: FOREST,
         selectionSize: 2,
         costs: {},
         affectedDataTypes: [],

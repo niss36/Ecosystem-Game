@@ -21,6 +21,14 @@
     /*background-image: url("/icons/land.jpg");*/
     background-color: lightgreen;
 }
+
+.Cell-root.forest{
+    color: yellow;
+    background-color: #cff181;
+    background-image: url("/icons/forest.svg");
+    background-color: lightgreen;
+}
+
 .Cell-root.remove {
     color: blue;
     background-color: red;
@@ -44,4 +52,14 @@
 .Cell-root.settlement{
     color:red;
     background-image: url("/icons/cabin.svg");
+}
+
+.Cell-root.cheapLumberMill{
+    color: red;
+    background-image: url("/icons/stump.svg");
+}
+
+.Cell-root.expensiveLumberMill{
+    color:red;
+    background-image: url("/icons/sprout.svg");
 }
