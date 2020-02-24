@@ -4,8 +4,6 @@ import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
 import {logStorage} from "./LogStorage";
-
-import {data} from "./DataAccess";
 import {cellinfo} from "./CellInfo";
 import {NEXT_TURN} from "../actions";
 
