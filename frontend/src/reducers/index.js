@@ -18,7 +18,7 @@ function nextTurnReducer(state, action) {
         const nextResources = {...state.resources};
 
         //Happiness calculation:
-        //TODO: if happiness is less than 0, you lose...
+        //TODO: if happiness is 0, you lose...
         nextResources[HAPPINESS] = {...nextResources[HAPPINESS], amount: getHappiness(state).amount};
 
         //Basic resources increase
