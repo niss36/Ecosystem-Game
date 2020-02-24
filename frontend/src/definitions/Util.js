@@ -96,7 +96,6 @@ export function getHappiness(state) {
     }
 
     if (happiness <= 0) {
-        //TODO: game over?
         happiness = 0;
     }
 
