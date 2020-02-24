@@ -3,8 +3,8 @@ import {combineReducers} from "redux";
 import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
-import {data} from "./DataAccess";
-
+import {logStorage} from "./LogStorage";
+import {cellinfo} from "./CellInfo";
 import {NEXT_TURN} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -19,10 +19,20 @@ function nextTurnReducer(state, action) {
 
         for (const id of [MONEY, FOOD, WOOD]) {
             const income = getIncome(id, state).total;
-            const nextAmount = nextResources[id].amount + income;
+            let nextAmount = nextResources[id].amount + income;
+            if (id === FOOD && nextAmount < 0) {
+                nextAmount = 0;
+                //TODO: inform player that there is a food deficit, effect happiness based on food deficit amount
+                //maybe store the food change per turn in the state somewhere since it is needed for the happiness
+                //calculation and potentially the population growth calculation.
+            }
 
             nextResources[id] = {...nextResources[id], amount: nextAmount};
         }
+
+        //Population growth
+        //TODO: calculate population growth as a fucntion of food growth and/or other factors?
+        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
 
         return {...state, resources: nextResources};
     }
@@ -70,8 +80,9 @@ const mainReducer = combineReducers({
     buildings,
     resources,
     map,
-    data,
+    logStorage,
     graphData,
+    cellinfo,
 });
 
 export default function(state = {}, action) {

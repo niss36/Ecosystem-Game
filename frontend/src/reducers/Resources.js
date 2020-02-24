@@ -30,13 +30,7 @@ function normalResource(id) {
 }
 
 function population(state = {amount: 10}, action) {
-    switch (action.type) {
-        case NEXT_TURN:
-            // TODO determine how population should grow
-            return {...state, amount: state.amount + 1};
-        default:
-            return state;
-    }
+    return state;
 }
 
 function taxes(state = 30, action) {
