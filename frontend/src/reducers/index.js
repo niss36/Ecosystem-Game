@@ -23,10 +23,16 @@ function nextTurnReducer(state, action) {
             if (id === FOOD && nextAmount < 0) {
                 nextAmount = 0;
                 //TODO: inform player that there is a food deficit, effect happiness based on food deficit amount
+                //maybe store the food change per turn in the state somewhere since it is needed for the happiness
+                //calculation and potentially the population growth calculation.
             }
 
             nextResources[id] = {...nextResources[id], amount: nextAmount};
         }
+
+        //Population growth
+        //TODO: calculate population growth as a fucntion of food growth and/or other factors?
+        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
 
         return {...state, resources: nextResources};
     }

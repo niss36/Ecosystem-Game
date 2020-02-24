@@ -58,7 +58,7 @@ export function computeTaxIncome(state) {
 }
 
 export function computeFoodEaten(state) {
-    const foodEatenPerPop = 50;
+    const foodEatenPerPop = 25;
     return state.resources[POPULATION].amount * foodEatenPerPop;
 }
 
