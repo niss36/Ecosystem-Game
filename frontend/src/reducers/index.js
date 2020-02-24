@@ -3,7 +3,7 @@ import {combineReducers} from "redux";
 import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
-import {data} from "./LogStorage";
+import {logStorage} from "./LogStorage";
 
 import {NEXT_TURN} from "../actions";
 
@@ -70,7 +70,7 @@ const mainReducer = combineReducers({
     buildings,
     resources,
     map,
-    data,
+    logStorage,
     graphData,
 });
 
