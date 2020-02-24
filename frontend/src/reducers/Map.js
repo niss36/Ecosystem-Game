@@ -50,10 +50,10 @@ const initialState = {
 
 export function map(state = initialState, action) {
     switch (action.type) {
-        case NEXT_TURN: {
+        /*case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, cells: []};
-        }
+        }*/
 
         case START_BUY_BUILDING: {
             let nextBuilding = action.id;
@@ -99,7 +99,7 @@ export function map(state = initialState, action) {
             return {...state, selection: nextSelection, cells: nextCells};
         }
 
-        case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE
+        /*case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE
             // temp code to change map
             let nextIsland;
             if (!state.island.includes(action.i)) {
@@ -115,7 +115,7 @@ export function map(state = initialState, action) {
             log += "]";
             console.log(log);
 
-            return {...state, island: nextIsland};
+            return {...state, island: nextIsland};*/
 
         case CELL_MOUSE_ENTER:
             if (state.selection.mode) { // if not undefined

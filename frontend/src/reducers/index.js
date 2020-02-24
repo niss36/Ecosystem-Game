@@ -5,6 +5,8 @@ import {resources} from "./Resources";
 import {map} from "./Map";
 import {logStorage} from "./LogStorage";
 
+import {data} from "./DataAccess";
+import {cellinfo} from "./CellInfo";
 import {NEXT_TURN} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
@@ -82,6 +84,7 @@ const mainReducer = combineReducers({
     map,
     logStorage,
     graphData,
+    cellinfo,
 });
 
 export default function(state = {}, action) {
