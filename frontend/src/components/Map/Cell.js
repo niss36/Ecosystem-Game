@@ -2,18 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./Cell.css";
+import {FOREST, LAND, SEA} from "../../definitions/Map";
 
 class Cell extends React.Component {
 
     render() {
-        const {i, land,forest, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
+        const {i, landType, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
 
         let classes = "Cell-root";
-        if (land) {
+        if (landType === LAND) {
             classes += " land";
         }
-        if(forest){
-            classes +=" forest";
+        else if(landType === FOREST){
+            classes += " forest";
+        }
+        else if (landType === SEA){
+            classes += " sea";
         }
 
         if (selected) {
@@ -38,8 +42,7 @@ class Cell extends React.Component {
 
 Cell.propTypes = {
     i: PropTypes.number,
-    land: PropTypes.bool,
-    forest:PropTypes.bool,
+    landType: PropTypes.string,
     mode: PropTypes.string,
     building: PropTypes.string,
     selected: PropTypes.bool,
