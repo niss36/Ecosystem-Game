@@ -127,8 +127,7 @@ export function HappinessPane({id, amount, breakdown}) {
             <div>Taxes: {breakdown["tax"]}%</div>
             <div>Population Excess: {breakdown["population excess"]}%</div>
             <div>Food Deficit: {breakdown["food deficit"]}%</div>
-            {/*TODO: rationing*/}
-            <div>Rationing: 0%</div>
+            <div>Rationing: {breakdown["rationing"]}%</div>
         </GenericResourcePane>
     );
 }

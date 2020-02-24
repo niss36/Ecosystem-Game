@@ -9,6 +9,7 @@ export const END_BUY_BUILDING = "END_BUY_BUILDING";
 export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
 export const SET_EFFORT = "SET_EFFORT";
 export const SET_TAXES = "SET_TAXES";
+export const SET_RATIONING = "SET_RATIONING";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
@@ -69,6 +70,13 @@ export function setTaxes(taxes) {
     return {
         type: SET_TAXES,
         taxes: taxes,
+    }
+}
+
+export function setRationing(rationing) {
+    return {
+        type: SET_RATIONING,
+        rationing: rationing,
     }
 }
 
