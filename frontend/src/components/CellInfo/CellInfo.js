@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import "./CellInfo.css";
+import Buildings from "../../definitions/Buildings";
 
 class CellInfo extends React.Component {
 
@@ -21,7 +22,7 @@ class CellInfo extends React.Component {
                 <div className={"CellInfo-contents"}>
                     {this.props.cellType}
                     <br/>
-                    {this.props.cellContents}
+                    {this.props.cellContents && Buildings[this.props.cellContents].name}
                 </div>
             </div>);
     }
