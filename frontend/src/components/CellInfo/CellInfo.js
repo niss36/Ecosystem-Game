@@ -21,7 +21,7 @@ class CellInfo extends React.Component {
                 <div className={"CellInfo-contents"}>
                     {this.props.cellContents}
                     <br/>
-                    Land? {this.props.land}
+                    Land? {this.props.cellType}
                 </div>
             </div>);
     }
@@ -31,6 +31,6 @@ export default connect(
     state => ({display: state.cellinfo.display,
         cellNo: state.cellinfo.cellNo,
         cellContents: state.map.cells[state.cellinfo.cellNo],
-        land: state.map.island.includes(state.cellinfo.cellNo),
+        cellType: state.map.cellTypes[state.cellinfo.cellNo],
     }),
 )(CellInfo);
