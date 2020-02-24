@@ -19,7 +19,11 @@ function nextTurnReducer(state, action) {
 
         for (const id of [MONEY, FOOD, WOOD]) {
             const income = getIncome(id, state).total;
-            const nextAmount = nextResources[id].amount + income;
+            let nextAmount = nextResources[id].amount + income;
+            if (id === FOOD && nextAmount < 0) {
+                nextAmount = 0;
+                //TODO: inform player that there is a food deficit, effect happiness based on food deficit amount
+            }
 
             nextResources[id] = {...nextResources[id], amount: nextAmount};
         }
