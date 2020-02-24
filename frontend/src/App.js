@@ -17,7 +17,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            started: true,
+            started: false,
         }; // TODO use redux instead of state here
     }
 
