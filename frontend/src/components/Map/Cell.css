@@ -40,3 +40,8 @@
     color: red;
     background-image:url("/icons/barn.svg");
 }
+
+.Cell-root.settlement{
+    color:red;
+    background-image: url("/icons/cabin.svg");
+}
