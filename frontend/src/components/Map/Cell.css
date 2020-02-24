@@ -6,25 +6,26 @@
 
     margin: 0;
 
-    color: blue;
-    background-color: #64a5c1;
-    /*background-image: url("/icons/sea.jpg");*/
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+.Cell-root.sea {
+    color: blue;
+    background-color: #64a5c1;
+    /*background-image: url("/icons/sea.jpg");*/
+
+}
+
 .Cell-root.land {
     color: yellow;
-    background-color: #cff181;
     /*background-image: url("/icons/land.jpg");*/
     background-color: lightgreen;
 }
 
 .Cell-root.forest{
     color: yellow;
-    background-color: #cff181;
     background-image: url("/icons/forest.svg");
     background-color: lightgreen;
 }

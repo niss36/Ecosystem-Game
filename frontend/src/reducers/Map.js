@@ -8,7 +8,7 @@ import {
 
 
 import buildings from "../definitions/Buildings";
-import {FOREST, LAND, SIZE} from "../definitions/Map";
+import {FOREST, LAND, SEA, SIZE} from "../definitions/Map";
 
 import {getSelection, numCanBuy} from "../definitions/Util";
 
@@ -17,21 +17,14 @@ function makeFilter(state) {
 
     const {mode, building} = state.selection;
 
-    const requiresLand = buildings[building].requiredCellType === LAND;
-    const requiresForest = buildings[building].requiredCellType === FOREST;
-
-    // requiresLand iff cell i is land.
-    const doesLandMatch = i => requiresLand === state.island.includes(i);
-    const doesForestMstch= i=> requiresForest ===state.forest.includes(i);
+    const doesCellTypeMatch = i => buildings[building].requiredCellType === state.landType[i];
 
     switch (mode) {
         case "add":
-            return i => doesLandMatch(i) && !state.cells[i];
-            return i =>doesForestMstch(i) && !state.cells[i];
+            return i => doesCellTypeMatch(i) && !state.cells[i];
 
         case "remove":
-            return i => doesLandMatch(i) && state.cells[i] === building;
-            return i => doesForestMstch(i) && state.cells[i] === building;
+            return i => doesCellTypeMatch(i) && state.cells[i] === building;
     }
 }
 
@@ -48,14 +41,25 @@ function getFilteredSelection(i, state) {
 const initialState = {
     selection: {mode: undefined, building: undefined, cells: []},
     land: [210, 211, 231, 271, 251, 270, 269, 250, 230, 247, 229, 249, 209, 227, 189, 188, 190, 192, 228, 232, 191, 208, 212, 206, 252, 272, 246, 187, 245, 207, 226, 168, 170, 169, 171, 293, 292, 268, 266, 248, 290, 291, 287, 310, 307, 289, 306, 308, 267, 309, 286, 288, 311, 312, 233, 213, 173, 153, 174, 175, 176, 196, 217, 216, 236, 172, 152, 193, 154, 235, 197, 329, 330, 331, 326, 265, 305, 225, 186, 149, 151, 150, 131, 132, 304, 325, 166, 148, 108, 128, 110, 109, 130, 89, 88, 90, 129, 111, 107, 127, 87, 106, 86, 105, 125, 124, 165, 163, 185, 205, 224, 184, 164, 204, 69, 68, 63, 62, 82, 42, 34, 55, 36, 57, 56, 76, 54, 75, 195, 155, 156, 135, 134, 133, 112, 113, 92, 317, 316, 336, 356, 337, 335],
+    landType: new Array(SIZE * SIZE),
     // TODO maybe change data structure (eg with a set)
     cells: new Array(SIZE * SIZE),
     island:[],
     forest:[],
 };
-initialState.shuffled = initialState.land.sort(() => 0.5 - Math.random());
-initialState.forest= initialState.shuffled.slice(0,(initialState.land).length/3);
-initialState.island= initialState.shuffled.slice((initialState.land).length/3,initialState.land.length-1);
+for (let x of initialState.land){
+    initialState.landType[x] = LAND;
+}
+for (let x = 0; x < SIZE * SIZE; x ++){
+    if (initialState.landType[x] !== LAND){
+        initialState.landType[x] = SEA;
+    }
+    else{
+        if (Math.random() < 0.5){
+            initialState.landType[x] = FOREST;
+        }
+    }
+}
 export function map(state = initialState, action) {
     switch (action.type) {
         /*case NEXT_TURN: {

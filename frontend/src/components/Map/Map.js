@@ -16,8 +16,9 @@ import "./Map.css";
 
 function mapStateToProps(state, ownProps) {
     return {
-        land: state.map.island.includes(ownProps.i),
-        forest: state.map.forest.includes(ownProps.i),
+        landType: state.map.landType[ownProps.i],
+        /*land: state.map.island.includes(ownProps.i),
+        forest: state.map.forest.includes(ownProps.i),*/
         mode: state.map.selection.mode,
         building: state.map.selection.building,
         selected: state.map.selection.cells.includes(ownProps.i),

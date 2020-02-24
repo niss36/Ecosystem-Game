@@ -77,7 +77,9 @@ function TaxesPane(props) {
             <div style={{textAlign: "center"}} id="taxes-effort-slider">
                 Taxes
             </div>
-            <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
+            <div style={{padding: "0px 20px"}}>
+                <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
+            </div>
         </div>
     );
 }
