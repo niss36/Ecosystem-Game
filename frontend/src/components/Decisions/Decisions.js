@@ -58,7 +58,14 @@ const marks = [
         label: 'LARGE',
     },
 ];
+
 function EffortBuildingPane({id, ...props}) {
+    let carnivores = null;
+    let herbivores = null;
+    if (id === HUNTING_SHACK){
+        carnivores = <Slider step={1} />
+        herbivores = <Slider step={1} />
+    }
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
@@ -67,6 +74,8 @@ function EffortBuildingPane({id, ...props}) {
             <Slider defaultValue={100} marks={marks} min={50} max={150} step={null} valueLabelDisplay="auto"
 
                     value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
+            {carnivores && <>Carnivores {carnivores}</>}
+            {herbivores && <>Herbivores {herbivores}</>}
         </BuildingPane>
     );
 }

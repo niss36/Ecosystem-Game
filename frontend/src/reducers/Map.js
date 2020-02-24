@@ -65,13 +65,11 @@ export function map(state = initialState, action) {
 
         case START_BUY_BUILDING: {
             let nextBuilding = action.id;
-            console.log(nextBuilding);
             return {...state, selection: {...state.selection, mode: "add", building: nextBuilding, cells: []}};
         }
 
         case START_REMOVE_BUILDING: {
             let nextBuilding = action.id;
-            console.log(nextBuilding);
             return {...state, selection: {...state.selection, mode: "remove", building: nextBuilding, cells: []}};
         }
 
@@ -106,24 +104,6 @@ export function map(state = initialState, action) {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, cells: nextCells};
         }
-
-        /*case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE
-            // temp code to change map
-            let nextIsland;
-            if (!state.island.includes(action.i)) {
-                nextIsland = [...state.island, action.i];
-            } else {
-                nextIsland = state.island.filter(item => item !== action.i);
-            }
-
-            let log = "[";
-            for (const x of nextIsland) {
-                log += x + ",";
-            }
-            log += "]";
-            console.log(log);
-
-            return {...state, island: nextIsland};*/
 
         case CELL_MOUSE_ENTER:
             if (state.selection.mode) { // if not undefined
