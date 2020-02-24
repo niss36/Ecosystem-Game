@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes} from "../../actions";
+import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes, setRationing} from "../../actions";
 
 import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, SETTLEMENT} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
@@ -89,6 +89,22 @@ const ConnectedTaxesPane = connect(
     dispatch => ({setTaxes: (e, v) => dispatch(setTaxes(v))})
 )(TaxesPane);
 
+function RationingPane(props) {
+    return (
+        <div>
+            <div style={{textAlign: "center"}} id="rationing-effort-slider">
+                Rationing
+            </div>
+            <Slider value={props.rationing} onChange={props.setRationing} aria-labelledby="rationing-effort-slider"/>
+        </div>
+    );
+}
+
+const ConnectedRationingPane = connect(
+    state => ({rationing: state.resources.rationing}),
+    dispatch => ({setRationing: (e, v) => dispatch(setRationing(v))})
+)(RationingPane);
+
 const NextTurn = connect()(({dispatch}) => (
     <Button
         className="Decisions-nextTurn"
@@ -137,6 +153,15 @@ class Decisions extends React.Component {
                                 <ul>
                                     <li>Main source of money</li>
                                     <li>Slider: balance amount of tax and happiness</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ConnectedRationingPane/>
+                        <ul>
+                            <li>
+                                Rationing
+                                <ul>
+                                    <li>Balance food consumption for happiness</li>
                                 </ul>
                             </li>
                         </ul>

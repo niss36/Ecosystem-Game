@@ -74,7 +74,10 @@ export function getHappiness(state) {
     happiness += taxImpact;
 
     //rationing
-    //TODO
+    const rationing = state.resources.rationing;
+    const rationingImpact = rationing - 50;
+    breakdown["rationing"] = rationingImpact;
+    happiness += rationingImpact;
 
     //food deficit
     const foodGrowth = getIncome(FOOD, state).total;
@@ -97,8 +100,6 @@ export function getHappiness(state) {
         happiness = 0;
     }
 
-    console.log(breakdown);
-
     return {amount: happiness, breakdown};
 }
 
@@ -107,7 +108,9 @@ export function computeTaxIncome(state) {
 }
 
 export function computeFoodEaten(state) {
-    const foodEatenPerPop = 25;
+    //TODO: make food eaten actually proportional to food produced by hunters,
+    // requires more thought than I currently have the capacity for
+    const foodEatenPerPop = 25 + Math.floor(state.resources.rationing/4);
     return state.resources[POPULATION].amount * foodEatenPerPop;
 }
 
