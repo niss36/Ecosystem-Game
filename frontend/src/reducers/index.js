@@ -3,7 +3,7 @@ import {combineReducers} from "redux";
 import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
-import {data} from "./DataAccess";
+import {data} from "./LogStorage";
 
 import {NEXT_TURN} from "../actions";
 

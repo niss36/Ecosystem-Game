@@ -10,30 +10,27 @@ function MakeLog(list, onLogClick, selectedIndex){
         const index = i;
         const id = list[i].buildingType;
         const cells = list[i].selectedCells;
-        const changeValue = list[i].changeValue;
         const actionType = list[i].actionType;
         if(i === selectedIndex) {
             array[i] = (
-                <ListItem button key={index} id={id} cells={cells} changevalue={changeValue} selected={true}>
+                <ListItem button selected={true}>
                     <ul onClick={onLogClick(index)} type="square">
-                        <li>{'Change Number: ' + (index + 1)}</li>
-                        <li>{'Action Type: ' + actionType}</li>
-                        <li>{'Building: ' + id}</li>
-                        <li>{'Located Cells: ' + cells}</li>
-                        <li>{' Effort: ' + changeValue}</li>
+                        <li>{'Action ' + (index + 1)}</li>
+                        <li>{'Action Type - ' + actionType}</li>
+                        <li>{'Building affected - ' + id}</li>
+                        <li>{'Building locations - ' + cells}</li>
                     </ul>
                     </ListItem>
             )
         }
         else{
             array[i] = (
-                <ListItem button key={index} id={id} cells={cells} changevalue={changeValue}>
+                <ListItem button>
                     <ul onClick={onLogClick(index)} type="square">
-                        <li>{'Change Number: ' + (index + 1)}</li>
-                        <li>{'Action Type: ' + actionType}</li>
-                        <li>{'Building: ' + id}</li>
-                        <li>{'Located Cells: ' + cells}</li>
-                        <li>{' Effort: ' + changeValue}</li>
+                        <li>{'Action ' + (index + 1)}</li>
+                        <li>{'Action Type - ' + actionType}</li>
+                        <li>{'Building affected - ' + id}</li>
+                        <li>{'Building locations - ' + cells}</li>
                     </ul>
                     </ListItem>
             )
@@ -46,9 +43,15 @@ function makeLogPlane({...props}){
     return (
         <div>
             <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
-                Commit Log Change
+                Undo Change
             </Button>
-            <div style={{maxHeight: 700, overflow: 'auto'}}>
+            <div>
+                One you have made a change it will appear in this log.
+            </div>
+            <div>
+                Click on an action and press 'Undo Change' to revert back to before that change.
+            </div>
+            <div style={{maxHeight: 600, overflow: 'auto'}}>
             <List>
                 {MakeLog(props.commitChange.storedChanges, props.onLogSelect, props.selectedIndex)}
             </List>
