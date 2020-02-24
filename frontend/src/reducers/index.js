@@ -9,7 +9,7 @@ import {NEXT_TURN} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 
-import {getIncome} from "../definitions/Util";
+import {getHappiness, getIncome} from "../definitions/Util";
 
 function nextTurnReducer(state, action) {
 
@@ -17,6 +17,10 @@ function nextTurnReducer(state, action) {
 
         const nextResources = {...state.resources};
 
+        //Happiness calculation:
+        nextResources[HAPPINESS] = {...nextResources[HAPPINESS], amount: getHappiness(state).amount};
+
+        //Basic resources increase
         for (const id of [MONEY, FOOD, WOOD]) {
             const income = getIncome(id, state).total;
             let nextAmount = nextResources[id].amount + income;
@@ -31,7 +35,7 @@ function nextTurnReducer(state, action) {
         }
 
         //Population growth
-        //TODO: calculate population growth as a fucntion of food growth and/or other factors?
+        //TODO: calculate population growth as a function of food growth and/or other factors?
         nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
 
         return {...state, resources: nextResources};
@@ -46,7 +50,7 @@ function graphDataReducer(state, action) {
         const nextGraphData = [{
             timestamp: 0,
             pop: state.resources[POPULATION].amount,
-            happiness: state.resources[HAPPINESS],
+            happiness: state.resources[HAPPINESS].amount,
             money: state.resources[MONEY].amount,
             food: state.resources[FOOD].amount,
             wood: state.resources[WOOD].amount,
@@ -60,7 +64,7 @@ function graphDataReducer(state, action) {
         const nextGraphData = [...state.graphData, {
             timestamp: nextTimestamp,
             pop: state.resources[POPULATION].amount,
-            happiness: state.resources[HAPPINESS],
+            happiness: state.resources[HAPPINESS].amount,
             money: state.resources[MONEY].amount,
             food: state.resources[FOOD].amount,
             wood: state.resources[WOOD].amount,

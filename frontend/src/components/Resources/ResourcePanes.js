@@ -111,21 +111,24 @@ const useHappinessStyles = makeStyles({
     }
 });
 
-export function HappinessPane({id, happiness}) {
+export function HappinessPane({id, amount, breakdown}) {
 
     const classes = useHappinessStyles();
     const classesArray = [classes.veryLow, classes.low, classes.medium, classes.high, classes.veryHigh];
 
-    const ix = Math.min(4, Math.max(0, Math.floor(happiness / 20)));
+    const ix = Math.min(4, Math.max(0, Math.floor(amount / 20)));
     const className = classesArray[ix];
 
-    const value = <div className={classes.root + " " + className}>{happiness}%</div>;
+    const value = <div className={classes.root + " " + className}>{amount}%</div>;
 
     return (
         <GenericResourcePane id={id} value={value}> {/*TODO breakdown & computation*/}
             <div>Base: 100%</div>
-            <div>Taxes: -20%</div>
-            <div>Pollution: -10%</div>
+            <div>Taxes: {breakdown["tax"]}%</div>
+            <div>Population Excess: {breakdown["population excess"]}%</div>
+            <div>Food Deficit: {breakdown["food deficit"]}%</div>
+            {/*TODO: rationing*/}
+            <div>Rationing: 0%</div>
         </GenericResourcePane>
     );
 }

@@ -47,10 +47,59 @@ export function getIncome(resourceId, state) {
         //TODO: add food consumption to breakdown
         //breakdown["eating"] = foodEaten;
         total -= foodEaten;
-
     }
 
     return {total, breakdown};
+}
+
+export function getHappiness(state) {
+    let happiness = 100;
+    const breakdown = {};
+
+    //population excess
+    const maxPopulation = getMaxPopulation(state);
+    const population = state.resources[POPULATION].amount;
+    if (population > maxPopulation) {
+        const popExcessImpact = (population - maxPopulation) * 10;
+        happiness -= popExcessImpact;
+        breakdown["population excess"] = popExcessImpact * -1
+    } else {
+        breakdown["population excess"] = 0;
+    }
+
+    //taxes
+    const taxes = state.resources.taxes;
+    const taxImpact = 30 - taxes;
+    breakdown["tax"] = taxImpact;
+    happiness += taxImpact;
+
+    //rationing
+    //TODO
+
+    //food deficit
+    const foodGrowth = getIncome(FOOD, state).total;
+    const foodDiff = state.resources[FOOD].amount + foodGrowth;
+    if (foodDiff < 0) {
+        const foodImpact = Math.floor(foodDiff/10);
+        breakdown["food deficit"] = foodImpact;
+        happiness += foodImpact;
+    } else {
+        breakdown["food deficit"] = 0;
+    }
+
+    //limit happiness to range of 0-100, need to implement game over on 0 happiness
+    if (happiness > 100) {
+        happiness = 100;
+    }
+
+    if (happiness <= 0) {
+        //TODO: game over?
+        happiness = 0;
+    }
+
+    console.log(breakdown);
+
+    return {amount: happiness, breakdown};
 }
 
 export function computeTaxIncome(state) {

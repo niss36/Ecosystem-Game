@@ -3,7 +3,7 @@ import {combineReducers} from "redux";
 import {END_BUY_BUILDING, END_REMOVE_BUILDING, NEXT_TURN, LOG_ITEM_CONFIRM, SET_TAXES} from "../actions";
 
 import buildings from "../definitions/Buildings";
-import {POPULATION, MONEY, FOOD, WOOD} from "../definitions/Resources";
+import {POPULATION, MONEY, FOOD, WOOD, HAPPINESS} from "../definitions/Resources";
 
 function normalResource(id) {
     return function (state = {amount: 1000}, action) {
@@ -33,6 +33,10 @@ function population(state = {amount: 10}, action) {
     return state;
 }
 
+function happiness(state = {amount: 100}, action) {
+    return state;
+}
+
 function taxes(state = 30, action) {
     if (action.type === SET_TAXES) {
         return action.taxes;
@@ -50,5 +54,6 @@ export const resources = combineReducers({
     [MONEY]: money,
     [FOOD]: food,
     [WOOD]: wood,
+    [HAPPINESS]: happiness,
     taxes,
 });

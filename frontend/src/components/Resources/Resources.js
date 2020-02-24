@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
 
-import {getIncome, getMaxPopulation} from "../../definitions/Util";
+import {getHappiness, getIncome, getMaxPopulation} from "../../definitions/Util";
 
 import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
@@ -41,7 +41,7 @@ function mapStateToProps(state) {
             ...resources[POPULATION],
             max: getMaxPopulation(state),
         },
-        [HAPPINESS]: resources[HAPPINESS],
+        [HAPPINESS]: getHappiness(state),
     }
 }
 
