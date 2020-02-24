@@ -9,6 +9,7 @@ export const END_BUY_BUILDING = "END_BUY_BUILDING";
 export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
 export const SET_EFFORT = "SET_EFFORT";
 export const SET_TAXES = "SET_TAXES";
+export const SET_RATIONING = "SET_RATIONING";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
@@ -49,12 +50,24 @@ export function endBuyBuilding(id,selectedCells, isLog) {
 }
 
 export function endRemoveBuilding(id,selectedCells, isLog) {
-    return {
-        type: END_REMOVE_BUILDING,
-        id: id,
-        selectedCells: selectedCells,
-        isLog: isLog,
-    }
+    return (dispatch, getState) => {
+        const state = getState();
+
+        let builtThisTurn = 0;
+        for (const cell of selectedCells) {
+            if (state.map.builtThisTurn.has(cell)) {
+                builtThisTurn++;
+            }
+        }
+
+        dispatch({
+            type: END_REMOVE_BUILDING,
+            id: id,
+            selectedCells: selectedCells,
+            builtThisTurn: builtThisTurn,
+            isLog: isLog,
+        });
+    };
 }
 
 export function setEffort(id, effort) {
@@ -69,6 +82,13 @@ export function setTaxes(taxes) {
     return {
         type: SET_TAXES,
         taxes: taxes,
+    }
+}
+
+export function setRationing(rationing) {
+    return {
+        type: SET_RATIONING,
+        rationing: rationing,
     }
 }
 

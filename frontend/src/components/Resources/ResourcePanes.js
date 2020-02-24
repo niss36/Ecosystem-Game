@@ -77,14 +77,25 @@ function GenericResourcePane({id, value, children}) {
     );
 }
 
+function getBreakdownName(id) {
+    switch (id) {
+        case "taxes":
+            return "Taxes";
+        case "consumption":
+            return "Consumption";
+        default:
+            return buildings[id].name;
+    }
+}
+
 export function ResourcePane({id, amount, income}) {
 
-    const value = <>{amount} (+{income.total}/month)</>;
+    const value = <>{amount} ({income.total > 0 && "+"}{income.total}/month)</>;
 
     return (
         <GenericResourcePane id={id} value={value}>
             {
-                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{id === "taxes" ? "Taxes" : buildings[id].name}: +{v}/month</div>)
+                Object.entries(income.breakdown).map(([id, v]) => <div key={id}>{getBreakdownName(id)}: {v > 0 && "+"}{v}/month</div>)
             }
         </GenericResourcePane>
     );
@@ -122,13 +133,12 @@ export function HappinessPane({id, amount, breakdown}) {
     const value = <div className={classes.root + " " + className}>{amount}%</div>;
 
     return (
-        <GenericResourcePane id={id} value={value}> {/*TODO breakdown & computation*/}
+        <GenericResourcePane id={id} value={value}>
             <div>Base: 100%</div>
             <div>Taxes: {breakdown["tax"]}%</div>
             <div>Population Excess: {breakdown["population excess"]}%</div>
             <div>Food Deficit: {breakdown["food deficit"]}%</div>
-            {/*TODO: rationing*/}
-            <div>Rationing: 0%</div>
+            <div>Rationing: {breakdown["rationing"]}%</div>
         </GenericResourcePane>
     );
 }

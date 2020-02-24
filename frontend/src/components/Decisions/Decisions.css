@@ -9,3 +9,8 @@
     border-top: 1px solid lightgray;
     border-radius: 0;
 }
+
+.sliderPanel{
+    border-bottom: 1px solid lightgray;
+    padding: 5px 20px;
+}
