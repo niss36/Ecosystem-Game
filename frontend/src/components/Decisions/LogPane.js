@@ -54,12 +54,8 @@ function makeLogPlane({...props}){
             </Button>*/
     return (
         <div>
+            <div style={{maxHeight: 600, overflow: 'auto'}}>
                 {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
-            <div>
-                One you have made a change it will appear in this log.
-            </div>
-            <div>
-                Click on an action and press 'Undo Change' to revert back to before that change. //Not relevent anymore
             </div>
             <div style={{maxHeight: 600, overflow: 'auto'}}>
             <List>
@@ -129,15 +125,17 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
 
     let array = new Array(historyLength);
     for(let i = 1; i < historyLength + 1; i++){
-        let turn = 'Turn' + i;
-        array[i] = <MenuItem onClick={clickHandle(i-1)}>{turn}</MenuItem>
+        let turn = 'Turn ' + i;
+        array[historyLength - i] = <MenuItem onClick={clickHandle(i-1)}>{turn}</MenuItem>
     }
 
     return (
         <div>
+            <div>{'Currently displayed turn: ' + (currentTimeStep + 1)}</div>
             <Button aria-controls="simple-menu" aria-haspopup="true" variant="outlined" onClick={handleClick}>
                 {'Change Turn Log'}
             </Button>
+            <div>
                 <Menu variant={'enu'}
                     id="simple-menu"
                     anchorEl={anchorEl}
@@ -147,6 +145,7 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
                  >
                     {array}
                 </Menu>
+            </div>
         </div>
     );
 }
