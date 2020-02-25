@@ -11,20 +11,20 @@
     background-repeat: no-repeat;
 }
 
-.Cell-root.sea {
+.Cell-root.Sea {
     color: blue;
     background-color: #64a5c1;
     /*background-image: url("/icons/sea.jpg");*/
 
 }
 
-.Cell-root.land {
+.Cell-root.Land {
     color: yellow;
     /*background-image: url("/icons/land.jpg");*/
     background-color: lightgreen;
 }
 
-.Cell-root.forest{
+.Cell-root.Forest{
     color: yellow;
     background-image: url("/icons/forest.svg");
     background-color: lightgreen;
