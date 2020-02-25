@@ -37,14 +37,6 @@ const ConnectedBuildingPane = connect(
     mapDispatchToProps
 )(BuildingPane);
 
-function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolete args
-    return (
-        <ConnectedBuildingPane id={id} {...props}>
-            {children}
-        </ConnectedBuildingPane>
-    );
-}
-
 function EffortBuildingPane({id, ...props}) {
     return (
         <BuildingPane id={id} {...props}>
@@ -66,10 +58,6 @@ const ConnectedEffortBuildingPane = connect(
         }
     }
 )(EffortBuildingPane);
-
-function MakeEffortBuildingPane({id}) {
-    return (<ConnectedEffortBuildingPane id={id}/>);
-}
 
 function TaxesPane(props) {
     return (
@@ -130,24 +118,24 @@ class Decisions extends React.Component {
                     {/*Food*/}
                     <div>
                         {/*Agriculture*/}
-                        <MakeBuildingPane id={ANIMAL_FARM}/>
+                        <ConnectedBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeEffortBuildingPane id={FISHING_BOAT}/>
+                        <ConnectedEffortBuildingPane id={FISHING_BOAT}/>
 
                         {/*Hunting*/}
-                        <MakeEffortBuildingPane id={HUNTING_SHACK}/>
+                        <ConnectedEffortBuildingPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <MakeBuildingPane id={CHEAP_LUMBER_MILL}/>
-                        <MakeBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
+                        <ConnectedBuildingPane id={CHEAP_LUMBER_MILL}/>
+                        <ConnectedBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
                     </div>
 
                     {/*Population*/}
                     <div>
-                        <MakeBuildingPane id={SETTLEMENT}/>
+                        <ConnectedBuildingPane id={SETTLEMENT}/>
                         <ul className={"sliderPanel"}>
                             <ConnectedTaxesPane/>
                             <li>
