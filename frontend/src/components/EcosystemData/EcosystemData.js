@@ -6,7 +6,7 @@ import TabsPane from "../util/TabsPane";
 import "./EcosystemData.css";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import {green, lime, orange, red, yellow} from "@material-ui/core/colors";
+import {green, lime, orange, purple, red, yellow} from "@material-ui/core/colors";
 
 import {connect} from "react-redux";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -14,6 +14,37 @@ import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Radio} from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const GreenCheckbox = withStyles({
+    root: {
+        color: green[400],
+        '&$checked': {
+            color: green[600],
+        },
+    },
+    checked: {},
+})(props => <Checkbox color="default" {...props} />);
+const GreenRadio = withStyles({
+    root: {
+        color: green[400],
+        '&$checked': {
+            color: green[600],
+        },
+    },
+    checked: {},
+})(props => <Radio color="default" {...props} />);
+const PurpleRadio = withStyles({
+    root: {
+        color: purple[400],
+        '&$checked': {
+            color: purple[600],
+        },
+    },
+    checked: {},
+})(props => <Radio color="default" {...props} />);
 
 const CustomizedDot = (props) => {
     const {
@@ -67,13 +98,11 @@ class EcosystemData extends React.Component {
                 <TabsPane tabs={["Population & Infrastructure", "Resources"]}>
                     <div>
                         <Grid container>
-                            <Grid item xs={3}>
-                                <FormControl component="fieldset" style={{padding: "10px"}}>
-                                    <RadioGroup defaultValue="pop" aria-label="resource" name="customized-radios" value={this.state.currentPopTab} onChange={(event) => this.setState({currentPopTab: event.target.value})}>
-                                        <FormControlLabel value="pop" control={<Radio/>} label="Population" />
-                                        <FormControlLabel value="happiness" control={<Radio/>} label="Happiness" />
+                            <Grid item xs={3} className={"flex-container"}>
+                                    <RadioGroup className={"centre"} defaultValue="pop" aria-label="resource" name="customized-radios" value={this.state.currentPopTab} onChange={(event) => this.setState({currentPopTab: event.target.value})}>
+                                        <FormControlLabel value="pop" control={<PurpleRadio />} label="Population" />
+                                        <FormControlLabel value="happiness" control={<GreenRadio/>} label="Happiness" />
                                     </RadioGroup>
-                                </FormControl>
                             </Grid>
                             <Grid item xs={9}>
                                 <ResponsiveContainer width="100%" height={400}>
@@ -89,7 +118,7 @@ class EcosystemData extends React.Component {
                                                   dot={<CustomizedDot/>} isAnimationActive={false}/>
                                             :
                                             //if population graph
-                                            <Line type="monotone" stroke="green" dataKey="pop"
+                                            <Line type="monotone" stroke="purple" dataKey="pop"
                                                   isAnimationActive={false}/>)
                                         }
 
@@ -107,28 +136,23 @@ class EcosystemData extends React.Component {
                     </div>
                     <div>
                         <Grid container>
-                            <Grid item xs={3}>
-                                <div><input
-                                    type="checkbox"
-                                    checked={this.state.moneyChecked}
-                                    onChange={() => this.setState({moneyChecked: !this.state.moneyChecked})}
-                                />
-                                    Money
-                                </div>
-                                <div><input
-                                    type="checkbox"
-                                    checked={this.state.foodChecked}
-                                    onChange={() => this.setState({foodChecked: !this.state.foodChecked})}
-                                />
-                                    Food
-                                </div>
-                                <div><input
-                                    type="checkbox"
-                                    checked={this.state.woodChecked}
-                                    onChange={() => this.setState({woodChecked: !this.state.woodChecked})}
-                                />
-                                    Wood
-                                </div>
+                            <Grid item xs={3} className={"flex-container"}>
+                                <FormGroup className={"centre"}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={this.state.moneyChecked} onChange={() => this.setState({moneyChecked: !this.state.moneyChecked})} />}
+                                        label="Money"
+                                    />
+                                    <FormControlLabel
+                                        control={<Checkbox checked={this.state.foodChecked} onChange={() => this.setState({foodChecked: !this.state.foodChecked})} />}
+                                        label="Food"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox color={"primary"} checked={this.state.woodChecked} onChange={() => this.setState({woodChecked: !this.state.woodChecked})} />
+                                        }
+                                        label= "Wood"
+                                    />
+                                </FormGroup>
                             </Grid>
                             <Grid item xs={9}>
                                 <ResponsiveContainer width="100%" height={400}>
@@ -141,19 +165,19 @@ class EcosystemData extends React.Component {
 
                                         {(this.state.moneyChecked &&
                                             //if money checked, draw its line
-                                            <Line type="monotone" stroke="#ccbe00" dataKey="money"
+                                            <Line type="monotone" stroke="green" dataKey="money"
                                                   isAnimationActive={false}/>
                                         )}
 
                                         {(this.state.foodChecked &&
                                             //if food checked, draw its line
-                                            <Line type="monotone" stroke="#009603" dataKey="food"
+                                            <Line type="monotone" stroke="red" dataKey="food"
                                                   isAnimationActive={false}/>
                                         )}
 
                                         {(this.state.woodChecked &&
                                             //if wood checked, draw its line
-                                            <Line type="monotone" stroke="#946300" dataKey="wood"
+                                            <Line type="monotone" stroke="blue" dataKey="wood"
                                                   isAnimationActive={false}/>
                                         )}
                                         <YAxis/>

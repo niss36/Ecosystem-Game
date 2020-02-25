@@ -15,6 +15,7 @@ export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
 export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
 export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
+export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 
 /**
  * Action creators
@@ -159,4 +160,11 @@ export function logItemConfirm(index, selectedDel, dispatch){
             index: index,
         })
     };
+}
+
+export function logChangeDisplayed(indexNew){
+    return{
+        type: LOG_CHANGE_DISPLAYED,
+        index: indexNew,
+    }
 }
