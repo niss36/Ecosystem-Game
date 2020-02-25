@@ -49,17 +49,17 @@ function makeLogPlane({...props}){
         anchor = null;
     };
     console.log(props.commitChange.displayedTurn);
+    /*<Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
+                Undo Change
+            </Button>*/
     return (
         <div>
-            <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
-                Undo Change
-            </Button>
-                {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange)}
+                {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             <div>
                 One you have made a change it will appear in this log.
             </div>
             <div>
-                Click on an action and press 'Undo Change' to revert back to before that change.
+                Click on an action and press 'Undo Change' to revert back to before that change. //Not relevent anymore
             </div>
             <div style={{maxHeight: 600, overflow: 'auto'}}>
             <List>
@@ -110,7 +110,7 @@ class LogPlane extends React.Component {
 }
 
 
-function SimpleMenu(historyLength, clickFunction) {
+function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -135,18 +135,18 @@ function SimpleMenu(historyLength, clickFunction) {
 
     return (
         <div>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                Time Steps
+            <Button aria-controls="simple-menu" aria-haspopup="true" variant="outlined" onClick={handleClick}>
+                {'Change Turn Log'}
             </Button>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                {array}
-            </Menu>
+                <Menu variant={'enu'}
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                 >
+                    {array}
+                </Menu>
         </div>
     );
 }
