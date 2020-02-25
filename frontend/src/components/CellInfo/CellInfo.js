@@ -31,7 +31,9 @@ class CellInfo extends React.Component {
 export default connect(
     state => ({display: state.cellinfo.display,
         cellNo: state.cellinfo.cellNo,
-        cellContents: state.map.cells[state.cellinfo.cellNo],
+        cellContents: (state.map.cells[state.cellinfo.cellNo]).type,
         cellType: state.map.cellTypes[state.cellinfo.cellNo],
+        // TODO ADD SIZE AND NUMBER! AND LET CHANGE IT!!
+
     }),
 )(CellInfo);

@@ -21,10 +21,11 @@ function makeFilter(state) {
 
     switch (mode) {
         case "add":
-            return i => doesCellTypeMatch(i) && !state.cells[i];
+            return i => doesCellTypeMatch(i) && !(state.cells[i].type);
 
         case "remove":
-            return i => doesCellTypeMatch(i) && state.cells[i] === building;
+            // the prob is it can be undefined
+            return i => doesCellTypeMatch(i) && (state.cells[i].type === building);
     }
 }
 
@@ -43,7 +44,7 @@ const island = [210, 211, 231, 271, 251, 270, 269, 250, 230, 247, 229, 249, 209,
 const initialState = {
     selection: {mode: undefined, building: undefined, cells: []},
     cellTypes: new Array(SIZE * SIZE),
-    cells: new Array(SIZE * SIZE),
+    cells: (new Array(SIZE * SIZE)),
     builtThisTurn: new Set(),
 };
 
@@ -51,6 +52,7 @@ for (let x of island){
     initialState.cellTypes[x] = LAND;
 }
 for (let x = 0; x < SIZE * SIZE; x ++){
+    initialState.cells[x] = {type :undefined, size: undefined, number: undefined}
     if (initialState.cellTypes[x] !== LAND){
         initialState.cellTypes[x] = SEA;
     } else {
@@ -81,13 +83,13 @@ export function map(state = initialState, action) {
                 const nextBuiltThisTurn = new Set(state.builtThisTurn);
             if (action.isLog === undefined) {
                 for (const x of state.selection.cells) {
-                    nextCells[x] = state.selection.building;
+                    nextCells[x] = {type: state.selection.building,size:undefined,number:undefined};//TODO change size and num
                     nextBuiltThisTurn.add(x);
                 }
             }
             else{
                 for (const x of action.selectedCells){
-                    nextCells[x] = action.id;
+                    nextCells[x] = {type: action.i,size:undefined,number:undefined};//TODO change size and num;
                     nextBuiltThisTurn.add(x);
                 }
             }
@@ -100,13 +102,13 @@ export function map(state = initialState, action) {
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             if (action.isLog === undefined) {
                 for (const x of state.selection.cells) {
-                    nextCells[x] = undefined;
+                    nextCells[x] = {type: undefined};
                     nextBuiltThisTurn.delete(x);
                 }
             }
             else{
                 for (const x of action.selectedCells){
-                    nextCells[x] = undefined;
+                    nextCells[x] = {type: undefined};
                     nextBuiltThisTurn.delete(x);
                 }
             }

@@ -7,7 +7,14 @@ import Slider from "@material-ui/core/Slider";
 
 import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes, setRationing} from "../../actions";
 
-import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, SETTLEMENT} from "../../definitions/Buildings";
+import {
+    ANIMAL_FARM,
+    FISHING_BOAT,
+    HUNTING_SHACK,
+    CHEAP_LUMBER_MILL,
+    EXPENSIVE_LUMBER_MILL,
+    SETTLEMENT
+} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {canBuy} from "../../definitions/Util";
 
@@ -44,6 +51,7 @@ function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolet
         </ConnectedBuildingPane>
     );
 }
+
 const marks = [
     {
         value: 50,
@@ -58,24 +66,38 @@ const marks = [
         label: 'LARGE',
     },
 ];
+const types = [
+    {
+        value: 0,
+        label: 'Carnivores',
+    },
+    {
+        value: 50,
+        label: 'Both',
+    },
+    {
+        value: 100,
+        label: 'Herbivores',
+    },
+];
 
 function EffortBuildingPane({id, ...props}) {
-    let carnivores = null;
-    let herbivores = null;
-    if (id === HUNTING_SHACK){
-        carnivores = <Slider step={1} />
-        herbivores = <Slider step={1} />
-    }
+    // let type = null;
+    // if (id === HUNTING_SHACK) {
+    let type = <Slider step={1} defaultValue={50} marks={types} min={0} max={100} valueLabelDisplay="auto"
+                       aria-labelledby={id + "-effort-slider"}
+    />
+
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
-                Effort- Change this to size!
+                Size
             </div>
             <Slider defaultValue={100} marks={marks} min={50} max={150} step={null} valueLabelDisplay="auto"
 
-                    value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
-            {carnivores && <>Carnivores {carnivores}</>}
-            {herbivores && <>Herbivores {herbivores}</>}
+                    value={props.effects[FOOD].income} onChange={props.onSetEffort}
+                    aria-labelledby={id + "-effort-slider"}/>
+            {type && <>Type of animal hunted {type}</>}
         </BuildingPane>
     );
 }
@@ -120,7 +142,8 @@ function RationingPane(props) {
                 Rationing
             </div>
             <div>
-            <Slider value={props.rationing} onChange={props.setRationing} aria-labelledby="rationing-effort-slider"/>
+                <Slider value={props.rationing} onChange={props.setRationing}
+                        aria-labelledby="rationing-effort-slider"/>
             </div>
         </div>
     );
