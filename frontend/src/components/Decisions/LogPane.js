@@ -142,6 +142,11 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
+                      PaperProps={{
+                          style: {
+                              width: 175,
+                          },
+                      }}
                  >
                     {array}
                 </Menu>
