@@ -1,2 +1,4 @@
 .Resources-root {
+    position: sticky;
+    top: 36px;
 }
