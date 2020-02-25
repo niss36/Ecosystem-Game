@@ -100,7 +100,7 @@ function canConfirmLog(indexState, displayed, current){
 }
 
 
-class LogPlane extends React.Component {
+class LogPane extends React.Component {
 
     render(){
         return (
@@ -151,4 +151,4 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
     );
 }
 
-export default LogPlane;
+export default LogPane;

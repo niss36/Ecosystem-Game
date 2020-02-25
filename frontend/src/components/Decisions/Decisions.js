@@ -16,7 +16,7 @@ import BuildingPane from "./BuildingPane";
 
 import "./Decisions.css";
 
-import LogPlane from "./LogPlane";
+import LogPane from "./LogPane";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -170,7 +170,7 @@ class Decisions extends React.Component {
                     </div>
 
                     {/*Log*/}
-                    <LogPlane/>
+                    <LogPane/>
                 </TabsPane>
                 <div className="flex-grow-1"/>
                 <NextTurn/>
