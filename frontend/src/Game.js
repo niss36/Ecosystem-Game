@@ -26,7 +26,7 @@ class Game extends React.Component {
                             <EcosystemData/>
                         </Grid>
                     </Grid>
-                    <Grid item xs={2}>{/*Cell info + maybe events?*/}
+                    <Grid item xs={2}>
                         <CellInfo/>
                     </Grid>
                 </Grid>

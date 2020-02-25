@@ -16,7 +16,7 @@ function MakeLog(list, onLogClick, selectedIndex){
         const actionType = list[i].actionType;
         if(i === selectedIndex) {
             array[i] = (
-                <ListItem button selected={true}>
+                <ListItem key={index} button selected={true}>
                     <ul onClick={onLogClick(index)} type="square">
                         <li>{'Action ' + (index + 1)}</li>
                         <li>{'Action Type - ' + actionType}</li>
@@ -28,7 +28,7 @@ function MakeLog(list, onLogClick, selectedIndex){
         }
         else{
             array[i] = (
-                <ListItem button>
+                <ListItem key={index} button>
                     <ul onClick={onLogClick(index)} type="square">
                         <li>{'Action ' + (index + 1)}</li>
                         <li>{'Action Type - ' + actionType}</li>
