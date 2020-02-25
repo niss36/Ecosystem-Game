@@ -6,12 +6,11 @@ import "./Cell.css";
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, onMouseEnter, onMouseClick} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick} = this.props;
 
-        let classes = "Cell-root";
-        if (cellType) {
-            classes += " " + cellType;
-        }
+        let rootClasses = "Cell-root " + cellType;
+
+        let classes = "Cell-content";
 
         if (selected) {
             if (mode === "remove") {
@@ -25,10 +24,18 @@ class Cell extends React.Component {
             classes += " " + cellData;
         }
 
+        for (const side of ["top", "right", "bottom", "left"]) {
+            if (sameCellType[side]) {
+                classes += " " + side;
+            }
+        }
+
         return (
-            <p className={classes} onClick={onMouseClick} onMouseEnter={onMouseEnter}>
-                {i}
-            </p>
+            <div className={rootClasses} onClick={onMouseClick} onMouseEnter={onMouseEnter}>
+                <div className={classes}>
+                    {/*{i}*/}
+                </div>
+            </div>
         );
     }
 }
