@@ -17,10 +17,10 @@ import {Radio} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {FOOD, HAPPINESS, MONEY, POPULATION, WOOD} from "../../definitions/Resources";
 
 const GreenCheckbox = withStyles({
     root: {
-        color: green[400],
         '&$checked': {
             color: green[600],
         },
@@ -82,7 +82,7 @@ class EcosystemData extends React.Component {
 
         this.state = {
             //current datakey being plotted by graphs on Population/Happiness tab
-            currentPopTab: "pop",
+            currentPopTab: POPULATION,
 
             //Radio button state for Resources tab
             moneyChecked: true,
@@ -99,9 +99,9 @@ class EcosystemData extends React.Component {
                     <div>
                         <Grid container>
                             <Grid item xs={3} className={"flex-container"}>
-                                    <RadioGroup className={"centre"} defaultValue="pop" aria-label="resource" name="customized-radios" value={this.state.currentPopTab} onChange={(event) => this.setState({currentPopTab: event.target.value})}>
-                                        <FormControlLabel value="pop" control={<PurpleRadio />} label="Population" />
-                                        <FormControlLabel value="happiness" control={<GreenRadio/>} label="Happiness" />
+                                    <RadioGroup className={"centre"} defaultValue={POPULATION} aria-label="resource" name="customized-radios" value={this.state.currentPopTab} onChange={(event) => this.setState({currentPopTab: event.target.value})}>
+                                        <FormControlLabel value={POPULATION} control={<PurpleRadio/>} label="Population" />
+                                        <FormControlLabel value={HAPPINESS} control={<GreenRadio/>} label="Happiness" />
                                     </RadioGroup>
                             </Grid>
                             <Grid item xs={9}>
@@ -112,17 +112,17 @@ class EcosystemData extends React.Component {
                                             top: 20, right: 20, left: 0, bottom: 10,
                                         }}
                                     >
-                                        {(this.state.currentPopTab === "happiness" ?
+                                        {(this.state.currentPopTab === HAPPINESS ?
                                             //if happiness graph
                                             <Line type="monotone" stroke={green[400]} dataKey="happiness"
                                                   dot={<CustomizedDot/>} isAnimationActive={false}/>
                                             :
                                             //if population graph
-                                            <Line type="monotone" stroke="purple" dataKey="pop"
+                                            <Line type="monotone" stroke="purple" dataKey={POPULATION}
                                                   isAnimationActive={false}/>)
                                         }
 
-                                        {(this.state.currentPopTab === "pop") &&
+                                        {(this.state.currentPopTab === POPULATION) &&
                                         //if population graph, add a grid
                                         <CartesianGrid strokeDasharray="3 3"/>
                                         }
@@ -150,7 +150,7 @@ class EcosystemData extends React.Component {
                                         control={
                                             <Checkbox color={"primary"} checked={this.state.woodChecked} onChange={() => this.setState({woodChecked: !this.state.woodChecked})} />
                                         }
-                                        label= "Wood"
+                                        label="Wood"
                                     />
                                 </FormGroup>
                             </Grid>
@@ -165,19 +165,19 @@ class EcosystemData extends React.Component {
 
                                         {(this.state.moneyChecked &&
                                             //if money checked, draw its line
-                                            <Line type="monotone" stroke="green" dataKey="money"
+                                            <Line type="monotone" stroke="green" dataKey={MONEY}
                                                   isAnimationActive={false}/>
                                         )}
 
                                         {(this.state.foodChecked &&
                                             //if food checked, draw its line
-                                            <Line type="monotone" stroke="red" dataKey="food"
+                                            <Line type="monotone" stroke="red" dataKey={FOOD}
                                                   isAnimationActive={false}/>
                                         )}
 
                                         {(this.state.woodChecked &&
                                             //if wood checked, draw its line
-                                            <Line type="monotone" stroke="blue" dataKey="wood"
+                                            <Line type="monotone" stroke="blue" dataKey={WOOD}
                                                   isAnimationActive={false}/>
                                         )}
                                         <YAxis/>

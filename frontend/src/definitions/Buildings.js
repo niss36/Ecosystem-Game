@@ -48,7 +48,10 @@ export default {
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
         requiredCellType: FOREST,
         selectionSize: 2,
-        costs: {},
+        costs: {
+            [WOOD]: 200,
+            [MONEY]: 200,
+        },
         affectedDataTypes: [],
     },
     [EXPENSIVE_LUMBER_MILL]: {
@@ -56,7 +59,10 @@ export default {
         description: "Cuts down trees to produce wood sustainably.",
         requiredCellType: FOREST,
         selectionSize: 2,
-        costs: {},
+        costs: {
+            [WOOD]: 400,
+            [MONEY]: 400,
+        },
         affectedDataTypes: [],
     },
     [SETTLEMENT]: {

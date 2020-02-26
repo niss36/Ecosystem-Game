@@ -23,7 +23,7 @@ import BuildingPane from "./BuildingPane";
 
 import "./Decisions.css";
 
-import LogPlane from "./LogPlane";
+import LogPane from "./LogPane";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -43,14 +43,6 @@ const ConnectedBuildingPane = connect(
     mapStateToProps,
     mapDispatchToProps
 )(BuildingPane);
-
-function MakeBuildingPane({id, children, ...props}) { // TODO get rid of obsolete args
-    return (
-        <ConnectedBuildingPane id={id} {...props}>
-            {children}
-        </ConnectedBuildingPane>
-    );
-}
 
 const marks = [
     {
@@ -113,10 +105,6 @@ const ConnectedEffortBuildingPane = connect(
     }
 )(EffortBuildingPane);
 
-function MakeEffortBuildingPane({id}) {
-    return (<ConnectedEffortBuildingPane id={id}/>);
-}
-
 function TaxesPane(props) {
     return (
         <div>
@@ -177,24 +165,24 @@ class Decisions extends React.Component {
                     {/*Food*/}
                     <div>
                         {/*Agriculture*/}
-                        <MakeBuildingPane id={ANIMAL_FARM}/>
+                        <ConnectedBuildingPane id={ANIMAL_FARM}/>
 
                         {/*Fisheries*/}
-                        <MakeEffortBuildingPane id={FISHING_BOAT}/>
+                        <ConnectedEffortBuildingPane id={FISHING_BOAT}/>
 
                         {/*Hunting*/}
-                        <MakeEffortBuildingPane id={HUNTING_SHACK}/>
+                        <ConnectedEffortBuildingPane id={HUNTING_SHACK}/>
                     </div>
 
                     {/*Forestry*/}
                     <div>
-                        <MakeBuildingPane id={CHEAP_LUMBER_MILL}/>
-                        <MakeBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
+                        <ConnectedBuildingPane id={CHEAP_LUMBER_MILL}/>
+                        <ConnectedBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
                     </div>
 
                     {/*Population*/}
                     <div>
-                        <MakeBuildingPane id={SETTLEMENT}/>
+                        <ConnectedBuildingPane id={SETTLEMENT}/>
                         <ul className={"sliderPanel"}>
                             <ConnectedTaxesPane/>
                             <li>
@@ -217,7 +205,7 @@ class Decisions extends React.Component {
                     </div>
 
                     {/*Log*/}
-                    <LogPlane/>
+                    <LogPane/>
                 </TabsPane>
                 <div className="flex-grow-1"/>
                 <NextTurn/>
@@ -226,9 +214,4 @@ class Decisions extends React.Component {
     }
 }
 
-/*
-<List>
-{MakeLog([1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8])}
-</List>
- */
 export default Decisions;

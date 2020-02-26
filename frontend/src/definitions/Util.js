@@ -5,7 +5,7 @@ import {SIZE} from "./Map";
 export function getMaxPopulation(state) {
     let max = 25;
 
-    for (const [building, buildingState] of Object.entries(state.buildings)) {
+    for (const [, buildingState] of Object.entries(state.buildings)) {
 
         if (buildingState.numberBuilt) {
             const effect = buildingState.effects[POPULATION];

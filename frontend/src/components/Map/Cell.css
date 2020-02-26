@@ -4,63 +4,103 @@
     -ms-user-select: none;
     -webkit-user-select: none;
 
-    margin: 0;
+    --sea: #64a5c1;
+    --land: lightgreen;
+}
+
+/*
+Intentionally reversed. These are only visible when the associated Cell-content has a round border,
+in order to smooth the neighbouring cells.
+*/
+.Cell-root.Sea {
+    background-color: var(--land);
+}
+
+.Cell-root.Land, .Cell-root.Forest {
+    background-color: var(--sea);
+}
+
+.Cell-content {
+    width: 100%;
+    height: 100%;
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    border-radius: 20%;
+    overflow: hidden;
 }
 
-.Cell-root.sea {
+.Cell-content.top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.Cell-content.right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.Cell-content.bottom {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.Cell-content.left {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.Cell-root.Sea .Cell-content {
     color: blue;
-    background-color: #64a5c1;
-    /*background-image: url("/icons/sea.jpg");*/
-
+    background-color: var(--sea);
+    background-image: url("/icons/sea.jpg");
 }
 
-.Cell-root.land {
+.Cell-root.Land .Cell-content {
     color: yellow;
+    background-color: var(--land);
     /*background-image: url("/icons/land.jpg");*/
-    background-color: lightgreen;
 }
 
-.Cell-root.forest{
+.Cell-root.Forest .Cell-content {
     color: yellow;
+    background-color: var(--land);
     background-image: url("/icons/forest.svg");
-    background-color: lightgreen;
 }
 
-.Cell-root.remove {
+.Cell-root .Cell-content.remove {
     color: blue;
     background-color: red;
 }
 
-.Cell-root.fishingBoat {
+.Cell-root .Cell-content.fishingBoat {
     color: red;
     background-image: url("/icons/boat.svg");
 }
 
-.Cell-root.huntingShack {
+.Cell-root .Cell-content.huntingShack {
     color: red;
     background-image: url("/icons/shack.svg");
 }
 
-.Cell-root.animalFarm{
+.Cell-root .Cell-content.animalFarm{
     color: red;
     background-image:url("/icons/barn.svg");
 }
 
-.Cell-root.settlement{
+.Cell-root .Cell-content.settlement{
     color:red;
     background-image: url("/icons/cabin.svg");
 }
 
-.Cell-root.cheapLumberMill{
+.Cell-root .Cell-content.cheapLumberMill{
     color: red;
     background-image: url("/icons/stump.svg");
 }
 
-.Cell-root.expensiveLumberMill{
+.Cell-root .Cell-content.expensiveLumberMill{
     color:red;
     background-image: url("/icons/sprout.svg");
 }

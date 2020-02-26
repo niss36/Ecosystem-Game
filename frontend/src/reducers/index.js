@@ -50,11 +50,11 @@ function graphDataReducer(state, action) {
     if (!state.graphData.length) {
         const nextGraphData = [{
             timestamp: 0,
-            pop: state.resources[POPULATION].amount,
-            happiness: state.resources[HAPPINESS].amount,
-            money: state.resources[MONEY].amount,
-            food: state.resources[FOOD].amount,
-            wood: state.resources[WOOD].amount,
+            [POPULATION]: state.resources[POPULATION].amount,
+            [HAPPINESS]: state.resources[HAPPINESS].amount,
+            [MONEY]: state.resources[MONEY].amount,
+            [FOOD]: state.resources[FOOD].amount,
+            [WOOD]: state.resources[WOOD].amount,
         }];
 
         return {...state, graphData: nextGraphData};
@@ -64,14 +64,14 @@ function graphDataReducer(state, action) {
         const nextTimestamp = state.graphData[state.graphData.length-1].timestamp + 1;
         const nextGraphData = [...state.graphData, {
             timestamp: nextTimestamp,
-            pop: state.resources[POPULATION].amount,
-            happiness: state.resources[HAPPINESS].amount,
-            money: state.resources[MONEY].amount,
-            food: state.resources[FOOD].amount,
-            wood: state.resources[WOOD].amount,
+            [POPULATION]: state.resources[POPULATION].amount,
+            [HAPPINESS]: state.resources[HAPPINESS].amount,
+            [MONEY]: state.resources[MONEY].amount,
+            [FOOD]: state.resources[FOOD].amount,
+            [WOOD]: state.resources[WOOD].amount,
         }];
 
-        return {...state, graphData:nextGraphData};
+        return {...state, graphData: nextGraphData};
     }
 
     return state;

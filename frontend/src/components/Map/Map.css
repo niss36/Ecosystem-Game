@@ -12,9 +12,6 @@
     display: grid;
     grid-template-columns: repeat(20, auto);
     grid-auto-rows: 1fr;
-
-    color: blue;
-    background-color: gray;
 }
 
 .Map-grid::before {

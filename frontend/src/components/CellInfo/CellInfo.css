@@ -1,12 +1,13 @@
-.CellInfo-header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    font-size: 1.125rem;
-    margin-bottom: 8px;
-}
 .CellInfo-contents{
     margin-bottom: 6px;
     color: #666;
+}
+
+.CellInfo-root.panel{
+    padding: 5px 20px;
+}
+
+.CellInfo-root{
+    position: sticky;
+    top: 36px;
 }
