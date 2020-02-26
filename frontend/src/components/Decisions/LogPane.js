@@ -89,10 +89,11 @@ function makeLogPlane({...props}){
             </Button>*/
     return (
         <div>
+            <br/>
             <div style={{maxHeight: 600, overflowHeight: 'auto'}}>
                 {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             </div>
-            <div style={{maxHeight: 600, overflowHeight: 'auto'}}>
+            <div style={{maxHeight: 650, overflow: 'auto'}}>
             <List>
                 {makeCleanLog(props.commitChange.historyClean[props.commitChange.displayedTurn])}
             </List>
@@ -181,7 +182,6 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
                           style: {
                               width: 225,
                               maxHeight: 300,
-                              overflowHeight: 'auto'
                           },
                       }}
                  >
