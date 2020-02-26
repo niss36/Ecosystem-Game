@@ -5,7 +5,8 @@ import {logItemConfirm, logItemSelect, logChangeDisplayed} from "../../actions";
 import {connect} from "react-redux";
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
-
+import {ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL} from "../../definitions/Buildings";
+const buildings = [ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL];
 
 function MakeLog(list, onLogClick, selectedIndex){
     let array = new Array(list.length);
@@ -42,24 +43,58 @@ function MakeLog(list, onLogClick, selectedIndex){
     return array;
 }
 
+function makeCleanLog(cleanDisplayed){
+    let buyLog = cleanDisplayed.buy;
+    let sellLog = cleanDisplayed.sell;
+    let logArray = [];
+    for(let i = 0; i < buildings.length; i++){
+        const building = buildings[i];
+        if(buyLog[building].length !== 0){
+            let indexString = '';
+            for(let j = 0; j < buyLog[building].length; j++){
+                indexString = indexString + buyLog[building][j] + ', '
+            }
+            logArray.push(
+                <ListItem>
+                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Buy New Building'} <br/> <b>Cells:</b>{' ' + indexString} </p>
+                </ListItem>
+            )
+        }
+        if(sellLog[building].length !== 0){
+            let indexString = '';
+            for(let j = 0; j < sellLog[building].length; j++){
+                indexString = indexString + sellLog[building][j] + ', '
+            }
+            logArray.push(
+                <ListItem>
+                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/> <b>Cells:</b>{' ' + sellLog[building]} </p>
+                </ListItem>
+            )
+        }
+    }
+    return logArray
+}
+
 
 function makeLogPlane({...props}){
     let anchor = null;
     const close = () => {
         anchor = null;
     };
-    console.log(props.commitChange.displayedTurn);
     /*<Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
                 Undo Change
+        <List>
+            {MakeLog(props.commitChange.history[props.commitChange.displayedTurn], props.onLogSelect, props.selectedIndex)}
+        </List>
             </Button>*/
     return (
         <div>
-            <div style={{maxHeight: 600, overflow: 'auto'}}>
+            <div style={{maxHeight: 600, overflowHeight: 'auto'}}>
                 {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             </div>
-            <div style={{maxHeight: 600, overflow: 'auto'}}>
+            <div style={{maxHeight: 600, overflowHeight: 'auto'}}>
             <List>
-                {MakeLog(props.commitChange.history[props.commitChange.displayedTurn], props.onLogSelect, props.selectedIndex)}
+                {makeCleanLog(props.commitChange.historyClean[props.commitChange.displayedTurn])}
             </List>
             </div>
         </div>
@@ -133,7 +168,7 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
         <div>
             <div>{'Currently displayed turn: ' + (currentTimeStep + 1)}</div>
             <Button aria-controls="simple-menu" aria-haspopup="true" variant="outlined" onClick={handleClick}>
-                {'Change Turn Log'}
+                {'Change Turn Displayed'}
             </Button>
             <div>
                 <Menu variant={'enu'}
@@ -144,7 +179,9 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
                     onClose={handleClose}
                       PaperProps={{
                           style: {
-                              width: 175,
+                              width: 225,
+                              maxHeight: 300,
+                              overflowHeight: 'auto'
                           },
                       }}
                  >

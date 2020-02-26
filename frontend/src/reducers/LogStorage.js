@@ -7,7 +7,9 @@ import {
     LOG_CHANGE_DISPLAYED
 } from "../actions";
 import {combineReducers} from "redux";
-
+import{ANIMAL_FARM, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, FISHING_BOAT, HUNTING_SHACK, SETTLEMENT} from "../definitions/Buildings";
+const buildings = [ANIMAL_FARM, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, FISHING_BOAT, HUNTING_SHACK, SETTLEMENT];
+const initialClean = newCleanHistoryMaker();
 
 const initialStores = {
     history : [[]],
@@ -15,61 +17,125 @@ const initialStores = {
     displayedLog: [],
     displayedTurn: 0,
     currentTurn: 0,
+    historyClean: [initialClean],
+    displayedCleanLog: initialClean,
 };
+
+function newCleanHistoryMaker(){
+    return {
+        buy:  {
+            [ANIMAL_FARM]: [],
+            [CHEAP_LUMBER_MILL]: [],
+            [EXPENSIVE_LUMBER_MILL]: [],
+            [FISHING_BOAT]: [],
+            [HUNTING_SHACK]: [],
+            [SETTLEMENT]: [],
+        },
+        sell: {
+            [ANIMAL_FARM]: [],
+            [CHEAP_LUMBER_MILL]: [],
+            [EXPENSIVE_LUMBER_MILL]: [],
+            [FISHING_BOAT]: [],
+            [HUNTING_SHACK]: [],
+            [SETTLEMENT]: [],
+        },
+    }
+}
+
+function contains(array, item){
+    for(let i = 0; i < array.length; i++){
+        if(array[i] === item){
+            return i;
+        }
+    }
+    return -1;
+}
+
+function removeIndex(array, index){
+    array.splice(index, 1);
+}
 
 export function commitChange(state = initialStores, action){
         switch(action.type){
             case END_BUY_BUILDING:
-                /*
-                let newLog1 = [...state.history];
-                newLog1[state.currentTurn].push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Buy'});
-                let newDisplayed = [];
-                if(state.displayedLog.length !== 0) {
-                    newDisplayed = [...state.displayedLog];
+                if(action.selectedCells.length !== 0) {
+                    console.log(state.displayedCleanLog);
+                    let newHistory = [...state.history];
+                    newHistory[state.currentTurn].push({
+                        buildingType: action.id,
+                        selectedCells: action.selectedCells,
+                        changeValue: action.changeValue,
+                        actionType: 'Buy'
+                    });
+                    let newDisplayed = [];
+                    if (state.displayedLog.length !== 0 || state.displayedLog.length !== undefined) {
+                        newDisplayed = [...state.displayedLog];
+                    }
+                    if (state.currentTurn === state.currentTurn) {
+                        newDisplayed.push({
+                            buildingType: action.id,
+                            selectedCells: action.selectedCells,
+                            changeValue: action.changeValue,
+                            actionType: 'Buy'
+                        });
+                    }
+                    let newHistoryClean = [...state.historyClean];
+                    let buyHistory = newHistoryClean[state.currentTurn].buy[action.id];
+                    let sellHistory = newHistoryClean[state.currentTurn].sell[action.id];
+                    for(let i = 0; i < action.selectedCells.length; i++) {
+                        let cell = action.selectedCells[i];
+                        let index = contains(sellHistory, cell);
+                        if(index !== -1){
+                            removeIndex(sellHistory, index);
+                        }
+                        else{
+                            buyHistory.push(cell);
+                        }
+                    }
+                    return {...state, history: newHistory, displayedLog: newDisplayed, historyClean: newHistoryClean};
                 }
-                if(state.displayedLog === state.currentTurn){
-                    newDisplayed.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Buy'});
+                else{
+                    return state;
                 }
-                return {...state, history: newLog1, displayedLog: newDisplayed};
-                */
-
-                console.log(action);
-                let newHistory = [...state.history];
-                newHistory[state.currentTurn].push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Buy'});
-                let newDisplayed = [];
-                if(state.displayedLog.length !== 0 || state.displayedLog.length !== undefined){
-                    newDisplayed = [...state.displayedLog];
-                }
-                if(state.currentTurn === state.currentTurn){
-                    newDisplayed.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Buy'});
-                }
-                return {...state, history: newHistory, displayedLog: newDisplayed};
             case END_REMOVE_BUILDING:
-
-                /*
-                let newLog = [...state.history];
-                newLog[state.currentTurn].push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Sell'});
-                let newDisplayed2 = [];
-                if(state.displayedLog.length !== 0) {
-                    newDisplayed2 = [...state.displayedLog];
+                if(action.selectedCells.length !== 0) {
+                    let newHistory2 = [...state.history];
+                    newHistory2[state.currentTurn].push({
+                        buildingType: action.id,
+                        selectedCells: action.selectedCells,
+                        changeValue: action.changeValue,
+                        actionType: 'Sell'
+                    });
+                    let newDisplayed2 = [];
+                    if (state.displayedLog.length !== 0 || state.displayedLog.length !== undefined) {
+                        newDisplayed2 = [...state.displayedLog];
+                    }
+                    if (state.currentTurn === state.currentTurn) {
+                        newDisplayed2.push({
+                            buildingType: action.id,
+                            selectedCells: action.selectedCells,
+                            changeValue: action.changeValue,
+                            actionType: 'Sell'
+                        });
+                    }
+                    let newHistoryClean = [...state.historyClean];
+                    let buyHistory = newHistoryClean[state.currentTurn].buy[action.id];
+                    let sellHistory = newHistoryClean[state.currentTurn].sell[action.id];
+                    for(let i = 0; i < action.selectedCells.length; i++) {
+                        let cell = action.selectedCells[i];
+                        let index = contains(buyHistory, cell);
+                        if(index !== -1){
+                            removeIndex(buyHistory, index);
+                        }
+                        else{
+                            sellHistory.push(cell);
+                        }
+                    }
+                    return {...state, history: newHistory2, displayedLog: newDisplayed2, historyClean: newHistoryClean};
                 }
-                if(state.displayedLog === state.currentTurn){
-                    newDisplayed2.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Sell'});
+                else{
+                    return state;
                 }
-                return {...state, history: newLog, displayedLog: newDisplayed2};
-                */
-
-                console.log(action);
-                let newHistory2 = [...state.history];
-                newHistory2[state.currentTurn].push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Sell'});
-                let newDisplayed2 = [];
-                if(state.displayedLog.length !== 0 || state.displayedLog.length !== undefined){
-                    newDisplayed2 = [...state.displayedLog];
-                }
-                if(state.currentTurn === state.currentTurn){
-                    newDisplayed2.push({buildingType: action.id, selectedCells: action.selectedCells, changeValue: action.changeValue, actionType: 'Sell'});
-                }
-                return {...state, history: newHistory2, displayedLog: newDisplayed2};
             /*case LOG_ITEM_SELECT:
 
                 let selectedDel = [];
@@ -99,27 +165,20 @@ export function commitChange(state = initialStores, action){
                 return {...state, history: newChanges, selectedLogIndex: {index: "undefined", selectedDel: []}};
             */
             case NEXT_TURN:
-                /*
-                let newHistory = [];
-                if(state.history.length !== 0) {
-                    newHistory = [...state.history].push([]);
-                }
-                return {...state, currentTurn: (state.currentTurn + 1), history: newHistory, selectedLogIndex: {index: "undefined", selectedDel: []}};
-                */
-
                 let newHistory3 = [];
                 if(state.history.length !== 0){
                     newHistory3 = [...state.history];
                 }
                 newHistory3.push([]);
-                return {...state, history: newHistory3 ,currentTurn: state.currentTurn + 1, displayedTurn: state.currentTurn + 1, selectedLogIndex: {index: "undefined", selectedDel: []}};
+                let newCleanHistory = [];
+                if(state.historyClean.length !== 0){
+                    newCleanHistory = [...state.historyClean];
+                }
+                newCleanHistory.push(newCleanHistoryMaker());
+                return {...state, history: newHistory3 ,currentTurn: state.currentTurn + 1, displayedTurn: state.currentTurn + 1, selectedLogIndex: {index: "undefined", selectedDel: []}, historyClean: newCleanHistory};
             case LOG_CHANGE_DISPLAYED:
-                /*
                 let newIndex = action.index;
-                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedLog: {...state.history[newIndex]}};
-                */
-                let newIndex = action.index;
-                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedLog: [...state.history[newIndex]]};
+                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedLog: [...state.history[newIndex]], displayedCleanLog: state.historyClean[newIndex]};
             default:
                 return state;
         }
