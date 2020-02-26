@@ -8,7 +8,6 @@ import {
 } from "../actions";
 import {combineReducers} from "redux";
 import{ANIMAL_FARM, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, FISHING_BOAT, HUNTING_SHACK, SETTLEMENT} from "../definitions/Buildings";
-const buildings = [ANIMAL_FARM, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, FISHING_BOAT, HUNTING_SHACK, SETTLEMENT];
 const initialClean = newCleanHistoryMaker();
 
 const initialStores = {
@@ -19,6 +18,7 @@ const initialStores = {
     currentTurn: 0,
     historyClean: [initialClean],
     displayedCleanLog: initialClean,
+    selectedLogItem: {building: undefined, action: ''},
 };
 
 function newCleanHistoryMaker(){
@@ -84,13 +84,13 @@ export function commitChange(state = initialStores, action){
                     let sellHistory = newHistoryClean[state.currentTurn].sell[action.id];
                     for(let i = 0; i < action.selectedCells.length; i++) {
                         let cell = action.selectedCells[i];
-                        let index = contains(sellHistory, cell);
+                        /*let index = contains(sellHistory, cell);
                         if(index !== -1){
                             removeIndex(sellHistory, index);
                         }
-                        else{
+                        else{*/
                             buyHistory.push(cell);
-                        }
+                        //}
                     }
                     return {...state, history: newHistory, displayedLog: newDisplayed, historyClean: newHistoryClean};
                 }
@@ -178,7 +178,15 @@ export function commitChange(state = initialStores, action){
                 return {...state, history: newHistory3 ,currentTurn: state.currentTurn + 1, displayedTurn: state.currentTurn + 1, selectedLogIndex: {index: "undefined", selectedDel: []}, historyClean: newCleanHistory};
             case LOG_CHANGE_DISPLAYED:
                 let newIndex = action.index;
-                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedLog: [...state.history[newIndex]], displayedCleanLog: state.historyClean[newIndex]};
+                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedLog: [...state.history[newIndex]], displayedCleanLog: state.historyClean[newIndex], selectedLogItem: {building: undefined, action: ''}};
+            case LOG_ITEM_SELECT:
+                let newDisplayedLog = {building: action.buildingType, action: action.actionType};
+                if(state.selectedLogItem.building === action.buildingType && state.selectedLogItem.action === action.actionType){
+                    return {...state, selectedLogItem: {building: undefined, action: ''}};
+                }
+                else {
+                    return {...state, selectedLogItem: newDisplayedLog};
+                }
             default:
                 return state;
         }

@@ -6,17 +6,26 @@ import "./Cell.css";
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection} = this.props;
 
         let rootClasses = "Cell-root " + cellType;
 
         let classes = "Cell-content";
 
+
+
         if (selected) {
-            if (mode === "remove") {
+            if (mode === "remove" || mode === 'log') {
                 classes += " remove";
             } else {
                 classes += " " + building;
+            }
+        }
+        else{
+            if (logSelection.building !== undefined) {
+                if (logSelection.cells.includes(i)) {
+                    classes += " logSelect";
+                }
             }
         }
 
