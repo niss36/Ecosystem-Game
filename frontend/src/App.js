@@ -8,8 +8,14 @@ import {createStore, applyMiddleware} from "redux";
 import appReducer from "./reducers";
 import {Provider} from "react-redux";
 import thunk from 'redux-thunk';
+import {initialise} from "./actions";
 
 const store = createStore(appReducer, applyMiddleware(thunk));
+
+function onStart() {
+    this.setState({started: true});
+    store.dispatch(initialise());
+}
 
 class App extends React.Component {
 
@@ -28,7 +34,7 @@ class App extends React.Component {
                     this.state.started ? (
                         <Game/>
                     ) : (
-                        <Menu onStart={() => this.setState({started: true})}/>
+                        <Menu onStart={() => {store.dispatch(initialise()); this.setState({started: true})}}/>
                     )
                 }
             </Provider>

@@ -5,6 +5,8 @@ import buildings from "../definitions/Buildings";
  */
 
 export const NEXT_TURN = "NEXT_TURN";
+export const GET_DATA_INITIAL = "GET_DATA_INITIAL";
+export const NEXT_TURN_LOADING = "NEXT_TURN_LOADING";
 export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
 export const END_BUY_BUILDING = "END_BUY_BUILDING";
@@ -24,9 +26,38 @@ export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
  * Action creators
  */
 
+function getDataFunction(){
+    //TODO get data;
+    return 0.0;
+}
+
+export function initialise(){
+    return (dispatch, getState) =>{
+        dispatch({
+            type: NEXT_TURN_LOADING,
+        });
+
+        let data = getDataFunction();
+
+        dispatch({
+            type: GET_DATA_INITIAL,
+            data: data,
+        });
+    }
+}
+
 export function nextTurn() {
-    return {
-        type: NEXT_TURN,
+    return (dispatch, getState) => {
+        dispatch({
+            type: NEXT_TURN_LOADING,
+        });
+
+        let data = getDataFunction();
+
+        dispatch({
+            type: NEXT_TURN,
+            data: data,
+        });
     }
 }
 

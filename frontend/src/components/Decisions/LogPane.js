@@ -1,16 +1,15 @@
 import React from "react";
 import {List, ListItem} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {logItemConfirm, logItemSelect, logChangeDisplayed} from "../../actions";
+import {logItemSelect, logChangeDisplayed} from "../../actions";
 import {connect} from "react-redux";
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
-import {ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL} from "../../definitions/Buildings";
 import buildDict from '../../definitions/Buildings';
-const buildings = [ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL];
+let buildings = Object.keys(buildDict);
 
 
-function MakeLog(list, onLogClick, selectedIndex){
+/*function MakeLog(list, onLogClick, selectedIndex){
     let array = new Array(list.length);
     for (let i = 0; i < list.length; i++) {
         const index = i;
@@ -43,7 +42,7 @@ function MakeLog(list, onLogClick, selectedIndex){
         }
     }
     return array;
-}
+}*/
 
 function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
     let buyLog = cleanDisplayed.buy;
@@ -107,7 +106,7 @@ function makeLogPlane({...props}){
 }
 
 
-const mapStateToLogProps = (state, ownProps) => {
+const mapStateToLogProps = (state) => {
     return {
         ...state.logStorage,
         canConfirm : canConfirmLog(state.logStorage.commitChange.selectedLogIndex.index, state.logStorage.commitChange.displayedTurn, state.logStorage.commitChange.currentTurn),
@@ -116,10 +115,10 @@ const mapStateToLogProps = (state, ownProps) => {
 };
 
 
-const mapDispatchToLogProps = (dispatch, ownProps) => {
+const mapDispatchToLogProps = (dispatch) => {
     return {
         onLogSelect: (selectedCells, buildingType, actionType) => function(){ dispatch(logItemSelect(selectedCells, buildingType, actionType));},
-        onLogConfirm: (selectedItem) => (logItemConfirm(selectedItem.index, [...selectedItem.selectedDel], dispatch)),
+        //onLogConfirm: (selectedItem) => (logItemConfirm(selectedItem.index, [...selectedItem.selectedDel], dispatch)),
         onLogHistoryChange: (index) => dispatch(logChangeDisplayed(index)),
     }
 };

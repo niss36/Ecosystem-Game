@@ -3,19 +3,11 @@ import {
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
     LOG_ITEM_SELECT,
-    LOG_ITEM_CONFIRM,
-    LOG_CHANGE_DISPLAYED
+    LOG_CHANGE_DISPLAYED, GET_DATA_INITIAL
 } from "../actions";
 import {combineReducers} from "redux";
-import {
-    ANIMAL_FARM,
-    CHEAP_LUMBER_MILL,
-    EXPENSIVE_LUMBER_MILL,
-    FISHING_BOAT,
-    HUNTING_SHACK,
-    PLANTING_TREES,
-    SETTLEMENT
-} from "../definitions/Buildings";
+import buildDict from '../definitions/Buildings';
+let buildings = Object.keys(buildDict);
 const initialClean = newCleanHistoryMaker();
 
 const initialStores = {
@@ -30,26 +22,12 @@ const initialStores = {
 };
 
 function newCleanHistoryMaker(){
-    return {
-        buy:  {
-            [ANIMAL_FARM]: [],
-            [CHEAP_LUMBER_MILL]: [],
-            [EXPENSIVE_LUMBER_MILL]: [],
-            [FISHING_BOAT]: [],
-            [HUNTING_SHACK]: [],
-            [SETTLEMENT]: [],
-            [PLANTING_TREES]:[],
-        },
-        sell: {
-            [ANIMAL_FARM]: [],
-            [CHEAP_LUMBER_MILL]: [],
-            [EXPENSIVE_LUMBER_MILL]: [],
-            [FISHING_BOAT]: [],
-            [HUNTING_SHACK]: [],
-            [SETTLEMENT]: [],
-            [PLANTING_TREES]:[],
-        },
+    let dict = {buy: {}, sell: {}};
+    for(let i = 0; i < buildings.length; i++){
+        let building = buildings[i];
+        dict = {...dict, buy: {...dict.buy, [building]: []}, sell: {...dict.sell, [building]: []}};
     }
+    return dict;
 }
 
 function contains(array, item){
@@ -81,7 +59,7 @@ export function commitChange(state = initialStores, action){
                     if (state.displayedLog.length !== 0 || state.displayedLog.length !== undefined) {
                         newDisplayed = [...state.displayedLog];
                     }
-                    if (state.currentTurn === state.currentTurn) {
+                    if (state.currentTurn === state.displayedTurn) {
                         newDisplayed.push({
                             buildingType: action.id,
                             selectedCells: action.selectedCells,
@@ -91,16 +69,9 @@ export function commitChange(state = initialStores, action){
                     }
                     let newHistoryClean = [...state.historyClean];
                     let buyHistory = newHistoryClean[state.currentTurn].buy[action.id];
-                    let sellHistory = newHistoryClean[state.currentTurn].sell[action.id];
                     for(let i = 0; i < action.selectedCells.length; i++) {
                         let cell = action.selectedCells[i];
-                        /*let index = contains(sellHistory, cell);
-                        if(index !== -1){
-                            removeIndex(sellHistory, index);
-                        }
-                        else{*/
                             buyHistory.push(cell);
-                        //}
                     }
                     return {...state, history: newHistory, displayedLog: newDisplayed, historyClean: newHistoryClean};
                 }
@@ -120,7 +91,7 @@ export function commitChange(state = initialStores, action){
                     if (state.displayedLog.length !== 0 || state.displayedLog.length !== undefined) {
                         newDisplayed2 = [...state.displayedLog];
                     }
-                    if (state.currentTurn === state.currentTurn) {
+                    if (state.currentTurn === state.displayedTurn) {
                         newDisplayed2.push({
                             buildingType: action.id,
                             selectedCells: action.selectedCells,
