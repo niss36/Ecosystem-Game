@@ -58,7 +58,7 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
             }
             let selected = (selectedLogItem.action === 'buy' && selectedLogItem.building === building);
             logArray.push(
-                <ListItem button selected={selected} onClick={onLogSelect(buyLog[building], building, 'buy')}>
+                <ListItem key={'buy ' + i} button selected={selected} onClick={onLogSelect(buyLog[building], building, 'buy')}>
                     <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Buy New Building'} <br/></p>
                 </ListItem>
             )
@@ -70,7 +70,7 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
             }
             let selected = (selectedLogItem.action === 'sell' && selectedLogItem.building === building);
             logArray.push(
-                <ListItem button selected={selected} onClick={onLogSelect(sellLog[building], building, 'sell')}>
+                <ListItem key={'sell ' + i} button selected={selected} onClick={onLogSelect(sellLog[building], building, 'sell')}>
                     <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/></p>
                 </ListItem>
             )
@@ -94,7 +94,7 @@ function makeLogPlane({...props}){
     return (
         <div>
             <br/>
-            <div style={{maxHeight: 600, overflowHeight: 'auto'}}>
+            <div>
                 {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             </div>
             <div style={{maxHeight: 650, overflow: 'auto'}}>
