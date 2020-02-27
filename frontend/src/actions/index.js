@@ -18,6 +18,7 @@ export const SET_DIFFICULTY = "SET_DIFFICULTY";
 export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
 export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
 export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
+export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
 
 /**
  * Action creators
@@ -90,6 +91,15 @@ export function changeSliders(id,slider, newValue) {
         type: CHANGE_SLIDERS,
         id: id,
         slider: slider,
+        newValue: newValue,
+    }
+}
+
+export function changeCellInfo(cellNo,slider, newValue,) {
+    return {
+        type: CHANGE_CELL_INFO,
+        slider: slider,
+        cellNo: cellNo,
         newValue: newValue,
     }
 }

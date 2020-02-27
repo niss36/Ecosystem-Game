@@ -8,6 +8,7 @@ const initialState = {
 };
 
 
+
 export function cellinfo(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {

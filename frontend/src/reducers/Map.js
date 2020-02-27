@@ -4,7 +4,7 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED,
+    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO,
 } from "../actions";
 
 import buildings, {CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES} from "../definitions/Buildings";
@@ -178,6 +178,16 @@ export function map(state = initialState, action) {
             }
         case LOG_CHANGE_DISPLAYED:
             return {...state, logSelection: {building: undefined, cells: []}};
+        case CHANGE_CELL_INFO:
+            let newCells = [...state.cells];
+            if (action.slider === "effort") {
+                newCells[action.cellNo].effort = action.newValue
+            }
+            if (action.slider === "size") {
+                newCells[action.cellNo].size = action.newValue
+            }
+            return {...state, cells: newCells};
+
         default:
             return state;
         }

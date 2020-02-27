@@ -45,7 +45,7 @@ const ConnectedBuildingPane = connect(
     mapDispatchToProps
 )(BuildingPane);
 
-const marks = [
+const sizes = [
     {
         value: 10,
         label: 'SMALL',
@@ -82,7 +82,7 @@ function EffortBuildingPane({id, ...props}) {
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
                 Max size of hunted animal in kg
             </div>
-            <Slider marks={marks} min={0} max={1000} step={1} valueLabelDisplay="auto"
+            <Slider marks={sizes} min={0} max={1000} step={1} valueLabelDisplay="auto"
 
                     value={props.size} onChange={((event, value) => {
                         props.onChangeSliders(event, "size",value < 10 ? 10 : value);
