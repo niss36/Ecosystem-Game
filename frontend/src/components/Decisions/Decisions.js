@@ -71,7 +71,8 @@ function TaxesPane(props) {
                 Taxes
             </div>
             <div>
-                <Slider value={props.taxes} onChange={props.setTaxes} aria-labelledby="taxes-effort-slider"/>
+                <Slider value={props.taxes} onChange={props.setTaxes} valueLabelDisplay="auto"
+                        aria-labelledby="taxes-effort-slider"/>
             </div>
         </div>
     );
@@ -89,7 +90,7 @@ function RationingPane(props) {
                 Rationing
             </div>
             <div>
-                <Slider value={props.rationing} onChange={props.setRationing}
+                <Slider value={props.rationing} onChange={props.setRationing} valueLabelDisplay="auto"
                         aria-labelledby="rationing-effort-slider"/>
             </div>
         </div>
