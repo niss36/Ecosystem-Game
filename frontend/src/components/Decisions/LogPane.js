@@ -6,7 +6,9 @@ import {connect} from "react-redux";
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import {ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL} from "../../definitions/Buildings";
+import buildDict from '../../definitions/Buildings';
 const buildings = [ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL];
+
 
 function MakeLog(list, onLogClick, selectedIndex){
     let array = new Array(list.length);
@@ -57,8 +59,7 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
             let selected = (selectedLogItem.action === 'buy' && selectedLogItem.building === building);
             logArray.push(
                 <ListItem button selected={selected} onClick={onLogSelect(buyLog[building], building, 'buy')}>
-                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Buy New Building'} <br/>
-                    <b>Cells:</b>{' ' + indexString}</p>
+                    <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Buy New Building'} <br/></p>
                 </ListItem>
             )
         }
@@ -70,8 +71,7 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
             let selected = (selectedLogItem.action === 'sell' && selectedLogItem.building === building);
             logArray.push(
                 <ListItem button selected={selected} onClick={onLogSelect(sellLog[building], building, 'sell')}>
-                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/>
-                    <b>Cells:</b>{' ' + sellLog[building]} </p>
+                    <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/></p>
                 </ListItem>
             )
         }
@@ -81,11 +81,11 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
 
 
 function makeLogPlane({...props}){
-    let anchor = null;
+    /*let anchor = null;
     const close = () => {
         anchor = null;
     };
-    /*<Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
+    <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
                 Undo Change
         <List>
             {MakeLog(props.commitChange.history[props.commitChange.displayedTurn], props.onLogSelect, props.selectedIndex)}
