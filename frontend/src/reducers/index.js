@@ -140,8 +140,27 @@ export default function(state = {}, action) {
  *             building: string,
  *             cells: [number],
  *         },
- *         island: [number],
- *         cells: [string],
+ *         cellTypes: [string],
+ *         cells: [
+ *             {
+ *                 type: string,
+ *                 size: number,
+ *                 effort: number,
+ *             }
+ *         ],
+ *         builtThisTurn: Set(number),
+ *         sameCellTypes: [
+ *             {
+ *                 top: bool,
+ *                 right: bool,
+ *                 bottom: bool,
+ *                 left: bool,
+ *             }
+ *         ],
+ *         logSelection: {
+ *             building: string,
+ *             cells: [number]
+ *         },
  *     },
  *     data: {
  *         ??
@@ -151,6 +170,11 @@ export default function(state = {}, action) {
  *             timestamp: number,
  *             [<resource>]: number,
  *         },
- *     ]
+ *     ],
+ *     cellinfo: {
+ *         display: string,
+ *         cellNo: number,
+ *     },
+ *     gameStatus: string,
  * }
  */
