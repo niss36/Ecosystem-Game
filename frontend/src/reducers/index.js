@@ -83,7 +83,7 @@ function graphData(state = [], action) {
     return state;
 }
 
-function gameStatus(state = MENU, action) {
+function gameStatus(state = RUNNING, action) {
     if (action.type === START_GAME) {
         return RUNNING;
     }
