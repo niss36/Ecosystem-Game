@@ -165,7 +165,7 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
     let array = new Array(historyLength);
     for(let i = 1; i < historyLength + 1; i++){
         let turn = 'Turn ' + i;
-        array[historyLength - i] = <MenuItem onClick={clickHandle(i-1)}>{turn}</MenuItem>
+        array[historyLength - i] = <MenuItem key={i} onClick={clickHandle(i-1)}>{turn}</MenuItem>
     }
 
     return (
@@ -175,7 +175,7 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
                 {'Change Turn Displayed'}
             </Button>
             <div>
-                <Menu variant={'enu'}
+                <Menu variant="menu"
                     id="simple-menu"
                     anchorEl={anchorEl}
                     keepMounted
