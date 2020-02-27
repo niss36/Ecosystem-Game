@@ -7,10 +7,11 @@ import {
     CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED,
 } from "../actions";
 
-import buildings from "../definitions/Buildings";
+import buildings, {CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES} from "../definitions/Buildings";
 import {FOREST, LAND, SEA, SIZE} from "../definitions/Map";
 
 import {getSelection, numCanBuy} from "../definitions/Util";
+import {cellinfo} from "./CellInfo";
 
 function makeFilter(state) {
     // assert mode not undefined
@@ -85,7 +86,37 @@ export function map(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}};
+
+            const nextCellTypes = [...state.cellTypes];
+            const nextCells = [...state.cells];
+            for (let x = 0; x < SIZE * SIZE; x++) {
+                if(nextCellTypes[x]===FOREST){
+                    if(nextCells[x]===CHEAP_LUMBER_MILL){
+                        let i=Math.random();
+                        if(i>0.7){
+                            nextCellTypes[x]=LAND;
+                            nextCells[x] = undefined;
+                        }
+                    }
+                    else if(nextCells[x]===EXPENSIVE_LUMBER_MILL){
+                        let j=Math.random();
+                        if(j>0.9){
+                            nextCellTypes[x]=LAND;
+                            nextCells[x]= undefined;
+                        }
+                    }
+                }
+                else if(nextCellTypes[x]===LAND){
+                    if(nextCells[x]===PLANTING_TREES){
+                        let k=Math.random();
+                        if(k>0.9){
+                            nextCellTypes[x]=FOREST;
+                            nextCells[x]=undefined;
+                        }
+                    }
+                }
+            }
+            return {...state, selection: nextSelection, builtThisTurn: new Set(), cells: nextCells, cellTypes: nextCellTypes, logSelection: {building: undefined, cells: []}};
         }
 
         case START_BUY_BUILDING: {

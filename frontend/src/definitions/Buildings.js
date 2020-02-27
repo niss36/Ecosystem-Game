@@ -7,6 +7,7 @@ export const HUNTING_SHACK = "huntingShack";
 export const CHEAP_LUMBER_MILL = "cheapLumberMill";
 export const EXPENSIVE_LUMBER_MILL = "expensiveLumberMill";
 export const SETTLEMENT = "settlement";
+export const PLANTING_TREES ="planting";
 
 //TODO define affectedDataTypes for each building type.
 export default {
@@ -73,4 +74,14 @@ export default {
         costs: {},
         affectedDataTypes: [],
     },
+    [PLANTING_TREES]:{
+        name: "Tree Planting",
+        description:"Plant some trees.",
+        requiredCellType:LAND,
+        selectionSize: 2,
+        costs:{
+            [MONEY]:100
+        },
+        affectedDataTypes:[],
+    }
 };

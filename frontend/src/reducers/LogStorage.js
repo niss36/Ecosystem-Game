@@ -7,7 +7,15 @@ import {
     LOG_CHANGE_DISPLAYED
 } from "../actions";
 import {combineReducers} from "redux";
-import{ANIMAL_FARM, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, FISHING_BOAT, HUNTING_SHACK, SETTLEMENT} from "../definitions/Buildings";
+import {
+    ANIMAL_FARM,
+    CHEAP_LUMBER_MILL,
+    EXPENSIVE_LUMBER_MILL,
+    FISHING_BOAT,
+    HUNTING_SHACK,
+    PLANTING_TREES,
+    SETTLEMENT
+} from "../definitions/Buildings";
 const initialClean = newCleanHistoryMaker();
 
 const initialStores = {
@@ -30,6 +38,7 @@ function newCleanHistoryMaker(){
             [FISHING_BOAT]: [],
             [HUNTING_SHACK]: [],
             [SETTLEMENT]: [],
+            [PLANTING_TREES]:[],
         },
         sell: {
             [ANIMAL_FARM]: [],
@@ -38,6 +47,7 @@ function newCleanHistoryMaker(){
             [FISHING_BOAT]: [],
             [HUNTING_SHACK]: [],
             [SETTLEMENT]: [],
+            [PLANTING_TREES]:[],
         },
     }
 }

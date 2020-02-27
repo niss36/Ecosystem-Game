@@ -106,5 +106,10 @@ in order to smooth the neighbouring cells.
 
 .Cell-root .Cell-content.expensiveLumberMill{
     color:red;
+    background-image: url("/icons/tree.svg");
+}
+
+.Cell-root .Cell-content.planting{
+    color:red;
     background-image: url("/icons/sprout.svg");
 }

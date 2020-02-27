@@ -7,7 +7,7 @@ import Slider from "@material-ui/core/Slider";
 
 import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes, setRationing} from "../../actions";
 
-import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, SETTLEMENT} from "../../definitions/Buildings";
+import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES, SETTLEMENT} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {canBuy} from "../../definitions/Util";
 
@@ -131,6 +131,7 @@ class Decisions extends React.Component {
                     <div>
                         <ConnectedBuildingPane id={CHEAP_LUMBER_MILL}/>
                         <ConnectedBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
+                        <ConnectedBuildingPane id={PLANTING_TREES}/>
                     </div>
 
                     {/*Population*/}
