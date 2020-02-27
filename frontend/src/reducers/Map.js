@@ -49,7 +49,7 @@ const sameCellTypes = new Array(SIZE * SIZE);
 
 for (let x = 0; x < SIZE * SIZE; x++) {
     if (island.has(x)) {
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.3) {
             cellTypes[x] = FOREST;
         } else {
             cellTypes[x] = LAND;
@@ -82,7 +82,7 @@ const initialState = {
 };
 
 for (let x = 0; x < SIZE * SIZE; x++) {
-    initialState.cells[x] = {type :undefined, size: undefined, number: undefined};
+    initialState.cells[x] = {type :undefined, size: undefined, effort: undefined};
 }
 
 export function map(state = initialState, action) {
@@ -104,7 +104,7 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of state.selection.cells) {
-                nextCells[x] = {type: state.selection.building,size:undefined,number:undefined};//TODO change size and num
+                nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};

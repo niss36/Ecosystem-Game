@@ -1,3 +1,5 @@
+import buildings from "../definitions/Buildings";
+
 /**
  * Action types
  */
@@ -7,7 +9,7 @@ export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
 export const END_BUY_BUILDING = "END_BUY_BUILDING";
 export const END_REMOVE_BUILDING = "END_REMOVE_BUILDING";
-export const SET_EFFORT = "SET_EFFORT";
+export const CHANGE_SLIDERS = "CHANGE_SLIDERS";
 export const SET_TAXES = "SET_TAXES";
 export const SET_RATIONING = "SET_RATIONING";
 export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
@@ -42,11 +44,23 @@ export function startRemoveBuilding(id) {
 }
 
 export function endBuyBuilding(id,selectedCells, isLog) {
-    return {
-        type: END_BUY_BUILDING,
-        id: id,
-        selectedCells: selectedCells,
-        isLog: isLog
+    return (dispatch,getState) => {
+        const state = getState();
+        let size = undefined;
+        let effort= undefined;
+        if (buildings[id].requireSilder) {
+            size = state.buildings[id].size;
+            effort = state.buildings[id].effort;
+        }
+
+        dispatch({
+            type: END_BUY_BUILDING,
+            id: id,
+            selectedCells: selectedCells,
+            isLog: isLog,
+            size: size,
+            effort: effort,
+        });
     }
 }
 
@@ -71,11 +85,12 @@ export function endRemoveBuilding(id,selectedCells, isLog) {
     };
 }
 
-export function setEffort(id, effort) {
+export function changeSliders(id,slider, newValue) {
     return {
-        type: SET_EFFORT,
+        type: CHANGE_SLIDERS,
         id: id,
-        effort: effort,
+        slider: slider,
+        newValue: newValue,
     }
 }
 
@@ -110,6 +125,7 @@ export function cellMouseClick(i) {
     return (dispatch, getState) => {
         const state = getState();
         const {mode, building, cells} = state.map.selection;
+
 
         if (mode === "add") { // buying buildings
             dispatch(endBuyBuilding(building, cells));

@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes, setRationing} from "../../actions";
+import {nextTurn, startBuyBuilding, startRemoveBuilding, changeSliders, setTaxes, setRationing} from "../../actions";
 
 import {
     ANIMAL_FARM,
@@ -46,50 +46,54 @@ const ConnectedBuildingPane = connect(
 
 const marks = [
     {
-        value: 50,
+        value: 10,
         label: 'SMALL',
     },
     {
-        value: 100,
+        value: 500,
         label: 'MEDIUM',
     },
     {
-        value: 150,
+        value: 1000,
         label: 'LARGE',
     },
 ];
 const types = [
     {
         value: 0,
-        label: 'Carnivores',
+        label: 'Low',
     },
     {
         value: 50,
-        label: 'Both',
+        label: 'Mid',
     },
     {
         value: 100,
-        label: 'Herbivores',
+        label: 'High',
     },
 ];
 
 function EffortBuildingPane({id, ...props}) {
-    // let type = null;
-    // if (id === HUNTING_SHACK) {
-    let type = <Slider step={1} defaultValue={50} marks={types} min={0} max={100} valueLabelDisplay="auto"
-                       aria-labelledby={id + "-effort-slider"}
-    />
+
 
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
-                Size
+                Max size of hunted animal in kg
             </div>
-            <Slider defaultValue={100} marks={marks} min={50} max={150} step={null} valueLabelDisplay="auto"
+            <Slider marks={marks} min={0} max={1000} step={1} valueLabelDisplay="auto"
 
-                    value={props.effects[FOOD].income} onChange={props.onSetEffort}
+                    value={props.size} onChange={((event, value) => {
+                        props.onChangeSliders(event, "size",value < 10 ? 10 : value);
+            })}
                     aria-labelledby={id + "-effort-slider"}/>
-            {type && <>Type of animal hunted {type}</>}
+                    Effort
+            <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
+                    aria-labelledby={id + "-effort-slider"}
+                    value={props.effort}
+                    onChange={((event, value) => {
+                        props.onChangeSliders(event, "effort",value < 10 ? 10 : value);})}
+            />
         </BuildingPane>
     );
 }
@@ -100,7 +104,7 @@ const ConnectedEffortBuildingPane = connect(
         return {
             onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
             onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
-            onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
+            onChangeSliders: (e, slider, v) => dispatch(changeSliders(ownProps.id,slider, v))
         }
     }
 )(EffortBuildingPane);
