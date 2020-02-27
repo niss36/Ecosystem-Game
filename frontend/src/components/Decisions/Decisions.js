@@ -16,15 +16,14 @@ import {
     SETTLEMENT,
     PLANTING_TREES
 } from "../../definitions/Buildings";
-import {FOOD} from "../../definitions/Resources";
 import {canBuy} from "../../definitions/Util";
 
 import TabsPane from "../util/TabsPane";
+import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
 import BuildingPane from "./BuildingPane";
+import LogPane from "./LogPane";
 
 import "./Decisions.css";
-
-import LogPane from "./LogPane";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -45,56 +44,11 @@ const ConnectedBuildingPane = connect(
     mapDispatchToProps
 )(BuildingPane);
 
-const sizes = [
-    {
-        value: 10,
-        label: 'SMALL',
-    },
-    {
-        value: 500,
-        label: 'MEDIUM',
-    },
-    {
-        value: 1000,
-        label: 'LARGE',
-    },
-];
-const types = [
-    {
-        value: 0,
-        label: 'Low',
-    },
-    {
-        value: 50,
-        label: 'Mid',
-    },
-    {
-        value: 100,
-        label: 'High',
-    },
-];
-
 function EffortBuildingPane({id, ...props}) {
-
-
     return (
         <BuildingPane id={id} {...props}>
-            <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
-                Max size of hunted animal in kg
-            </div>
-            <Slider marks={sizes} min={0} max={1000} step={1} valueLabelDisplay="auto"
-
-                    value={props.size} onChange={((event, value) => {
-                        props.onChangeSliders(event, "size",value < 10 ? 10 : value);
-            })}
-                    aria-labelledby={id + "-effort-slider"}/>
-                    Effort
-            <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
-                    aria-labelledby={id + "-effort-slider"}
-                    value={props.effort}
-                    onChange={((event, value) => {
-                        props.onChangeSliders(event, "effort",value < 10 ? 10 : value);})}
-            />
+            <SizeSliderPane value={props.size} onChange={value => props.onChangeSliders("size", value)}/>
+            <EffortSliderPane value={props.effort} onChange={value => props.onChangeSliders("effort", value)}/>
         </BuildingPane>
     );
 }
@@ -105,7 +59,7 @@ const ConnectedEffortBuildingPane = connect(
         return {
             onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
             onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
-            onChangeSliders: (e, slider, v) => dispatch(changeSliders(ownProps.id,slider, v))
+            onChangeSliders: (slider, v) => dispatch(changeSliders(ownProps.id, slider, v))
         }
     }
 )(EffortBuildingPane);

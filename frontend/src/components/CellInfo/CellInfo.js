@@ -1,42 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 
-import Slider from "@material-ui/core/Slider";
-
 import {changeCellInfo} from "../../actions";
 
 import Buildings from "../../definitions/Buildings";
 
-import "./CellInfo.css";
+import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
 
-const sizes = [
-    {
-        value: 10,
-        label: 'SMALL',
-    },
-    {
-        value: 500,
-        label: 'MEDIUM',
-    },
-    {
-        value: 1000,
-        label: 'LARGE',
-    },
-];
-const types = [
-    {
-        value: 0,
-        label: 'Low',
-    },
-    {
-        value: 50,
-        label: 'Mid',
-    },
-    {
-        value: 100,
-        label: 'High',
-    },
-];
+import "./CellInfo.css";
 
 function getValidBuildings(cellType) {
     let list = [];
@@ -67,43 +38,28 @@ function getBuildingInfo(props) {
 
 class CellInfo extends React.Component {
     render() {
+
+        const {display, cellNo, cellType, cellSize, cellEffort} = this.props;
+
         return (
-            <div className={"CellInfo-root"} style={{display: this.props.display}}>
+            <div className={"CellInfo-root"} style={{display: display}}>
                 <div>
                     <div className={"CellInfo-header"}>
                         <h3>Cell Info</h3>
                     </div>
                     <div className={"CellInfo-contents"}>
                         <p>
-                            Cell type: {this.props.cellType}
+                            Cell type: {cellType}
                         </p>
                         {getBuildingInfo(this.props)}
                         {
-                            this.props.cellSize && (<div>
-
-                                    <div style={{textAlign: "center"}}>
-                                        Max size of hunted animal in kg
-                                    </div>
-                                    <Slider marks={sizes} min={0} max={1000} step={1} valueLabelDisplay="auto"
-                                            value={this.props.cellSize} onChange={((event, value) => {
-                                        this.props.changeCell(this.props.cellNo, "size", value < 10 ? 10 : value);
-                                    })}
-                                    />
-                                </div>
+                            cellSize && (
+                                <SizeSliderPane value={cellSize} onChange={value => this.props.changeCell(cellNo, "size", value)}/>
                             )
                         }
                         {
-                            this.props.cellEffort && (<div>
-                                    <div style={{textAlign: "center"}}>
-                                        Effort
-                                    </div>
-                                    <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
-                                            value={this.props.cellEffort}
-                                            onChange={((event, value) => {
-                                                this.props.changeCell(this.props.cellNo, "effort", value < 10 ? 10 : value);
-                                            })}
-                                    />
-                                </div>
+                            cellEffort && (
+                                <EffortSliderPane value={cellEffort} onChange={value => this.props.changeCell(cellNo, "effort", value)}/>
                             )
                         }
                     </div>
