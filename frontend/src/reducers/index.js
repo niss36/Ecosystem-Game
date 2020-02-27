@@ -9,9 +9,9 @@ import {Data} from "./DataStores";
 import {NEXT_TURN, START_GAME} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
+import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
 import {getHappiness, getIncome} from "../definitions/Util";
-import {MENU, RUNNING} from "../definitions/GameStatus";
 
 function nextTurnReducer(state, action) {
 
@@ -20,8 +20,8 @@ function nextTurnReducer(state, action) {
         const nextResources = {...state.resources};
 
         //Happiness calculation:
-        //TODO: if happiness is 0, you lose...
-        nextResources[HAPPINESS] = {...nextResources[HAPPINESS], amount: getHappiness(state).amount};
+        const happiness = getHappiness(state).amount;
+        nextResources[HAPPINESS] = {...nextResources[HAPPINESS], amount: happiness};
 
         //Basic resources increase
         for (const id of [MONEY, FOOD, WOOD]) {
@@ -41,7 +41,12 @@ function nextTurnReducer(state, action) {
         //TODO: calculate population growth as a function of food growth and/or other factors?
         nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
 
-        return {...state, resources: nextResources};
+        if (happiness > 0) {
+            return {...state, resources: nextResources};
+        } else {
+            console.log("You lose"); // TODO you lose...
+            return {...state, resource: nextResources, gameStatus: LOST};
+        }
     }
 
     return state;
@@ -86,6 +91,8 @@ function graphData(state = [], action) {
 function gameStatus(state = RUNNING, action) {
     if (action.type === START_GAME) {
         return RUNNING;
+    } else if (action.type === "QUIT") { // TODO
+        return MENU;
     }
 
     return state;

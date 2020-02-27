@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {startGame} from "./actions";
 import appReducer from "./reducers";
 
-import {MENU} from "./definitions/GameStatus";
+import {MENU, RUNNING, LOST} from "./definitions/GameStatus";
 
 import Game from "./Game";
 import Menu from "./Menu";
@@ -16,10 +16,15 @@ import "./App.css";
 const store = createStore(appReducer, applyMiddleware(thunk));
 
 function Body({status, start}) {
-    if (status === MENU)
-        return (<Menu onStart={start}/>);
-    else
-        return <Game/>
+    switch (status) {
+        case MENU:
+            return (<Menu onStart={start}/>);
+        case RUNNING:
+            return (<Game/>);
+        case LOST:
+            return (<div>You lose</div>); // TODO
+        default:
+    }
 }
 
 const ConnectedBody = connect(
