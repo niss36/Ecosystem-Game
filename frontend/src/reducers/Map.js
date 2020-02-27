@@ -96,27 +96,27 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             for (let x = 0; x < SIZE * SIZE; x++) {
                 if(nextCellTypes[x]===FOREST){
-                    if(nextCells[x]===CHEAP_LUMBER_MILL){
+                    if(nextCells[x].type===CHEAP_LUMBER_MILL){
                         let i=Math.random();
                         if(i>0.7){
                             nextCellTypes[x]=LAND;
-                            nextCells[x] = undefined;
+                            nextCells[x].type = undefined;
                         }
                     }
-                    else if(nextCells[x]===EXPENSIVE_LUMBER_MILL){
+                    else if(nextCells[x].type===EXPENSIVE_LUMBER_MILL){
                         let j=Math.random();
                         if(j>0.9){
                             nextCellTypes[x]=LAND;
-                            nextCells[x]= undefined;
+                            nextCells[x].type= undefined;
                         }
                     }
                 }
                 else if(nextCellTypes[x]===LAND){
-                    if(nextCells[x]===PLANTING_TREES){
+                    if(nextCells[x].type===PLANTING_TREES){
                         let k=Math.random();
                         if(k>0.9){
                             nextCellTypes[x]=FOREST;
-                            nextCells[x]=undefined;
+                            nextCells[x].type=undefined;
                         }
                     }
                 }
