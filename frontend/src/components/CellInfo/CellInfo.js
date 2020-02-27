@@ -1,10 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import "./CellInfo.css";
-import Buildings from "../../definitions/Buildings";
+
 import Slider from "@material-ui/core/Slider";
-import BuildingPane from "../Decisions/BuildingPane";
-import {cellMouseClick, cellMouseEnter, changeCellInfo} from "../../actions";
+
+import {changeCellInfo} from "../../actions";
+
+import Buildings from "../../definitions/Buildings";
+
+import "./CellInfo.css";
 
 const sizes = [
     {
@@ -35,38 +38,35 @@ const types = [
     },
 ];
 
-class CellInfo extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {};
+function getValidBuildings(cellType) {
+    let list = [];
+    for (let x in Buildings) {
+        if (Buildings[x].requiredCellType === cellType) {
+            list.push(<li key={x}>{Buildings[x].name}</li>);
+        }
     }
+    return list;
+}
 
+function getBuildingInfo(props) {
+    if (props.cellContents) {
+        return (<p>Building: {Buildings[props.cellContents].name}</p>);
+    } else {
+        return (
+            <>
+                <p>
+                    Buildings that can be built:
+                </p>
+                <ul>
+                    {getValidBuildings(props.cellType)}
+                </ul>
+            </>
+        );
+    }
+}
+
+class CellInfo extends React.Component {
     render() {
-        function getValidBuildings(cellType) {
-            let list = [];
-            for (let x in Buildings) {
-                if (Buildings[x].requiredCellType === cellType) {
-                    list.push(<li key={x}>{Buildings[x].name}</li>);
-                }
-            }
-            return list;
-        }
-
-        function getBuildingInfo(props, Buildings) {
-            if (props.cellContents !== undefined) {
-                return "Building: " + Buildings[props.cellContents].name;
-            } else {
-                return (
-                    <>
-                        <p>Buildings that can be built:</p>
-                        <ul>{getValidBuildings(props.cellType)}</ul>
-                    </>
-                );
-            }
-        }
-
         return (
             <div className={"CellInfo-root"} style={{display: this.props.display}}>
                 <div>
@@ -74,64 +74,65 @@ class CellInfo extends React.Component {
                         <h3>Cell Info</h3>
                     </div>
                     <div className={"CellInfo-contents"}>
-                        <div>
-                            {"Cell type: " + this.props.cellType}
-                        </div>
-                        <div>
-                            {getBuildingInfo(this.props, Buildings)}
-                        </div>
-                        <div>
+                        <p>
+                            Cell type: {this.props.cellType}
+                        </p>
+                        {getBuildingInfo(this.props)}
+                        {
+                            this.props.cellSize && (<div>
 
-                            {
-                                this.props.cellSize && (<div>
-
-                                        <div style={{textAlign: "center"}}>
-                                            Max size of hunted animal in kg
-                                        </div>
-                                        <Slider marks={sizes} min={0} max={1000} step={1} valueLabelDisplay="auto"
-                                                value={this.props.cellSize} onChange={((event, value) => {
-                                            this.props.changeCell(this.props.cellNo, "size", value < 10 ? 10 : value);
-                                        })}
-                                        />
+                                    <div style={{textAlign: "center"}}>
+                                        Max size of hunted animal in kg
                                     </div>
-                                )
-                            }
-                            {
-                                this.props.cellEffort && (<div>
-                                        <div style={{textAlign: "center"}}>
-                                            Effort
-                                        </div>
-                                        <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
-                                                value={this.props.cellEffort}
-                                                onChange={((event, value) => {
-                                                    this.props.changeCell(this.props.cellNo, "effort", value < 10 ? 10 : value);
-                                                })}
-                                        />
+                                    <Slider marks={sizes} min={0} max={1000} step={1} valueLabelDisplay="auto"
+                                            value={this.props.cellSize} onChange={((event, value) => {
+                                        this.props.changeCell(this.props.cellNo, "size", value < 10 ? 10 : value);
+                                    })}
+                                    />
+                                </div>
+                            )
+                        }
+                        {
+                            this.props.cellEffort && (<div>
+                                    <div style={{textAlign: "center"}}>
+                                        Effort
                                     </div>
-                                )
-                            }
-                        </div>
+                                    <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
+                                            value={this.props.cellEffort}
+                                            onChange={((event, value) => {
+                                                this.props.changeCell(this.props.cellNo, "effort", value < 10 ? 10 : value);
+                                            })}
+                                    />
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>);
     }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapStateToProps(state) {
+    const i = state.cellInfo.cellNo;
+    const cell = state.map.cells[i];
+
+    return {
+        display: state.cellInfo.display,
+        cellNo: i,
+        cellContents: cell.type,
+        cellSize: cell.size,
+        cellEffort: cell.effort,
+        cellType: state.map.cellTypes[i],
+    }
+}
+
+function mapDispatchToProps(dispatch) {
     return {
         changeCell: (cellNo, slider, newValue) => dispatch(changeCellInfo(cellNo, slider, newValue)),
     }
 }
 
 export default connect(
-    state => ({
-        display: state.cellinfo.display,
-        cellNo: state.cellinfo.cellNo,
-        cellContents: (state.map.cells[state.cellinfo.cellNo]).type,
-        cellSize: (state.map.cells[state.cellinfo.cellNo]).size,
-        cellEffort: (state.map.cells[state.cellinfo.cellNo]).effort,
-        cellType: state.map.cellTypes[state.cellinfo.cellNo],
-
-    }),
+    mapStateToProps,
     mapDispatchToProps,
 )(CellInfo);

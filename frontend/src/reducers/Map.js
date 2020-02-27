@@ -11,7 +11,6 @@ import buildings, {CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES} fro
 import {FOREST, LAND, SEA, SIZE} from "../definitions/Map";
 
 import {getSelection, numCanBuy} from "../definitions/Util";
-import {cellinfo} from "./CellInfo";
 
 function makeFilter(state) {
     // assert mode not undefined

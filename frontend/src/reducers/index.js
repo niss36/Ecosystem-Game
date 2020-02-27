@@ -4,7 +4,7 @@ import {buildings} from "./Decisions";
 import {resources} from "./Resources";
 import {map} from "./Map";
 import {logStorage} from "./LogStorage";
-import {cellinfo} from "./CellInfo";
+import {cellInfo} from "./CellInfo";
 import {Data} from "./DataStores";
 import {NEXT_TURN, START_GAME} from "../actions";
 
@@ -105,7 +105,7 @@ const mainReducer = combineReducers({
     logStorage,
     graphData,
     Data,
-    cellinfo,
+    cellInfo,
     gameStatus,
 });
 
@@ -171,7 +171,7 @@ export default function(state = {}, action) {
  *             [<resource>]: number,
  *         },
  *     ],
- *     cellinfo: {
+ *     cellInfo: {
  *         display: string,
  *         cellNo: number,
  *     },

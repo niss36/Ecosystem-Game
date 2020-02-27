@@ -9,7 +9,7 @@ const initialState = {
 
 
 
-export function cellinfo(state = initialState, action) {
+export function cellInfo(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {
             return {...state, display: "none"};
