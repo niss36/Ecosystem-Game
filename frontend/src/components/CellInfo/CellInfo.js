@@ -48,7 +48,7 @@ class CellInfo extends React.Component {
             let list = [];
             for (let x in Buildings) {
                 if (Buildings[x].requiredCellType === cellType) {
-                    list.push(<li>{Buildings[x].name}</li>);
+                    list.push(<li key={x}>{Buildings[x].name}</li>);
                 }
             }
             return list;
@@ -58,9 +58,12 @@ class CellInfo extends React.Component {
             if (props.cellContents !== undefined) {
                 return "Building: " + Buildings[props.cellContents].name;
             } else {
-                return <p>Buildings that can be built
-                    <ul>{getValidBuildings(props.cellType)}</ul>
-                </p>
+                return (
+                    <>
+                        <p>Buildings that can be built:</p>
+                        <ul>{getValidBuildings(props.cellType)}</ul>
+                    </>
+                );
             }
         }
 
