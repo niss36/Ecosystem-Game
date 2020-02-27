@@ -4,6 +4,7 @@ import buildings from "../definitions/Buildings";
  * Action types
  */
 
+export const START_GAME = "START_GAME";
 export const NEXT_TURN = "NEXT_TURN";
 export const GET_DATA_INITIAL = "GET_DATA_INITIAL";
 export const NEXT_TURN_LOADING = "NEXT_TURN_LOADING";
@@ -26,33 +27,29 @@ export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
  * Action creators
  */
 
-function getDataFunction(){
+function getDataFunction(state){
     //TODO get data;
     return 0.0;
 }
 
-export function initialise(){
-    return (dispatch, getState) =>{
-        dispatch({
-            type: NEXT_TURN_LOADING,
-        });
+export function startGame() {
+    return (dispatch, getState) => {
+        dispatch({type: NEXT_TURN_LOADING});
 
-        let data = getDataFunction();
+        const data = getDataFunction(getState());
 
         dispatch({
-            type: GET_DATA_INITIAL,
+            type: START_GAME,
             data: data,
         });
-    }
+    };
 }
 
 export function nextTurn() {
     return (dispatch, getState) => {
-        dispatch({
-            type: NEXT_TURN_LOADING,
-        });
+        dispatch({type: NEXT_TURN_LOADING});
 
-        let data = getDataFunction();
+        const data = getDataFunction(getState());
 
         dispatch({
             type: NEXT_TURN,

@@ -6,11 +6,12 @@ import {map} from "./Map";
 import {logStorage} from "./LogStorage";
 import {cellinfo} from "./CellInfo";
 import {Data} from "./DataStores";
-import {NEXT_TURN} from "../actions";
+import {NEXT_TURN, START_GAME} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 
 import {getHappiness, getIncome} from "../definitions/Util";
+import {MENU, RUNNING} from "../definitions/GameStatus";
 
 function nextTurnReducer(state, action) {
 
@@ -82,6 +83,14 @@ function graphData(state = [], action) {
     return state;
 }
 
+function gameStatus(state = MENU, action) {
+    if (action.type === START_GAME) {
+        return RUNNING;
+    }
+
+    return state;
+}
+
 const mainReducer = combineReducers({
     buildings,
     resources,
@@ -90,6 +99,7 @@ const mainReducer = combineReducers({
     graphData,
     Data,
     cellinfo,
+    gameStatus,
 });
 
 export default function(state = {}, action) {

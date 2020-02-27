@@ -1,42 +1,37 @@
 import React from "react";
+import {connect, Provider} from "react-redux";
+import {createStore, applyMiddleware} from "redux";
+import thunk from 'redux-thunk';
+
+import {startGame} from "./actions";
+import appReducer from "./reducers";
+
+import {MENU} from "./definitions/GameStatus";
 
 import Game from "./Game";
 import Menu from "./Menu";
 
 import "./App.css";
-import {createStore, applyMiddleware} from "redux";
-import appReducer from "./reducers";
-import {Provider} from "react-redux";
-import thunk from 'redux-thunk';
-import {initialise} from "./actions";
 
 const store = createStore(appReducer, applyMiddleware(thunk));
 
-function onStart() {
-    this.setState({started: true});
-    store.dispatch(initialise());
+function Body({status, start}) {
+    if (status === MENU)
+        return (<Menu onStart={start}/>);
+    else
+        return <Game/>
 }
 
+const ConnectedBody = connect(
+    state => ({status: state.gameStatus}),
+    dispatch => ({start: () => dispatch(startGame())}),
+)(Body);
+
 class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            started: true,
-        }; // TODO use redux instead of state here
-    }
-
     render() {
         return (
             <Provider store={store}>
-                {
-                    this.state.started ? (
-                        <Game/>
-                    ) : (
-                        <Menu onStart={() => {store.dispatch(initialise()); this.setState({started: true})}}/>
-                    )
-                }
+                <ConnectedBody/>
             </Provider>
         );
     }
