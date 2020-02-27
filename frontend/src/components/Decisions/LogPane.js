@@ -6,7 +6,9 @@ import {connect} from "react-redux";
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import {ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL} from "../../definitions/Buildings";
+import buildDict from '../../definitions/Buildings';
 const buildings = [ANIMAL_FARM, SETTLEMENT, HUNTING_SHACK, FISHING_BOAT, EXPENSIVE_LUMBER_MILL, CHEAP_LUMBER_MILL];
+
 
 function MakeLog(list, onLogClick, selectedIndex){
     let array = new Array(list.length);
@@ -43,7 +45,7 @@ function MakeLog(list, onLogClick, selectedIndex){
     return array;
 }
 
-function makeCleanLog(cleanDisplayed){
+function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
     let buyLog = cleanDisplayed.buy;
     let sellLog = cleanDisplayed.sell;
     let logArray = [];
@@ -54,9 +56,10 @@ function makeCleanLog(cleanDisplayed){
             for(let j = 0; j < buyLog[building].length; j++){
                 indexString = indexString + buyLog[building][j] + ', '
             }
+            let selected = (selectedLogItem.action === 'buy' && selectedLogItem.building === building);
             logArray.push(
-                <ListItem>
-                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Buy New Building'} <br/> <b>Cells:</b>{' ' + indexString} </p>
+                <ListItem button selected={selected} onClick={onLogSelect(buyLog[building], building, 'buy')}>
+                    <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Buy New Building'} <br/></p>
                 </ListItem>
             )
         }
@@ -65,9 +68,10 @@ function makeCleanLog(cleanDisplayed){
             for(let j = 0; j < sellLog[building].length; j++){
                 indexString = indexString + sellLog[building][j] + ', '
             }
+            let selected = (selectedLogItem.action === 'sell' && selectedLogItem.building === building);
             logArray.push(
-                <ListItem>
-                    <p><b>BuildingType:</b>{' ' + building} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/> <b>Cells:</b>{' ' + sellLog[building]} </p>
+                <ListItem button selected={selected} onClick={onLogSelect(sellLog[building], building, 'sell')}>
+                    <p><b>Building Type:</b>{' ' + buildDict[building].name} <br/> <b>Action Type:</b>{' Sell Old Building'} <br/></p>
                 </ListItem>
             )
         }
@@ -77,11 +81,11 @@ function makeCleanLog(cleanDisplayed){
 
 
 function makeLogPlane({...props}){
-    let anchor = null;
+    /*let anchor = null;
     const close = () => {
         anchor = null;
     };
-    /*<Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
+    <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
                 Undo Change
         <List>
             {MakeLog(props.commitChange.history[props.commitChange.displayedTurn], props.onLogSelect, props.selectedIndex)}
@@ -95,7 +99,7 @@ function makeLogPlane({...props}){
             </div>
             <div style={{maxHeight: 650, overflow: 'auto'}}>
             <List>
-                {makeCleanLog(props.commitChange.historyClean[props.commitChange.displayedTurn])}
+                {makeCleanLog(props.commitChange.historyClean[props.commitChange.displayedTurn], props.onLogSelect, props.commitChange.selectedLogItem)}
             </List>
             </div>
         </div>
@@ -114,7 +118,7 @@ const mapStateToLogProps = (state, ownProps) => {
 
 const mapDispatchToLogProps = (dispatch, ownProps) => {
     return {
-        onLogSelect: (index) => function(){ dispatch(logItemSelect(index));},
+        onLogSelect: (selectedCells, buildingType, actionType) => function(){ dispatch(logItemSelect(selectedCells, buildingType, actionType));},
         onLogConfirm: (selectedItem) => (logItemConfirm(selectedItem.index, [...selectedItem.selectedDel], dispatch)),
         onLogHistoryChange: (index) => dispatch(logChangeDisplayed(index)),
     }

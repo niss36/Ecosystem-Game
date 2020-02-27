@@ -151,10 +151,12 @@ export function setDifficulty(difficulty) {
     }
 }
 
-export function logItemSelect(index){
+export function logItemSelect(selectedHighlight, buildingType, actionType){
     return {
         type: LOG_ITEM_SELECT,
-        index: index,
+        selectedHighlight: selectedHighlight,
+        buildingType: buildingType,
+        actionType: actionType,
     }
 }
 

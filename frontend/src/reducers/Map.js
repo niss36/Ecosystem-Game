@@ -4,7 +4,7 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER,
+    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED,
 } from "../actions";
 
 import buildings from "../definitions/Buildings";
@@ -79,6 +79,7 @@ const initialState = {
     cells: new Array(SIZE * SIZE),
     builtThisTurn: new Set(),
     sameCellTypes: sameCellTypes,
+    logSelection: {building: undefined, cells: []},
 };
 
 for (let x = 0; x < SIZE * SIZE; x++) {
@@ -89,7 +90,7 @@ export function map(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, builtThisTurn: new Set()};
+            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}};
         }
 
         case START_BUY_BUILDING: {
@@ -134,6 +135,18 @@ export function map(state = initialState, action) {
             }
 
             return state;
+        case LOG_ITEM_SELECT:
+            const building = action.buildingType;
+            const selectedCells = action.selectedHighlight;
+            let newLogSelection = {building: building, cells: selectedCells};
+            if(selectedCells === state.logSelection.cells && building === state.logSelection.building) {
+                return {...state, logSelection: {building: undefined, cells: []}};
+            }
+            else{
+                return {...state, logSelection: newLogSelection};
+            }
+        case LOG_CHANGE_DISPLAYED:
+            return {...state, logSelection: {building: undefined, cells: []}};
         default:
             return state;
         }

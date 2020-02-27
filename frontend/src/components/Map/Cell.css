@@ -75,6 +75,10 @@ in order to smooth the neighbouring cells.
     background-color: red;
 }
 
+.Cell-root .Cell-content.logSelect{
+    background-color: yellow;
+}
+
 .Cell-root .Cell-content.fishingBoat {
     color: red;
     background-image: url("/icons/boat.svg");

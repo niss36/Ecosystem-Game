@@ -22,6 +22,7 @@ function mapStateToProps(state, ownProps) {
         selected: state.map.selection.cells.includes(ownProps.i),
         cellData: (state.map.cells[ownProps.i]).type, // if hunting or fishing...
         sameCellType: state.map.sameCellTypes[ownProps.i],
+        logSelection: state.map.logSelection,
     }
 }
 
