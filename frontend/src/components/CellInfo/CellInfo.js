@@ -8,28 +8,27 @@ class CellInfo extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-
-        };
+        this.state = {};
     }
 
     render() {
         function getValidBuildings(cellType) {
             let list = [];
-            for (let x in Buildings){
-                if (Buildings[x].requiredCellType === cellType){
+            for (let x in Buildings) {
+                if (Buildings[x].requiredCellType === cellType) {
                     list.push(<li>{Buildings[x].name}</li>);
                 }
             }
             return list;
         }
 
-        function getBuildingInfo(props, Buildings){
-            if (props.cellContents !== undefined){
+        function getBuildingInfo(props, Buildings) {
+            if (props.cellContents !== undefined) {
                 return "Building: " + Buildings[props.cellContents].name;
-            }
-            else{
-                return <p>Buildings that can be built<ul>{getValidBuildings(props.cellType)}</ul></p>
+            } else {
+                return <p>Buildings that can be built
+                    <ul>{getValidBuildings(props.cellType)}</ul>
+                </p>
             }
         }
 
@@ -41,10 +40,16 @@ class CellInfo extends React.Component {
                     </div>
                     <div className={"CellInfo-contents"}>
                         <div>
-                        {"Cell type: " + this.props.cellType}
+                            {"Cell type: " + this.props.cellType}
                         </div>
                         <div>
-                        {getBuildingInfo(this.props, Buildings)}
+                            {getBuildingInfo(this.props, Buildings)}
+                        </div>
+                        <div>
+                            {"Cell test: " + this.props.cellSize}
+                        </div>
+                        <div>
+                            {"Cell test: " + this.props.cellEffort}
                         </div>
                     </div>
                 </div>
@@ -53,9 +58,14 @@ class CellInfo extends React.Component {
 }
 
 export default connect(
-    state => ({display: state.cellinfo.display,
+    state => ({
+        display: state.cellinfo.display,
         cellNo: state.cellinfo.cellNo,
-        cellContents: state.map.cells[state.cellinfo.cellNo],
+        cellContents: (state.map.cells[state.cellinfo.cellNo]).type,
+        cellSize: (state.map.cells[state.cellinfo.cellNo]).size,
+        cellEffort: (state.map.cells[state.cellinfo.cellNo]).effort,
         cellType: state.map.cellTypes[state.cellinfo.cellNo],
+        // TODO ADD SIZE AND NUMBER! AND LET CHANGE IT!!
+
     }),
 )(CellInfo);

@@ -5,9 +5,17 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {nextTurn, startBuyBuilding, startRemoveBuilding, setEffort, setTaxes, setRationing} from "../../actions";
+import {nextTurn, startBuyBuilding, startRemoveBuilding, changeSliders, setTaxes, setRationing} from "../../actions";
 
-import {ANIMAL_FARM, FISHING_BOAT, HUNTING_SHACK, CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES, SETTLEMENT} from "../../definitions/Buildings";
+import {
+    ANIMAL_FARM,
+    FISHING_BOAT,
+    HUNTING_SHACK,
+    CHEAP_LUMBER_MILL,
+    EXPENSIVE_LUMBER_MILL,
+    SETTLEMENT,
+    PLANTING_TREES
+} from "../../definitions/Buildings";
 import {FOOD} from "../../definitions/Resources";
 import {canBuy} from "../../definitions/Util";
 
@@ -37,13 +45,56 @@ const ConnectedBuildingPane = connect(
     mapDispatchToProps
 )(BuildingPane);
 
+const marks = [
+    {
+        value: 10,
+        label: 'SMALL',
+    },
+    {
+        value: 500,
+        label: 'MEDIUM',
+    },
+    {
+        value: 1000,
+        label: 'LARGE',
+    },
+];
+const types = [
+    {
+        value: 0,
+        label: 'Low',
+    },
+    {
+        value: 50,
+        label: 'Mid',
+    },
+    {
+        value: 100,
+        label: 'High',
+    },
+];
+
 function EffortBuildingPane({id, ...props}) {
+
+
     return (
         <BuildingPane id={id} {...props}>
             <div style={{textAlign: "center"}} id={id + "-effort-slider"}>
-                Effort- Change this to size!
+                Max size of hunted animal in kg
             </div>
-            <Slider value={props.effects[FOOD].income} onChange={props.onSetEffort} aria-labelledby={id + "-effort-slider"}/>
+            <Slider marks={marks} min={0} max={1000} step={1} valueLabelDisplay="auto"
+
+                    value={props.size} onChange={((event, value) => {
+                        props.onChangeSliders(event, "size",value < 10 ? 10 : value);
+            })}
+                    aria-labelledby={id + "-effort-slider"}/>
+                    Effort
+            <Slider step={1} marks={types} min={0} max={100} valueLabelDisplay="auto"
+                    aria-labelledby={id + "-effort-slider"}
+                    value={props.effort}
+                    onChange={((event, value) => {
+                        props.onChangeSliders(event, "effort",value < 10 ? 10 : value);})}
+            />
         </BuildingPane>
     );
 }
@@ -54,7 +105,7 @@ const ConnectedEffortBuildingPane = connect(
         return {
             onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
             onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
-            onSetEffort: (e, v) => dispatch(setEffort(ownProps.id, v))
+            onChangeSliders: (e, slider, v) => dispatch(changeSliders(ownProps.id,slider, v))
         }
     }
 )(EffortBuildingPane);
@@ -84,7 +135,8 @@ function RationingPane(props) {
                 Rationing
             </div>
             <div>
-            <Slider value={props.rationing} onChange={props.setRationing} aria-labelledby="rationing-effort-slider"/>
+                <Slider value={props.rationing} onChange={props.setRationing}
+                        aria-labelledby="rationing-effort-slider"/>
             </div>
         </div>
     );

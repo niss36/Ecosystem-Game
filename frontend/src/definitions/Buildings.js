@@ -21,6 +21,7 @@ export default {
             [MONEY]: 100,
         },
         affectedDataTypes: [],
+        requireSilder: false,
     },
     [FISHING_BOAT]: {
         name: "Fishing Boat",
@@ -32,6 +33,7 @@ export default {
             [MONEY]: 100,
         },
         affectedDataTypes: [],
+        requireSilder: true,
     },
     [HUNTING_SHACK]: {
         name: "Hunting Shack",
@@ -43,6 +45,7 @@ export default {
             [MONEY]: 400,
         },
         affectedDataTypes: [],
+        requireSilder: true,
     },
     [CHEAP_LUMBER_MILL]: {
         name: "Cheap Lumber Mill",
@@ -54,6 +57,7 @@ export default {
             [MONEY]: 200,
         },
         affectedDataTypes: [],
+        requireSilder: false,
     },
     [EXPENSIVE_LUMBER_MILL]: {
         name: "Expensive Lumber mill",
@@ -65,6 +69,7 @@ export default {
             [MONEY]: 400,
         },
         affectedDataTypes: [],
+        requireSilder: false,
     },
     [SETTLEMENT]: {
         name: "Settlement",
@@ -73,6 +78,7 @@ export default {
         selectionSize: 2,
         costs: {},
         affectedDataTypes: [],
+        requireSilder: false,
     },
     [PLANTING_TREES]:{
         name: "Tree Planting",

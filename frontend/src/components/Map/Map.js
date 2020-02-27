@@ -20,7 +20,7 @@ function mapStateToProps(state, ownProps) {
         mode: state.map.selection.mode,
         building: state.map.selection.building,
         selected: state.map.selection.cells.includes(ownProps.i),
-        cellData: state.map.cells[ownProps.i], // if hunting or fishing...
+        cellData: (state.map.cells[ownProps.i]).type, // if hunting or fishing...
         sameCellType: state.map.sameCellTypes[ownProps.i],
         logSelection: state.map.logSelection,
     }

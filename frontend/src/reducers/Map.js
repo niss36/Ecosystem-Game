@@ -22,10 +22,11 @@ function makeFilter(state) {
 
     switch (mode) {
         case "add":
-            return i => doesCellTypeMatch(i) && !state.cells[i];
+            return i => doesCellTypeMatch(i) && !(state.cells[i].type);
 
         case "remove":
-            return i => doesCellTypeMatch(i) && state.cells[i] === building;
+            // the prob is it can be undefined
+            return i => doesCellTypeMatch(i) && (state.cells[i].type === building);
 
         default:
             throw new Error("Unknown mode " + mode);
@@ -49,7 +50,7 @@ const sameCellTypes = new Array(SIZE * SIZE);
 
 for (let x = 0; x < SIZE * SIZE; x++) {
     if (island.has(x)) {
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.3) {
             cellTypes[x] = FOREST;
         } else {
             cellTypes[x] = LAND;
@@ -81,6 +82,10 @@ const initialState = {
     sameCellTypes: sameCellTypes,
     logSelection: {building: undefined, cells: []},
 };
+
+for (let x = 0; x < SIZE * SIZE; x++) {
+    initialState.cells[x] = {type :undefined, size: undefined, effort: undefined};
+}
 
 export function map(state = initialState, action) {
     switch (action.type) {
@@ -131,7 +136,7 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of state.selection.cells) {
-                nextCells[x] = state.selection.building;
+                nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
@@ -142,30 +147,12 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of state.selection.cells) {
-                nextCells[x] = undefined;
+                nextCells[x] = {type: undefined};
                 nextBuiltThisTurn.delete(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, cells: nextCells, builtThisTurn: nextBuiltThisTurn};
         }
-
-        /*case CELL_MOUSE_CLICK: //ONLY RUNS WHEN NOT ON MODE
-            // temp code to change map
-            let nextIsland;
-            if (!state.island.includes(action.i)) {
-                nextIsland = [...state.island, action.i];
-            } else {
-                nextIsland = state.island.filter(item => item !== action.i);
-            }
-
-            let log = "[";
-            for (const x of nextIsland) {
-                log += x + ",";
-            }
-            log += "]";
-            console.log(log);
-
-            return {...state, island: nextIsland};*/
 
         case CELL_MOUSE_ENTER:
             if (state.selection.mode) { // if not undefined

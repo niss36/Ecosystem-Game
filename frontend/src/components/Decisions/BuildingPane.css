@@ -20,6 +20,10 @@
     color: #666;
 }
 
+.BuildingPane-extra {
+    padding: 0 30px;
+}
+
 .BuildingPane-footer {
     display: flex;
     justify-content: center;
