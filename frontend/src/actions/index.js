@@ -50,10 +50,10 @@ function getDataFunction(state){
         harvestedBiomasses: [],
         meanHarvestedBiomass: 0.0,
         state: {
-            herbivoreBiomasses: [],
-            herbivoreAbundances: [],
-            carnivoreBiomasses: [],
-            carnivoreAbundances: [],
+            herbivoreBiomasses: [1],
+            herbivoreAbundances: [2],
+            carnivoreBiomasses: [1],
+            carnivoreAbundances: [2],
             temperature: 0.0,
             timeElapsed: 12,
         },
@@ -63,12 +63,17 @@ function getDataFunction(state){
 function initialAPICall(){
     //TODO call initial in python
     return {
-        herbivoreBiomasses: [],
-        herbivoreAbundances: [],
-        carnivoreBiomasses: [],
-        carnivoreAbundances: [],
-        temperature: 0.0,
-        timeElapsed: 12,
+        biodiversityScores: [],     //Should be uninitialised
+        harvestedBiomasses: [],     //Should be uninitialised
+        meanHarvestedBiomass: 0.0,  //Should be uninitialised
+        state: {
+            herbivoreBiomasses: [1],
+            herbivoreAbundances: [2],
+            carnivoreBiomasses: [1],
+            carnivoreAbundances: [2],
+            temperature: 0.0,
+            timeElapsed: 12,
+        },
     }; //TODO replace with returned state from API
 }
 

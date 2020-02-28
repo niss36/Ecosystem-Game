@@ -8,42 +8,6 @@ import { MenuItem } from '@material-ui/core';
 import buildDict from '../../definitions/Buildings';
 let buildings = Object.keys(buildDict);
 
-
-/*function MakeLog(list, onLogClick, selectedIndex){
-    let array = new Array(list.length);
-    for (let i = 0; i < list.length; i++) {
-        const index = i;
-        const id = list[i].buildingType;
-        const cells = list[i].selectedCells;
-        const actionType = list[i].actionType;
-        if(i === selectedIndex) {
-            array[i] = (
-                <ListItem key={index} button selected={true}>
-                    <ul onClick={onLogClick(index)} type="square">
-                        <li>{'Action ' + (index + 1)}</li>
-                        <li>{'Action Type - ' + actionType}</li>
-                        <li>{'Building affected - ' + id}</li>
-                        <li>{'Building locations - ' + cells}</li>
-                    </ul>
-                    </ListItem>
-            )
-        }
-        else{
-            array[i] = (
-                <ListItem key={index} button>
-                    <ul onClick={onLogClick(index)} type="square">
-                        <li>{'Action ' + (index + 1)}</li>
-                        <li>{'Action Type - ' + actionType}</li>
-                        <li>{'Building affected - ' + id}</li>
-                        <li>{'Building locations - ' + cells}</li>
-                    </ul>
-                    </ListItem>
-            )
-        }
-    }
-    return array;
-}*/
-
 function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
     let buyLog = cleanDisplayed.buy;
     let sellLog = cleanDisplayed.sell;
@@ -80,16 +44,6 @@ function makeCleanLog(cleanDisplayed, onLogSelect, selectedLogItem){
 
 
 function makeLogPlane({...props}){
-    /*let anchor = null;
-    const close = () => {
-        anchor = null;
-    };
-    <Button onClick={props.onLogConfirm(props.commitChange.selectedLogIndex)} disabled={props.canConfirm} variant="outlined" fullWidth={true} >
-                Undo Change
-        <List>
-            {MakeLog(props.commitChange.history[props.commitChange.displayedTurn], props.onLogSelect, props.selectedIndex)}
-        </List>
-            </Button>*/
     return (
         <div>
             <br/>
@@ -118,7 +72,6 @@ const mapStateToLogProps = (state) => {
 const mapDispatchToLogProps = (dispatch) => {
     return {
         onLogSelect: (selectedCells, buildingType, actionType) => function(){ dispatch(logItemSelect(selectedCells, buildingType, actionType));},
-        //onLogConfirm: (selectedItem) => (logItemConfirm(selectedItem.index, [...selectedItem.selectedDel], dispatch)),
         onLogHistoryChange: (index) => dispatch(logChangeDisplayed(index)),
     }
 };

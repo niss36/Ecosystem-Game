@@ -71,6 +71,27 @@ function halfDataset(state) {
 
 function graphDataReducer(state, action) {
 
+    if(action.type === START_GAME){
+        let totalBiomass = action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n}) + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n});
+        totalBiomass = totalBiomass/(action.data.state.herbivoreBiomasses.length * 2);
+        let abundance = action.data.state.herbivoreAbundances.reduce((total, n) => {return total + n}) + action.data.state.carnivoreAbundances.reduce((total, n) => {return total + n});
+        abundance = abundance/(action.data.state.herbivoreAbundances.length * 2);
+        const nextGraphData = {...state.graphData,
+            dataPoints: [{
+                timestamp: 0,
+                [POPULATION]: state.resources[POPULATION].amount,
+                [HAPPINESS]: state.resources[HAPPINESS].amount,
+                [MONEY]: state.resources[MONEY].amount,
+                [FOOD]: state.resources[FOOD].amount,
+                [WOOD]: state.resources[WOOD].amount,
+                meanHarvestedBiomass: action.data.meanHarvestedBiomass,
+                totalBiomass: totalBiomass,
+                abundance: abundance,
+            }]
+        };
+        return {...state, graphData: nextGraphData};
+    }
+
     if (!state.graphData.dataPoints.length) {
         const nextGraphData = {...state.graphData,
             dataPoints: [{
@@ -94,6 +115,10 @@ function graphDataReducer(state, action) {
 
         const nextTimestamp = state.graphData.currentTimestamp + 1;
         if (nextTimestamp % state.graphData.modValue === 0) {
+            let totalBiomass = action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n}) + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n});
+            totalBiomass = totalBiomass/(action.data.state.herbivoreBiomasses.length * 2);
+            let abundance = action.data.state.herbivoreAbundances.reduce((total, n) => {return total + n}) + action.data.state.carnivoreAbundances.reduce((total, n) => {return total + n});
+            abundance = abundance/(action.data.state.herbivoreAbundances.length * 2);
             const nextGraphData = {
                 ...state.graphData,
                 dataPoints: [...state.graphData.dataPoints, {
@@ -103,6 +128,9 @@ function graphDataReducer(state, action) {
                     [MONEY]: state.resources[MONEY].amount,
                     [FOOD]: state.resources[FOOD].amount,
                     [WOOD]: state.resources[WOOD].amount,
+                    meanHarvestedBiomass: action.data.meanHarvestedBiomass,
+                    totalBiomass: totalBiomass,
+                    abundance: abundance
                 }],
                 currentTimestamp: nextTimestamp,
             };
