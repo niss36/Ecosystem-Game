@@ -4,7 +4,7 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_CELL_TYPE,
+    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_CELL_TYPE, CELL_MOUSE_CLICK
 } from "../actions";
 
 import buildings from "../definitions/Buildings";
@@ -80,6 +80,7 @@ const initialState = {
     builtThisTurn: new Set(),
     sameCellTypes: sameCellTypes,
     logSelection: {building: undefined, cells: []},
+    cellClicked: undefined,
 };
 
 for (let x = 0; x < SIZE * SIZE; x++) {
@@ -90,7 +91,7 @@ export function map(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}};
+            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}, cellClicked: undefined};
         }
 
         case START_BUY_BUILDING: {
@@ -104,7 +105,7 @@ export function map(state = initialState, action) {
         case END_BUY_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of action.selectedCells) {
+            for (const x of state.selection.cells) {
                 nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
@@ -115,7 +116,7 @@ export function map(state = initialState, action) {
         case END_REMOVE_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of action.selectedCells) {
+            for (const x of state.selection.cells) {
                 nextCells[x] = {type: undefined};
                 nextBuiltThisTurn.delete(x);
             }
@@ -161,6 +162,8 @@ export function map(state = initialState, action) {
             nextCellTypes[action.i] = action.newCellType;
             return {...state, cellTypes: nextCellTypes};
         }
+        case CELL_MOUSE_CLICK:
+            return {...state, cellClicked: action.i};
         default:
             return state;
         }

@@ -23,6 +23,7 @@ function mapStateToProps(state, ownProps) {
         cellData: (state.map.cells[ownProps.i]).type, // if hunting or fishing...
         sameCellType: state.map.sameCellTypes[ownProps.i],
         logSelection: state.map.logSelection,
+        cellClicked: state.map.cellClicked,
     }
 }
 

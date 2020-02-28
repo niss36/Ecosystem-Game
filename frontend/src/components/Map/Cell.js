@@ -2,17 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./Cell.css";
+import {cellMouseClick} from "../../actions";
 
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked} = this.props;
 
         let rootClasses = "Cell-root " + cellType;
 
         let classes = "Cell-content";
-
-
 
         if (selected) {
             if (mode === "remove" || mode === 'log') {
@@ -27,6 +26,10 @@ class Cell extends React.Component {
                     classes += " logSelect";
                 }
             }
+        }
+
+        if (cellClicked === i){
+            classes += " logSelect";
         }
 
         if (cellData) {
