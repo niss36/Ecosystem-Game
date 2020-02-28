@@ -122,8 +122,8 @@ function SimpleMenu(historyLength, clickFunction, currentTimeStep) {
     }
 
     return (
-        <div>
-            <div>{'Currently displayed turn: ' + (currentTimeStep + 1)}</div>
+        <div style={{padding: "0px 10px"}}>
+            <div className={"BuildingPane-header"}>{'Currently displayed turn: ' + (currentTimeStep + 1)}</div>
             <Button aria-controls="simple-menu" aria-haspopup="true" variant="outlined" onClick={handleClick}>
                 {'Change Turn Displayed'}
             </Button>

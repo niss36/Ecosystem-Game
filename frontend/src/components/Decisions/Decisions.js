@@ -123,7 +123,7 @@ class Decisions extends React.Component {
             <div className="Decisions-root panel">
                 <TabsPane variant="scrollable" tabs={tabs}>
                     {/*Food*/}
-                    <div>
+                    <div className={"scroll"}>
                         {/*Agriculture*/}
                         <ConnectedBuildingPane id={ANIMAL_FARM}/>
 
@@ -135,14 +135,14 @@ class Decisions extends React.Component {
                     </div>
 
                     {/*Forestry*/}
-                    <div>
+                    <div className={"scroll"}>
                         <ConnectedBuildingPane id={CHEAP_LUMBER_MILL}/>
                         <ConnectedBuildingPane id={EXPENSIVE_LUMBER_MILL}/>
                         <ConnectedBuildingPane id={PLANTING_TREES}/>
                     </div>
 
                     {/*Population*/}
-                    <div>
+                    <div className={"scroll"}>
                         <ConnectedBuildingPane id={SETTLEMENT}/>
                         <ul className={"sliderPanel"}>
                             <ConnectedTaxesPane/>
@@ -166,7 +166,7 @@ class Decisions extends React.Component {
                     </div>
 
                     {/*Log*/}
-                    <LogPane/>
+                    <LogPane className={"scroll"}/>
                 </TabsPane>
                 <div className="flex-grow-1"/>
                 <NextTurn/>
