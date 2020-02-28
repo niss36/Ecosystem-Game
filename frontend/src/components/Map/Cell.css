@@ -55,7 +55,7 @@ in order to smooth the neighbouring cells.
 .Cell-root.Sea .Cell-content {
     color: blue;
     background-color: var(--sea);
-    background-image: url("/icons/sea.jpg");
+    background-image: url("/icons/sea.png");
 }
 
 .Cell-root.Land .Cell-content {
