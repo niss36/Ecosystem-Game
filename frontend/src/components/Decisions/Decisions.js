@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Slider from "@material-ui/core/Slider";
 
-import {nextTurn, startBuyBuilding, startRemoveBuilding, changeSliders, setTaxes, setRationing} from "../../actions";
+import {loading, startBuyBuilding, startRemoveBuilding, changeSliders, setTaxes, setRationing} from "../../actions";
 
 import {
     ANIMAL_FARM,
@@ -105,7 +105,7 @@ const ConnectedRationingPane = connect(
 const NextTurn = connect()(({dispatch}) => (
     <Button
         className="Decisions-nextTurn"
-        onClick={() => dispatch(nextTurn())}
+        onClick={() => dispatch(loading(false))}
         size="large"
         fullWidth
         startIcon={<PlayArrow/>}

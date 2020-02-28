@@ -29,32 +29,40 @@ export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
 
 function getDataFunction(state){
     //TODO get data;
-    return 0.0;
+    return 0;
 }
 
-export function startGame() {
+export function loading(initial) {
     return (dispatch, getState) => {
-        dispatch({type: NEXT_TURN_LOADING});
-
-        const data = getDataFunction(getState());
-
         dispatch({
-            type: START_GAME,
-            data: data,
+            type: NEXT_TURN_LOADING,
+            initial: initial,
+        });
+
+        return new Promise(resolve => {
+            getDataFunction();
+            setTimeout(resolve, 1000);
+        }).then(() => {
+            dispatch(getData(initial));
         });
     };
 }
 
-export function nextTurn() {
+export function getData(initial){
     return (dispatch, getState) => {
-        dispatch({type: NEXT_TURN_LOADING});
-
-        const data = getDataFunction(getState());
-
-        dispatch({
-            type: NEXT_TURN,
-            data: data,
-        });
+        const data = getDataFunction(getState);
+        if(initial){
+            dispatch({
+                type: START_GAME,
+                data: data,
+            });
+        }
+        else{
+            dispatch({
+                type: NEXT_TURN,
+                data: data,
+            });
+        }
     }
 }
 
