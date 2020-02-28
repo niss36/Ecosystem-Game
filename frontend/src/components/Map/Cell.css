@@ -4,6 +4,8 @@
     -ms-user-select: none;
     -webkit-user-select: none;
 
+    position: relative;
+
     --sea: #64a5c1;
     --land: lightgreen;
 }
@@ -80,36 +82,39 @@ in order to smooth the neighbouring cells.
 }
 
 .Cell-root .Cell-content.fishingBoat {
-    color: red;
     background-image: url("/icons/boat.svg");
 }
 
 .Cell-root .Cell-content.huntingShack {
-    color: red;
     background-image: url("/icons/shack.svg");
 }
 
 .Cell-root .Cell-content.animalFarm{
-    color: red;
     background-image:url("/icons/barn.svg");
 }
 
 .Cell-root .Cell-content.settlement{
-    color:red;
     background-image: url("/icons/cabin.svg");
 }
 
 .Cell-root .Cell-content.cheapLumberMill{
-    color: red;
     background-image: url("/icons/stump.svg");
 }
 
 .Cell-root .Cell-content.expensiveLumberMill{
-    color:red;
     background-image: url("/icons/tree.svg");
 }
 
 .Cell-root .Cell-content.planting{
-    color:red;
     background-image: url("/icons/sprout.svg");
+}
+
+.Cell-root .Cell-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    opacity: 0.5;
 }

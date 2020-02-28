@@ -4,7 +4,7 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_CELL_TYPE, CELL_MOUSE_CLICK
+    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_OVERLAY,CHANGE_CELL_TYPE, CELL_MOUSE_CLICK
 } from "../actions";
 
 import buildings from "../definitions/Buildings";
@@ -80,6 +80,7 @@ const initialState = {
     builtThisTurn: new Set(),
     sameCellTypes: sameCellTypes,
     logSelection: {building: undefined, cells: []},
+    overlay: undefined,
     cellClicked: undefined,
 };
 
@@ -89,6 +90,8 @@ for (let x = 0; x < SIZE * SIZE; x++) {
 
 export function map(state = initialState, action) {
     switch (action.type) {
+        case CHANGE_OVERLAY:
+            return {...state, overlay: action.newOverlay};
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
             return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}, cellClicked: undefined};
@@ -151,10 +154,10 @@ export function map(state = initialState, action) {
         case CHANGE_CELL_INFO:
             let newCells = [...state.cells];
             if (action.slider === "effort") {
-                newCells[action.cellNo].effort = action.newValue
+                newCells[action.cellNo] = {...newCells[action.cellNo], effort: action.newValue}
             }
             if (action.slider === "size") {
-                newCells[action.cellNo].size = action.newValue
+                newCells[action.cellNo] = {...newCells[action.cellNo], size: action.newValue}
             }
             return {...state, cells: newCells};
         case CHANGE_CELL_TYPE: {

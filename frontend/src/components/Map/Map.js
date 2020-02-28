@@ -2,11 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 
 import IconButton from "@material-ui/core/IconButton";
-import Settings from "@material-ui/icons/Settings";
+import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import {cellMouseClick, cellMouseEnter, setDifficulty} from "../../actions";
+import {cellMouseClick, cellMouseEnter, changeCellInfo, changeOverlay, setDifficulty} from "../../actions";
 
 import {SIZE} from "../../definitions/Map";
 
@@ -20,9 +20,10 @@ function mapStateToProps(state, ownProps) {
         mode: state.map.selection.mode,
         building: state.map.selection.building,
         selected: state.map.selection.cells.includes(ownProps.i),
-        cellData: (state.map.cells[ownProps.i]).type, // if hunting or fishing...
+        cellData: (state.map.cells[ownProps.i]),
         sameCellType: state.map.sameCellTypes[ownProps.i],
         logSelection: state.map.logSelection,
+        overlay: state.map.overlay,
         cellClicked: state.map.cellClicked,
     }
 }
@@ -81,26 +82,15 @@ class SettingsMenu extends React.Component {
     close() {
         this.setState({anchor: null});
     }
-
-    swapCSS(main, diff){
-        let anchor = this.state.anchor;
-        this.setState({anchor: anchor, mainDisplay: main, diffDisplay: diff});
-    }
-
-    diffMethod(diff){
-        this.props.setDifficulty(diff);
-        this.swapCSS('block', 'none');
-    }
-
-    overlayMethod(){
-
+    overlayMethod(type){
+        return () => this.props.changeOverlay(type);
     }
 
     render() {
         return (
             <div className="Map-settings">
                 <IconButton aria-label="map settings" onClick={this.open}>
-                    <Settings/>
+                    <TrackChangesIcon/>
                 </IconButton>
                 <Menu
                     id="settings-menu"
@@ -118,19 +108,25 @@ class SettingsMenu extends React.Component {
                     open={Boolean(this.state.anchor)}
                     onClose={this.close}
                 >
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod}>Overlay</MenuItem>
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={() => {this.swapCSS('none', 'block')}}>Difficulty</MenuItem>
+                    Overlay
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("harvest")}>Harvest Amout</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("sizes")}>Average Sizes</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("boimass")}>Biomass</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(undefined)}>None</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Close</MenuItem>
-                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('easy')}}>Easy</MenuItem>
-                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('medium')}}>Medium</MenuItem>
-                    <MenuItem style={{display:this.state.diffDisplay}} onClick={() => {this.diffMethod('hard')}}>Hard</MenuItem>
                 </Menu>
             </div>
         );
     }
 }
 
+function otherDispatchToProps(dispatch) {
+    return {
+        changeOverlay: (newOverlay) => dispatch(changeOverlay(newOverlay)),
+    }
+}
+
 const ConnectedSettingsMenu = connect(
     null,
-    dispatch => ({setDifficulty: diff => dispatch(setDifficulty(diff))})
+    otherDispatchToProps,
 )(SettingsMenu);

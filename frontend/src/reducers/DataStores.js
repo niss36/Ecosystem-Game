@@ -8,7 +8,6 @@ let initialStores = {
 };
 
 export function updateData(state= initialStores, action) {
-    console.log(action);
     switch(action.type){
         case NEXT_TURN_LOADING:
             return {...state, loading: true, initial: action.initial};

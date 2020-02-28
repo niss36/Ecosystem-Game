@@ -23,6 +23,7 @@ export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
 export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
 export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
+export const CHANGE_OVERLAY = "CHANGE_OVERLAY";
 export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
 
 /**
@@ -43,7 +44,7 @@ export function loading(initial) {
 
         return new Promise(resolve => {
             getDataFunction();
-            setTimeout(resolve, 1000);
+            setTimeout(resolve, 0);
         }).then(() => {
             dispatch(getData(initial));
         });
@@ -92,6 +93,13 @@ export function getData(initial){
             }
         }
     }
+}
+export function changeOverlay(newOverlay) {
+    return {
+        type: CHANGE_OVERLAY,
+        newOverlay: newOverlay
+    }
+
 }
 
 export function startBuyBuilding(id) {

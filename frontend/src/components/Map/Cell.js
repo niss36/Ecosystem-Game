@@ -13,6 +13,8 @@ class Cell extends React.Component {
 
         let classes = "Cell-content";
 
+        let overlayClasses = "Cell-overlay";
+
         if (selected) {
             if (mode === "remove" || mode === 'log') {
                 classes += " remove";
@@ -33,7 +35,7 @@ class Cell extends React.Component {
         }
 
         if (cellData) {
-            classes += " " + cellData;
+            classes += " " + cellData.type;
         }
 
         for (const side of ["top", "right", "bottom", "left"]) {
@@ -42,9 +44,40 @@ class Cell extends React.Component {
             }
         }
 
+        let overlayStyle = {};
+        switch (this.props.overlay) {
+            case "harvest":
+                if (cellData.effort !== undefined) {
+                    console.log(this.props.overlay);
+
+                    let effort = cellData.effort;
+                    const start = [255, 0, 0];
+                    const end = [0, 255, 0];
+
+                    const out = new Array(3);
+                    for (let i = 0; i < 3; i++) {
+                        out[i] = Math.floor(start[i] * effort / 100 + end[i] * (100 - effort) / 100);
+                    }
+
+                    console.log(effort);
+                    console.log(out);
+
+                    overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
+                }
+
+                break;
+            case "sizes":
+                break;
+            case "boimass":
+                break;
+            case undefined:
+                break;
+        }
+
         return (
             <div className={rootClasses} onClick={onMouseClick} onMouseEnter={onMouseEnter}>
-                <div className={classes}>
+                <div className={overlayClasses} style={overlayStyle}/>
+                <div className={classes} >
                     {/*{i}*/}
                 </div>
             </div>
