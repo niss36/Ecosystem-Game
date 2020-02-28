@@ -18,10 +18,12 @@ function normalResource(id) {
                 return state;
             }
             case END_REMOVE_BUILDING: {
-                const cost = buildings[action.id].costs[id];
-                if (cost) {
-                    const sellValue = Math.floor(cost *  action.builtThisTurn + cost * (action.selectedCells.length - action.builtThisTurn) * 0.80);
-                    return {...state, amount: state.amount + sellValue};
+                if (!action.noRefund) {
+                    const cost = buildings[action.id].costs[id];
+                    if (cost) {
+                        const sellValue = Math.floor(cost * action.builtThisTurn + cost * (action.selectedCells.length - action.builtThisTurn) * 0.80);
+                        return {...state, amount: state.amount + sellValue};
+                    }
                 }
 
                 return state;

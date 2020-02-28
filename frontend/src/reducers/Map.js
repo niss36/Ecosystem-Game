@@ -4,10 +4,10 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO,
+    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_CELL_TYPE,
 } from "../actions";
 
-import buildings, {CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES} from "../definitions/Buildings";
+import buildings from "../definitions/Buildings";
 import {FOREST, LAND, SEA, SIZE} from "../definitions/Map";
 
 import {getSelection, numCanBuy} from "../definitions/Util";
@@ -90,37 +90,7 @@ export function map(state = initialState, action) {
     switch (action.type) {
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-
-            const nextCellTypes = [...state.cellTypes];
-            const nextCells = [...state.cells];
-            for (let x = 0; x < SIZE * SIZE; x++) {
-                if(nextCellTypes[x]===FOREST){
-                    if(nextCells[x].type===CHEAP_LUMBER_MILL){
-                        let i=Math.random();
-                        if(i>0.7){
-                            nextCellTypes[x]=LAND;
-                            nextCells[x].type = undefined;
-                        }
-                    }
-                    else if(nextCells[x].type===EXPENSIVE_LUMBER_MILL){
-                        let j=Math.random();
-                        if(j>0.9){
-                            nextCellTypes[x]=LAND;
-                            nextCells[x].type= undefined;
-                        }
-                    }
-                }
-                else if(nextCellTypes[x]===LAND){
-                    if(nextCells[x].type===PLANTING_TREES){
-                        let k=Math.random();
-                        if(k>0.9){
-                            nextCellTypes[x]=FOREST;
-                            nextCells[x].type=undefined;
-                        }
-                    }
-                }
-            }
-            return {...state, selection: nextSelection, builtThisTurn: new Set(), cells: nextCells, cellTypes: nextCellTypes, logSelection: {building: undefined, cells: []}};
+            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}};
         }
 
         case START_BUY_BUILDING: {
@@ -134,7 +104,7 @@ export function map(state = initialState, action) {
         case END_BUY_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of state.selection.cells) {
+            for (const x of action.selectedCells) {
                 nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
@@ -145,7 +115,7 @@ export function map(state = initialState, action) {
         case END_REMOVE_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of state.selection.cells) {
+            for (const x of action.selectedCells) {
                 nextCells[x] = {type: undefined};
                 nextBuiltThisTurn.delete(x);
             }
@@ -186,7 +156,11 @@ export function map(state = initialState, action) {
                 newCells[action.cellNo].size = action.newValue
             }
             return {...state, cells: newCells};
-
+        case CHANGE_CELL_TYPE: {
+            const nextCellTypes = [...state.cellTypes];
+            nextCellTypes[action.i] = action.newCellType;
+            return {...state, cellTypes: nextCellTypes};
+        }
         default:
             return state;
         }

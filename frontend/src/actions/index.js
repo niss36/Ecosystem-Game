@@ -1,4 +1,5 @@
-import buildings from "../definitions/Buildings";
+import buildings, {CHEAP_LUMBER_MILL, EXPENSIVE_LUMBER_MILL, PLANTING_TREES} from "../definitions/Buildings";
+import {FOREST, LAND, SIZE} from "../definitions/Map";
 
 /**
  * Action types
@@ -22,6 +23,7 @@ export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
 export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
 export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
+export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
 
 /**
  * Action creators
@@ -62,6 +64,32 @@ export function getData(initial){
                 type: NEXT_TURN,
                 data: data,
             });
+
+            const state = getState();
+            const {cells, cellTypes} = state.map;
+
+            for (let i = 0; i < SIZE * SIZE; i++) {
+                if (cellTypes[i] === FOREST) {
+                    if (cells[i].type === CHEAP_LUMBER_MILL) {
+                        if (Math.random() > 0.7) {
+                            dispatch(endRemoveBuilding(CHEAP_LUMBER_MILL, [i], true));
+                            dispatch(changeCellType(i, LAND));
+                        }
+                    } else if (cells[i].type === EXPENSIVE_LUMBER_MILL) {
+                        if (Math.random() > 0.9) {
+                            dispatch(endRemoveBuilding(EXPENSIVE_LUMBER_MILL, [i], true));
+                            dispatch(changeCellType(i, LAND));
+                        }
+                    }
+                } else if (cellTypes[i] === LAND) {
+                    if (cells[i].type === PLANTING_TREES) {
+                        if (Math.random() > 0.9) {
+                            dispatch(endRemoveBuilding(PLANTING_TREES, [i], true));
+                            dispatch(changeCellType(i, FOREST));
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -80,7 +108,7 @@ export function startRemoveBuilding(id) {
     }
 }
 
-export function endBuyBuilding(id,selectedCells, isLog) {
+export function endBuyBuilding(id, selectedCells) {
     return (dispatch,getState) => {
         const state = getState();
         let size = undefined;
@@ -94,14 +122,13 @@ export function endBuyBuilding(id,selectedCells, isLog) {
             type: END_BUY_BUILDING,
             id: id,
             selectedCells: selectedCells,
-            isLog: isLog,
             size: size,
             effort: effort,
         });
     }
 }
 
-export function endRemoveBuilding(id,selectedCells, isLog) {
+export function endRemoveBuilding(id, selectedCells, noRefund) {
     return (dispatch, getState) => {
         const state = getState();
 
@@ -117,7 +144,7 @@ export function endRemoveBuilding(id,selectedCells, isLog) {
             id: id,
             selectedCells: selectedCells,
             builtThisTurn: builtThisTurn,
-            isLog: isLog,
+            noRefund: noRefund,
         });
     };
 }
@@ -172,7 +199,6 @@ export function cellMouseClick(i) {
         const state = getState();
         const {mode, building, cells} = state.map.selection;
 
-
         if (mode === "add") { // buying buildings
             dispatch(endBuyBuilding(building, cells));
         } else if (mode === "remove") { // removing buildings
@@ -206,29 +232,17 @@ export function logItemSelect(selectedHighlight, buildingType, actionType){
     }
 }
 
-export function logItemConfirm(index, selectedDel, dispatch){
-
-    return () => {
-        if(selectedDel !== undefined) {
-            for (let x = selectedDel.length - 1; x >= 0; x--) {
-                if (selectedDel[x].actionType === 'Buy') {
-                    dispatch(endRemoveBuilding(selectedDel[x].buildingType, selectedDel[x].selectedCells, true))
-                } else {
-                    dispatch(endBuyBuilding(selectedDel[x].buildingType, selectedDel[x].selectedCells, true))
-                }
-            }
-        }
-        dispatch({
-            type: LOG_ITEM_CONFIRM,
-            selectedDel: selectedDel,
-            index: index,
-        })
-    };
-}
-
 export function logChangeDisplayed(indexNew){
     return{
         type: LOG_CHANGE_DISPLAYED,
         index: indexNew,
+    }
+}
+
+export function changeCellType(i, newCellType) {
+    return {
+        type: CHANGE_CELL_TYPE,
+        i: i,
+        newCellType: newCellType,
     }
 }
