@@ -196,7 +196,7 @@ class EcosystemData extends React.Component {
 }
 
 const ConnectedEcosystemData = connect(
-    state => ({data: state.graphData}),
+    state => ({data: state.graphData.dataPoints}),
     dispatch => ({}),
 )(EcosystemData);
 

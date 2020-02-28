@@ -12,6 +12,7 @@ import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
 import {getHappiness, getIncome} from "../definitions/Util";
+import {graphData} from "./GraphData";
 
 function nextTurnReducer(state, action) {
 
@@ -52,39 +53,68 @@ function nextTurnReducer(state, action) {
     return state;
 }
 
+function halfDataset(state) {
+
+    const newModValue = state.graphData.modValue * 2;
+    const newDataPoints = state.graphData.dataPoints.filter(
+        function (el) {
+            return (el.timestamp % newModValue === 0)
+        }
+    );
+
+    const newGraphData = {...state.graphData,
+        dataPoints: newDataPoints,
+        modValue: newModValue,
+    };
+    return {...state, graphData: newGraphData};
+}
+
 function graphDataReducer(state, action) {
 
-    if (!state.graphData.length) {
-        const nextGraphData = [{
-            timestamp: 0,
-            [POPULATION]: state.resources[POPULATION].amount,
-            [HAPPINESS]: state.resources[HAPPINESS].amount,
-            [MONEY]: state.resources[MONEY].amount,
-            [FOOD]: state.resources[FOOD].amount,
-            [WOOD]: state.resources[WOOD].amount,
-        }];
+    if (!state.graphData.dataPoints.length) {
+        const nextGraphData = {...state.graphData,
+            dataPoints: [{
+                timestamp: 0,
+                [POPULATION]: state.resources[POPULATION].amount,
+                [HAPPINESS]: state.resources[HAPPINESS].amount,
+                [MONEY]: state.resources[MONEY].amount,
+                [FOOD]: state.resources[FOOD].amount,
+                [WOOD]: state.resources[WOOD].amount,
+            }]
+        };
 
         return {...state, graphData: nextGraphData};
     }
 
     if (action.type === NEXT_TURN) {
-        const nextTimestamp = state.graphData[state.graphData.length-1].timestamp + 1;
-        const nextGraphData = [...state.graphData, {
-            timestamp: nextTimestamp,
-            [POPULATION]: state.resources[POPULATION].amount,
-            [HAPPINESS]: state.resources[HAPPINESS].amount,
-            [MONEY]: state.resources[MONEY].amount,
-            [FOOD]: state.resources[FOOD].amount,
-            [WOOD]: state.resources[WOOD].amount,
-        }];
+        //check dataset isn't too large, if so half it
+        if (state.graphData.dataPoints.length === 30) {
+            state = halfDataset(state);
+        }
 
-        return {...state, graphData: nextGraphData};
+        const nextTimestamp = state.graphData.currentTimestamp + 1;
+        if (nextTimestamp % state.graphData.modValue === 0) {
+            const nextGraphData = {
+                ...state.graphData,
+                dataPoints: [...state.graphData.dataPoints, {
+                    timestamp: nextTimestamp,
+                    [POPULATION]: state.resources[POPULATION].amount,
+                    [HAPPINESS]: state.resources[HAPPINESS].amount,
+                    [MONEY]: state.resources[MONEY].amount,
+                    [FOOD]: state.resources[FOOD].amount,
+                    [WOOD]: state.resources[WOOD].amount,
+                }],
+                currentTimestamp: nextTimestamp,
+            };
+
+            return {...state, graphData: nextGraphData};
+        }
+        else {
+            const nextGraphData = {...state.graphData, currentTimestamp: nextTimestamp};
+            return {...state, graphData: nextGraphData};
+        }
     }
 
-    return state;
-}
-
-function graphData(state = [], action) {
     return state;
 }
 
@@ -165,12 +195,16 @@ export default function(state = {}, action) {
  *     data: {
  *         ??
  *     },
- *     graphData: [
- *         {
- *             timestamp: number,
- *             [<resource>]: number,
- *         },
- *     ],
+ *     graphData: {
+ *         dataPoints: [
+ *             {
+ *                 timestamp: number,
+ *                 [<resource>]: number,
+ *             },
+ *        ],
+ *        currentTimestamp: number,
+ *        modValue: number,
+ *     },
  *     cellInfo: {
  *         display: string,
  *         cellNo: number,
