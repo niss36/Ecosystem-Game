@@ -105,7 +105,7 @@ export function map(state = initialState, action) {
         case END_BUY_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of state.selection.cells) {
+            for (const x of action.selectedCells) {
                 nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
@@ -116,7 +116,7 @@ export function map(state = initialState, action) {
         case END_REMOVE_BUILDING: {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
-            for (const x of state.selection.cells) {
+            for (const x of action.selectedCells) {
                 nextCells[x] = {type: undefined};
                 nextBuiltThisTurn.delete(x);
             }
