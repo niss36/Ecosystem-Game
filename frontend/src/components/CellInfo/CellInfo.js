@@ -21,17 +21,15 @@ function getValidBuildings(cellType) {
 
 function getBuildingInfo(props) {
     if (props.cellContents) {
-        return (<p>Building: {Buildings[props.cellContents].name}</p>);
+        return (<div className={"buildingPane"}>{Buildings[props.cellContents].name}</div>);
     } else {
         return (
-            <>
-                <p>
-                    Buildings that can be built:
-                </p>
+            <div className={"buildingPane"}>
+                No building, you could possibly build
                 <ul>
                     {getValidBuildings(props.cellType)}
                 </ul>
-            </>
+            </div>
         );
     }
 }
@@ -48,10 +46,11 @@ class CellInfo extends React.Component {
                         <h3>Cell Info</h3>
                     </div>
                     <div className={"CellInfo-contents"}>
-                        <p>
-                            Cell type: {cellType}
-                        </p>
+                        <div style={{borderBottom: "1px solid lightgray"}}>
+                            {cellType}
+                        </div>
                         {getBuildingInfo(this.props)}
+                        <div style={{padding: "20px"}}>
                         {
                             cellSize && (
                                 <SizeSliderPane value={cellSize} onChange={value => this.props.changeCell(cellNo, "size", value)}/>
@@ -62,6 +61,7 @@ class CellInfo extends React.Component {
                                 <EffortSliderPane value={cellEffort} onChange={value => this.props.changeCell(cellNo, "effort", value)}/>
                             )
                         }
+                        </div>
                     </div>
                 </div>
             </div>);
