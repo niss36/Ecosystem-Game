@@ -50,6 +50,37 @@ Number
 
 ## Endpoints
 
+### NewModel
+path = /model/new
+
+**Method** POST
+
+**Data** None
+
+**Response**
+```
+STATE = {
+  herbivoreBiomasses: Number[],
+  herbivoreAbundances: Number[],
+  carnivoreBiomasses: Number[],
+  carnivoreAbundances: Number[],
+  temperature: Number, //in C
+  timeElapsed: Number, //months
+}
+
+DATA = {
+  biodiversityScores: Number[]
+  harvestedBiomasses: Number[],
+  meanHarvestedBiomass: Number,
+  state: STATE,
+}
+
+response.data = {
+  guid: String,
+  data: DATA,
+}
+```
+
 ### UpdateModel
 path = /model/{guid}/update
 
