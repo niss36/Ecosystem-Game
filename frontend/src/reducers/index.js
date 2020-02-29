@@ -146,12 +146,28 @@ function graphDataReducer(state, action) {
     return state;
 }
 
-function gameStatus(state = RUNNING, action) {
+function gameStatus(state = MENU, action) {
     if (action.type === START_GAME) {
         return RUNNING;
     } else if (action.type === "QUIT") { // TODO
         return MENU;
     }
+
+    return state;
+}
+
+function guid(state = null, action) {
+    if (action.type === START_GAME)
+        return action.guid;
+
+    return state;
+}
+
+function timestamp(state = 0, action) {
+    if (action.type === START_GAME)
+        return 0;
+    else if (action.type === NEXT_TURN)
+        return state + 1;
 
     return state;
 }
@@ -165,6 +181,8 @@ const mainReducer = combineReducers({
     Data,
     cellInfo,
     gameStatus,
+    guid,
+    timestamp,
 });
 
 export default function(state = {}, action) {
@@ -238,5 +256,7 @@ export default function(state = {}, action) {
  *         cellNo: number,
  *     },
  *     gameStatus: string,
+ *     guid: string,
+ *     timestamp: number,
  * }
  */

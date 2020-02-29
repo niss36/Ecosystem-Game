@@ -30,51 +30,55 @@ export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
  * Action creators
  */
 
-function getDataFunction(state){
-    //TODO Call Next Function API
-    let efforts = new Array(SIZE * SIZE);
-    let sizes = new Array(SIZE * SIZE);
-    for(let i = 0; i < state().map.cells.length; i++){
-        efforts[i] = state().map.cells[i].effort;
-        sizes[i] = state().map.cells[i].size;
-    }
-    let JSONToSend = {
-        harvestEffort: efforts,
-        lowerHarvestBodymass: sizes,
-        timestep: 12,
-        warming: 0.0,
+function initialFetch() {
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    const params = {
+        method: "POST",
+        headers: headers,
     };
 
-    return {
-        biodiversityScores: [],
-        harvestedBiomasses: [],
-        meanHarvestedBiomass: 0.0,
-        state: {
-            herbivoreBiomasses: [1],
-            herbivoreAbundances: [2],
-            carnivoreBiomasses: [1],
-            carnivoreAbundances: [2],
-            temperature: 0.0,
-            timeElapsed: 12,
-        },
-    }; //TODO replace with returned values.
+    return fetch("http://localhost:8000/model/new", params).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw Error(response.statusText);
+    })
 }
 
-function initialAPICall(){
-    //TODO call initial in python
-    return {
-        biodiversityScores: [],     //Should be uninitialised
-        harvestedBiomasses: [],     //Should be uninitialised
-        meanHarvestedBiomass: 0.0,  //Should be uninitialised
-        state: {
-            herbivoreBiomasses: [1],
-            herbivoreAbundances: [2],
-            carnivoreBiomasses: [1],
-            carnivoreAbundances: [2],
-            temperature: 0.0,
-            timeElapsed: 12,
-        },
-    }; //TODO replace with returned state from API
+function fetchData(state) {
+
+    const efforts = new Array(SIZE * SIZE);
+    const sizes = new Array(SIZE * SIZE);
+
+    for (let i = 0; i < SIZE * SIZE; i++) {
+        efforts[i] = (state.map.cells[i].effort || 0) / 100;
+        sizes[i] = (state.map.cells[i].size || 0);
+    }
+
+    const data = {
+        harvestEffort: efforts,
+        lowerHarvestBodymass: sizes,
+        timestep: 12, // TODO do we want to do 12 months at a time?
+        warming: 0,
+    };
+
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Content-Type", "application/json");
+    const params = {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(data),
+    };
+
+    return fetch("http://localhost:8000/model/" + state.guid + "/update", params).then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw Error(response.statusText);
+    });
 }
 
 export function loading(initial) {
@@ -84,59 +88,59 @@ export function loading(initial) {
             initial: initial,
         });
 
-        return new Promise(resolve => {
-            getDataFunction(getState);
-            setTimeout(resolve, 0);
-        }).then(() => {
-            dispatch(getData(initial));
-        });
+        if (initial) {
+            return initialFetch().then(({guid, data}) => {
+                console.log(data.harvestedBiomasses);
+                dispatch({
+                    type: START_GAME,
+                    guid: guid,
+                    data: data,
+                });
+            });
+        } else {
+            return fetchData(getState()).then(data => {
+                console.log(data.harvestedBiomasses);
+                dispatch(getData(data));
+            });
+        }
     };
 }
 
-export function getData(initial){
+export function getData(data){
     return (dispatch, getState) => {
-        if(initial){
-            const data = initialAPICall(getState);
-            dispatch({
-                type: START_GAME,
-                data: data,
-            });
-        }
-        else{
-            const data = getDataFunction(getState);
-            dispatch({
-                type: NEXT_TURN,
-                data: data,
-            });
+        dispatch({
+            type: NEXT_TURN,
+            data: data,
+        });
 
-            const state = getState();
-            const {cells, cellTypes} = state.map;
+        const state = getState();
+        const {cells, cellTypes} = state.map;
 
-            for (let i = 0; i < SIZE * SIZE; i++) {
-                if (cellTypes[i] === FOREST) {
-                    if (cells[i].type === CHEAP_LUMBER_MILL) {
-                        if (Math.random() > 0.7) {
-                            dispatch(endRemoveBuilding(CHEAP_LUMBER_MILL, [i], true));
-                            dispatch(changeCellType(i, LAND));
-                        }
-                    } else if (cells[i].type === EXPENSIVE_LUMBER_MILL) {
-                        if (Math.random() > 0.9) {
-                            dispatch(endRemoveBuilding(EXPENSIVE_LUMBER_MILL, [i], true));
-                            dispatch(changeCellType(i, LAND));
-                        }
+        for (let i = 0; i < SIZE * SIZE; i++) {
+            if (cellTypes[i] === FOREST) {
+                if (cells[i].type === CHEAP_LUMBER_MILL) {
+                    if (Math.random() > 0.7) {
+                        dispatch(endRemoveBuilding(CHEAP_LUMBER_MILL, [i], true));
+                        dispatch(changeCellType(i, LAND));
                     }
-                } else if (cellTypes[i] === LAND) {
-                    if (cells[i].type === PLANTING_TREES) {
-                        if (Math.random() > 0.9) {
-                            dispatch(endRemoveBuilding(PLANTING_TREES, [i], true));
-                            dispatch(changeCellType(i, FOREST));
-                        }
+                } else if (cells[i].type === EXPENSIVE_LUMBER_MILL) {
+                    if (Math.random() > 0.9) {
+                        dispatch(endRemoveBuilding(EXPENSIVE_LUMBER_MILL, [i], true));
+                        dispatch(changeCellType(i, LAND));
+                    }
+                }
+            } else if (cellTypes[i] === LAND) {
+                if (cells[i].type === PLANTING_TREES) {
+                    if (Math.random() > 0.9) {
+                        dispatch(endRemoveBuilding(PLANTING_TREES, [i], true));
+                        dispatch(changeCellType(i, FOREST));
                     }
                 }
             }
         }
     }
 }
+
 export function changeOverlay(newOverlay) {
     return {
         type: CHANGE_OVERLAY,
