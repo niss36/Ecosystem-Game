@@ -4,7 +4,13 @@ import {
     START_REMOVE_BUILDING,
     END_BUY_BUILDING,
     END_REMOVE_BUILDING,
-    CELL_MOUSE_ENTER, LOG_ITEM_SELECT, LOG_CHANGE_DISPLAYED, CHANGE_CELL_INFO, CHANGE_OVERLAY,CHANGE_CELL_TYPE, CELL_MOUSE_CLICK
+    CELL_MOUSE_ENTER,
+    LOG_ITEM_SELECT,
+    LOG_CHANGE_DISPLAYED,
+    CHANGE_CELL_INFO,
+    CHANGE_OVERLAY,
+    CHANGE_CELL_TYPE,
+    CELL_MOUSE_CLICK
 } from "../actions";
 
 import buildings from "../definitions/Buildings";
@@ -85,7 +91,7 @@ const initialState = {
 };
 
 for (let x = 0; x < SIZE * SIZE; x++) {
-    initialState.cells[x] = {type :undefined, size: undefined, effort: undefined};
+    initialState.cells[x] = {type: undefined, size: undefined, effort: undefined};
 }
 
 export function map(state = initialState, action) {
@@ -94,7 +100,13 @@ export function map(state = initialState, action) {
             return {...state, overlay: action.newOverlay};
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
-            return {...state, selection: nextSelection, builtThisTurn: new Set(), logSelection: {building: undefined, cells: []}, cellClicked: undefined};
+            return {
+                ...state,
+                selection: nextSelection,
+                builtThisTurn: new Set(),
+                logSelection: {building: undefined, cells: []},
+                cellClicked: undefined
+            };
         }
 
         case START_BUY_BUILDING: {
@@ -109,7 +121,7 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of action.selectedCells) {
-                nextCells[x] = {type: state.selection.building,size:action.size,effort:action.effort};//TODO change size and num
+                nextCells[x] = {type: state.selection.building, size: action.size, effort: action.effort};//TODO change size and num
                 nextBuiltThisTurn.add(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
@@ -143,10 +155,9 @@ export function map(state = initialState, action) {
             const building = action.buildingType;
             const selectedCells = action.selectedHighlight;
             let newLogSelection = {building: building, cells: selectedCells};
-            if(selectedCells === state.logSelection.cells && building === state.logSelection.building) {
+            if (selectedCells === state.logSelection.cells && building === state.logSelection.building) {
                 return {...state, logSelection: {building: undefined, cells: []}};
-            }
-            else{
+            } else {
                 return {...state, logSelection: newLogSelection};
             }
         case LOG_CHANGE_DISPLAYED:
@@ -166,8 +177,11 @@ export function map(state = initialState, action) {
             return {...state, cellTypes: nextCellTypes};
         }
         case CELL_MOUSE_CLICK:
+            if (state.cellClicked && action.i === state.cellClicked) { // dupiate code to cellinfo but lazy af
+                return {...state, cellClicked: undefined};
+            }
             return {...state, cellClicked: action.i};
         default:
             return state;
-        }
     }
+}

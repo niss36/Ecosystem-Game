@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
 
-    overflow: hidden;
 }
 
 .Decisions-nextTurn.MuiButton-root {
@@ -13,4 +12,9 @@
 .sliderPanel{
     border-bottom: 1px solid lightgray;
     padding: 5px 20px;
+}
+
+.scroll{
+    overflow-y: auto;
+    max-height: 700px;
 }

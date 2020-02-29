@@ -7,13 +7,13 @@
 }
 
 .BuildingPane-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
 
-    font-size: 1.125rem;
-    margin-bottom: 8px;
-}
+     font-size: 1.125rem;
+     margin-bottom: 8px;
+ }
 
 .BuildingPane-description {
     margin-bottom: 6px;

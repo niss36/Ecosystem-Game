@@ -31,8 +31,50 @@ export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
  */
 
 function getDataFunction(state){
-    //TODO get data;
-    return 0;
+    //TODO Call Next Function API
+    let efforts = new Array(SIZE * SIZE);
+    let sizes = new Array(SIZE * SIZE);
+    for(let i = 0; i < state().map.cells.length; i++){
+        efforts[i] = state().map.cells[i].effort;
+        sizes[i] = state().map.cells[i].size;
+    }
+    let JSONToSend = {
+        harvestEffort: efforts,
+        lowerHarvestBodymass: sizes,
+        timestep: 12,
+        warming: 0.0,
+    };
+
+    return {
+        biodiversityScores: [],
+        harvestedBiomasses: [],
+        meanHarvestedBiomass: 0.0,
+        state: {
+            herbivoreBiomasses: [1],
+            herbivoreAbundances: [2],
+            carnivoreBiomasses: [1],
+            carnivoreAbundances: [2],
+            temperature: 0.0,
+            timeElapsed: 12,
+        },
+    }; //TODO replace with returned values.
+}
+
+function initialAPICall(){
+    //TODO call initial in python
+    return {
+        biodiversityScores: [],     //Should be uninitialised
+        harvestedBiomasses: [],     //Should be uninitialised
+        meanHarvestedBiomass: 0.0,  //Should be uninitialised
+        state: {
+            herbivoreBiomasses: [1],
+            herbivoreAbundances: [2],
+            carnivoreBiomasses: [1],
+            carnivoreAbundances: [2],
+            temperature: 0.0,
+            timeElapsed: 12,
+        },
+    }; //TODO replace with returned state from API
 }
 
 export function loading(initial) {
@@ -43,7 +85,7 @@ export function loading(initial) {
         });
 
         return new Promise(resolve => {
-            getDataFunction();
+            getDataFunction(getState);
             setTimeout(resolve, 0);
         }).then(() => {
             dispatch(getData(initial));
@@ -53,14 +95,15 @@ export function loading(initial) {
 
 export function getData(initial){
     return (dispatch, getState) => {
-        const data = getDataFunction(getState);
         if(initial){
+            const data = initialAPICall(getState);
             dispatch({
                 type: START_GAME,
                 data: data,
             });
         }
         else{
+            const data = getDataFunction(getState);
             dispatch({
                 type: NEXT_TURN,
                 data: data,

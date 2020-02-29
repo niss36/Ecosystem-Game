@@ -16,6 +16,7 @@ export function cellInfo(state = initialState, action) {
         }
         case CELL_MOUSE_CLICK:{
             if (state.display === "block" && action.i === state.cellNo ){
+
                 return {...state, display: "none", cellNo: action.i};
             }
             return {...state, display: "block", cellNo: action.i};
