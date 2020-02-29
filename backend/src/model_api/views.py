@@ -2,31 +2,47 @@ import uuid
 import json
 
 from django.http.response import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .model.model import new_model
 
 __model = None  # TODO use persistent storage
 
 
+@csrf_exempt
 def new(request):
-    global __model
+    if request.method == 'OPTIONS':
+        response = HttpResponse()
+        response['allow'] = 'OPTIONS,POST'
+        return response
 
-    __model = new_model()
+    if request.method == 'POST':
+        global __model
 
-    guid = uuid.uuid4()
+        __model = new_model()
 
-    return JsonResponse({
-        'guid': str(guid),
-        'data': {
-            'biodiversityScores': __model.compute_biodiversity_scores(),
-            'harvestedBiomasses': [0] * __model.n_cells,
-            'meanHarvestedBiomass': 0,
-            'state': __model.return_state(),
-        }
-    })
+        guid = uuid.uuid4()
+
+        return JsonResponse({
+            'guid': str(guid),
+            'data': {
+                'biodiversityScores': __model.compute_biodiversity_scores(),
+                'harvestedBiomasses': [0] * __model.n_cells,
+                'meanHarvestedBiomass': 0,
+                'state': __model.return_state(),
+            }
+        })
+
+    return HttpResponse(status=400)
 
 
+@csrf_exempt
 def update(request, guid):
+    if request.method == 'OPTIONS':
+        response = HttpResponse()
+        response['allow'] = 'OPTIONS,POST'
+        return response
+
     if request.method == 'POST':
 
         data = json.loads(request.body)

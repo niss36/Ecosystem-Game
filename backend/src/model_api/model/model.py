@@ -149,20 +149,20 @@ class MadingleyModel:
         }
 
     def compute_biodiversity_scores(self):
-        bio_score = [0 for c in range(self.n_cells)]
+        bio_score = np.zeros(self.n_cells)
         for c in range(self.n_cells):
             max_herbivore = max(np.where(np.array(self.herbivore_biomasses[c]) > 0)[0])
             max_carnivore = max(np.where(np.array(self.carnivore_biomasses[c]) > 0)[0])
             bio_score[c] = max_herbivore + (2 * max_carnivore)
 
-        return bio_score
+        return bio_score.tolist()
 
     def return_state(self):
         return {
-            'herbivoreBiomasses': [np.sum(self.herbivore_biomasses[c]) for c in range(self.n_cells)],
-            'herbivoreAbundances': [np.sum(self.herbivore_abundances[c]) for c in range(self.n_cells)],
-            'carnivoreBiomasses': [np.sum(self.carnivore_biomasses[c]) for c in range(self.n_cells)],
-            'carnivoreAbundances': [np.sum(self.carnivore_abundances[c]) for c in range(self.n_cells)],
+            'herbivoreBiomasses': np.sum(self.herbivore_biomasses, axis=1).tolist(),
+            'herbivoreAbundances': np.sum(self.herbivore_abundances, axis=1).tolist(),
+            'carnivoreBiomasses': np.sum(self.carnivore_biomasses, axis=1).tolist(),
+            'carnivoreAbundances': np.sum(self.carnivore_abundances, axis=1).tolist(),
             'temperature': self.temperature,
             'timeElapsed': self.months_elapsed,
         }
@@ -177,8 +177,8 @@ class MadingleyModel:
 
         return {
             'biodiversityScores': biodiversity_scores,
-            'harvestedBiomasses': harvested_biomass,
-            'meanHarvestedBiomass': mean_harvested_biomass,
+            'harvestedBiomasses': harvested_biomass.tolist(),
+            'meanHarvestedBiomass': float(mean_harvested_biomass),
             'state': self.return_state(),
         }
 
