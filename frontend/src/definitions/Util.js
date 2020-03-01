@@ -105,17 +105,6 @@ export function computeTaxIncome(state) {
     return state.resources.taxes * state.resources[POPULATION].amount; // TODO
 }
 
-export function getBiomass(state) {
-    //TODO: get sum of biomass over all cells
-    /*
-    function sum(total, el) {
-        return total + el.biomass;
-    }
-    state.cells.reduce(sum, 0);
-     */
-    return 10;
-}
-
 export function computeFoodEaten(state) {
     //TODO: make food eaten actually proportional to food produced by hunters,
     // requires more thought than I currently have the capacity for

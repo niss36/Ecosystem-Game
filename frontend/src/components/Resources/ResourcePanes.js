@@ -59,7 +59,7 @@ const ExpansionPanelDetails = withStyles(theme => ({
     },
 }), {name: "ExpansionPanelDetails"})(MuiExpansionPanelDetails);
 
-export function GenericResourcePane({id, value, children}) {
+function GenericResourcePane({id, value, children}) {
 
     const {name, icon} = resources[id];
 
@@ -174,15 +174,6 @@ export function PopulationPane({id, amount, max}) {
 
     const value = <><span className={classes.root + " " + className}>{amount}</span> / {max}</>;
 
-    return (
-        <GenericResourcePane id={id} value={value}>
-            <div/>
-        </GenericResourcePane>
-    );
-}
-
-export function BiomassPane({id, amount}) {
-    const value = <div>{amount}</div>;
     return (
         <GenericResourcePane id={id} value={value}>
             <div/>
