@@ -120,7 +120,10 @@ Cell.propTypes = {
     mode: PropTypes.string,
     building: PropTypes.string,
     selected: PropTypes.bool,
-    cellData: PropTypes.string,
+    cellData: PropTypes.shape({
+        type: PropTypes.string,
+        effort: PropTypes.number,
+    }),
     onMouseEnter: PropTypes.func,
     onMouseClick: PropTypes.func
 };
