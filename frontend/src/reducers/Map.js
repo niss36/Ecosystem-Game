@@ -10,7 +10,7 @@ import {
     CHANGE_CELL_INFO,
     CHANGE_OVERLAY,
     CHANGE_CELL_TYPE,
-    CELL_MOUSE_CLICK
+    CELL_MOUSE_CLICK, START_GAME
 } from "../actions";
 
 import buildings from "../definitions/Buildings";
@@ -88,6 +88,7 @@ const initialState = {
     logSelection: {building: undefined, cells: []},
     overlay: undefined,
     cellClicked: undefined,
+    data: undefined,
 };
 
 for (let x = 0; x < SIZE * SIZE; x++) {
@@ -100,8 +101,10 @@ export function map(state = initialState, action) {
             return {...state, overlay: action.newOverlay};
         case NEXT_TURN: {
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};
+
             return {
                 ...state,
+                data: action.data,
                 selection: nextSelection,
                 builtThisTurn: new Set(),
                 logSelection: {building: undefined, cells: []},
@@ -109,6 +112,10 @@ export function map(state = initialState, action) {
             };
         }
 
+        case START_GAME:
+            return {
+                ...state, data: action.data,
+            };
         case START_BUY_BUILDING: {
             return {...state, selection: {...state.selection, mode: "add", building: action.id, cells: []}};
         }
@@ -132,7 +139,7 @@ export function map(state = initialState, action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of action.selectedCells) {
-                nextCells[x] = {type: undefined};
+                nextCells[x] = {...state.cells[x],type: undefined,size : undefined, effort: undefined};
                 nextBuiltThisTurn.delete(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};

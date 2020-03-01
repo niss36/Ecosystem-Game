@@ -37,7 +37,7 @@ function getBuildingInfo(props) {
 class CellInfo extends React.Component {
     render() {
 
-        const {display, cellNo, cellType, cellSize, cellEffort} = this.props;
+        const {display, cellNo, cellType, cellSize, cellEffort,cellHarvest,cellBoimass,cellAbundances} = this.props;
 
         return (
             <div className={"CellInfo-root"} style={{display: display}}>
@@ -46,6 +46,15 @@ class CellInfo extends React.Component {
                         <h3>Cell Info</h3>
                     </div>
                     <div className={"CellInfo-contents"}>
+                        <div  style={{borderBottom: "1px solid lightgray"}}>
+                            {Math.round(cellHarvest) } h {Math.round((cellHarvest/3_500_000)*100)}
+                        </div>
+                        <div style={{borderBottom: "1px solid lightgray"}}>
+                            {Math.round(cellBoimass)} boimass
+                        </div>
+                        <div style={{borderBottom: "1px solid lightgray"}}>
+                            {Math.round(cellAbundances)} abundances
+                        </div>
                         <div style={{borderBottom: "1px solid lightgray"}}>
                             {cellType}
                         </div>
@@ -79,6 +88,9 @@ function mapStateToProps(state) {
         cellSize: cell.size,
         cellEffort: cell.effort,
         cellType: state.map.cellTypes[i],
+        cellHarvest: state.map.data.harvestedBiomasses[i],
+        cellBoimass: state.map.data.state.herbivoreBiomasses[i]+state.map.data.state.carnivoreBiomasses[i],
+        cellAbundances: state.map.data.state.herbivoreAbundances[i]+state.map.data.state.herbivoreAbundances[i],
     }
 }
 

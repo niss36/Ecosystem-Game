@@ -1,5 +1,5 @@
 import buildings from "./Buildings";
-import {POPULATION, MONEY, FOOD} from "./Resources";
+import {POPULATION, MONEY, FOOD,WOOD} from "./Resources";
 import {SIZE} from "./Map";
 
 export function getMaxPopulation(state) {
@@ -47,6 +47,13 @@ export function getIncome(resourceId, state) {
         breakdown["consumption"] = -foodEaten;
         total -= foodEaten;
     }
+
+    if (resourceId === WOOD) {
+        const woodGain = 10;
+        breakdown["woodGain"] = +woodGain;
+        total += woodGain;
+    }
+
 
     return {total, breakdown};
 }

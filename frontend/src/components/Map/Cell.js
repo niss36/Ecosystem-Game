@@ -7,13 +7,14 @@ import {cellMouseClick} from "../../actions";
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked,harvestAmout} = this.props;
 
         let rootClasses = "Cell-root " + cellType;
 
         let classes = "Cell-content";
 
         let overlayClasses = "Cell-overlay";
+
 
         if (selected) {
             if (mode === "remove" || mode === 'log') {
@@ -22,16 +23,15 @@ class Cell extends React.Component {
                 classes += " " + building;
             }
         }
+        else if (cellClicked === i){
+            classes += " clickSelect";
+        }
         else{
             if (logSelection.building !== undefined) {
                 if (logSelection.cells.includes(i)) {
                     classes += " logSelect";
                 }
             }
-        }
-
-        if (cellClicked === i){
-            classes += " logSelect";
         }
 
         if (cellData) {
@@ -69,6 +69,26 @@ class Cell extends React.Component {
             case "sizes":
                 break;
             case "boimass":
+
+                if (harvestAmout !== undefined) {
+                    console.log(harvestAmout);
+
+                    let chnagedamout = (harvestAmout/3_500_000)*100;
+                    console.log(chnagedamout);
+                    const start = [255, 0, 0];
+                    const end = [0, 255, 0];
+
+                    const out = new Array(3);
+                    for (let i = 0; i < 3; i++) {
+                        out[i] = Math.floor(start[i] * chnagedamout / 100 + end[i] * (100 - chnagedamout) / 100);
+                    }
+
+
+                    overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
+                }
+
+
+
                 break;
             case undefined:
                 break;
