@@ -164,11 +164,13 @@ class MadingleyModel:
             nharvested_h = harvest_effort[c] * herbivore_abundances[c][indices]
             herbivore_abundances[c][indices] -= nharvested_h
             # FIXME why aren't biomasses updated?
+            self.herbivore_biomasses[c][indices] = herbivore_abundances[c][indices] * bodymasses[indices]
 
             # shape (len(indices),)
             nharvested_c = harvest_effort[c] * carnivore_abundances[c][indices]
             carnivore_abundances[c][indices] -= nharvested_c
             # FIXME why aren't biomasses updated?
+            self.carnivore_biomasses[c][indices] = carnivore_abundances[c][indices] * bodymasses[indices]
 
             # shape (len(indices),)
             nharvested = nharvested_h + nharvested_c
@@ -197,8 +199,8 @@ class MadingleyModel:
             'timeElapsed': self.months_elapsed,
         }
 
-    def step(self, harvest_effort, lower_harvest_bodymass, warming):
-        result = self.UpdateModelState(1, warming, lower_harvest_bodymass, harvest_effort)
+    def step(self, n_months, harvest_effort, lower_harvest_bodymass, warming):
+        result = self.UpdateModelState(n_months, warming, lower_harvest_bodymass, harvest_effort)
 
         harvested_biomass = result['harvested_biomass']
         mean_harvested_biomass = np.mean(harvested_biomass)

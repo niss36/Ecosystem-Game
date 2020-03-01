@@ -21,7 +21,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
-    <option name="requirementsPath" value="C:\Users\niss3\Desktop\Cambridge\IB\Group Project\Ecosystem-Game\backend\requirements.txt" />
+    <option name="requirementsPath" value="$MODULE_DIR$\backend\requirements.txt" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="renderExternalDocumentation" value="true" />
