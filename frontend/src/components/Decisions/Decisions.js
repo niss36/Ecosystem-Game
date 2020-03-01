@@ -8,7 +8,6 @@ import Slider from "@material-ui/core/Slider";
 import {loading, startBuyBuilding, startRemoveBuilding, changeSliders, setTaxes, setRationing} from "../../actions";
 
 import {
-    ANIMAL_FARM,
     FISHING_BOAT,
     HUNTING_SHACK,
     CHEAP_LUMBER_MILL,
@@ -124,9 +123,7 @@ class Decisions extends React.Component {
                 <TabsPane variant="scrollable" tabs={tabs}>
                     {/*Food*/}
                     <div className={"scroll"}>
-                        {/*Agriculture*/}
-                        <ConnectedBuildingPane id={ANIMAL_FARM}/>
-
+                        
                         {/*Fisheries*/}
                         <ConnectedEffortBuildingPane id={FISHING_BOAT}/>
 

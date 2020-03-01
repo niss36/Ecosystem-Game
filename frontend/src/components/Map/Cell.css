@@ -93,9 +93,6 @@ in order to smooth the neighbouring cells.
     background-image: url("/icons/shack.svg");
 }
 
-.Cell-root .Cell-content.animalFarm{
-    background-image:url("/icons/barn.svg");
-}
 
 .Cell-root .Cell-content.settlement{
     background-image: url("/icons/cabin.svg");
