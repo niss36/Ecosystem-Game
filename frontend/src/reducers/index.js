@@ -8,10 +8,10 @@ import {cellInfo} from "./CellInfo";
 import {Data} from "./DataStores";
 import {NEXT_TURN, START_GAME} from "../actions";
 
-import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD, BIOMASS} from "../definitions/Resources";
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
-import {getBiomass, getHappiness, getIncome} from "../definitions/Util";
+import {getHappiness, getIncome} from "../definitions/Util";
 import {graphData} from "./GraphData";
 
 function nextTurnReducer(state, action) {
@@ -19,10 +19,6 @@ function nextTurnReducer(state, action) {
     if (action.type === NEXT_TURN) {
 
         const nextResources = {...state.resources};
-
-        //Total biomass calculation
-        const biomass = getBiomass(state);
-        nextResources[BIOMASS] = {...nextResources[BIOMASS], amount: biomass};
 
         //Happiness calculation:
         const happiness = getHappiness(state).amount;
@@ -96,7 +92,6 @@ function graphDataReducer(state, action) {
         return {...state, graphData: nextGraphData};
     }
 
-    //initial state initalisation
     if (!state.graphData.dataPoints.length) {
         const nextGraphData = {...state.graphData,
             dataPoints: [{
@@ -135,7 +130,7 @@ function graphDataReducer(state, action) {
                     [WOOD]: state.resources[WOOD].amount,
                     meanHarvestedBiomass: action.data.meanHarvestedBiomass,
                     totalBiomass: totalBiomass,
-                    abundance: abundance,
+                    abundance: abundance
                 }],
                 currentTimestamp: nextTimestamp,
             };
@@ -209,7 +204,6 @@ export default function(state = {}, action) {
  *                 type: string,
  *                 size: number,
  *                 effort: number,
- *                 //TODO: biomass: number,
  *             }
  *         ],
  *         builtThisTurn: Set(number),
@@ -234,9 +228,6 @@ export default function(state = {}, action) {
  *             {
  *                 timestamp: number,
  *                 [<resource>]: number,
- *                 meanHarvestedBiomass: number,
-                   totalBiomass: number,
-                   abundance: number,
  *             },
  *        ],
  *        currentTimestamp: number,

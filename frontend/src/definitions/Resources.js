@@ -3,7 +3,6 @@ export const HAPPINESS = "happiness";
 export const MONEY = "money";
 export const FOOD = "food";
 export const WOOD = "wood";
-export const BIOMASS = "biomass";
 
 export default {
     [POPULATION]: {
@@ -25,9 +24,5 @@ export default {
     [WOOD]: {
         name: "Wood",
         icon: "/icons/logs.svg",
-    },
-    [BIOMASS]: {
-        name: "Total Biomass",
-        icon: "/icons/unknown.svg",
     }
 }
