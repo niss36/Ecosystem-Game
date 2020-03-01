@@ -107,7 +107,6 @@ export function map(state = initialState, action) {
                 selection: nextSelection,
                 builtThisTurn: new Set(),
                 logSelection: {building: undefined, cells: []},
-                cellClicked: undefined
             };
         }
 
