@@ -24,7 +24,7 @@ class Cell extends React.Component {
             }
         }
         else if (cellClicked === i){
-            classes += " logSelect";
+            classes += " clickSelect";
         }
         else{
             if (logSelection.building !== undefined) {
