@@ -22,7 +22,7 @@ import {FOOD, HAPPINESS, MONEY, POPULATION, WOOD} from "../../definitions/Resour
 const GreenCheckbox = withStyles({
     root: {
         '&$checked': {
-            color: green[600],
+            color: orange[600],
         },
     },
     checked: {},
@@ -38,9 +38,9 @@ const GreenRadio = withStyles({
 })(props => <Radio color="default" {...props} />);
 const PurpleRadio = withStyles({
     root: {
-        color: purple[400],
+        color:"#3333ff",
         '&$checked': {
-            color: purple[600],
+            color:"#3366ff",
         },
     },
     checked: {},
@@ -118,7 +118,7 @@ class EcosystemData extends React.Component {
                                                   dot={<CustomizedDot/>} isAnimationActive={false}/>
                                             :
                                             //if population graph
-                                            <Line type="monotone" stroke="purple" dataKey={POPULATION}
+                                            <Line type="monotone" stroke="#3366ff" dataKey={POPULATION}
                                                   isAnimationActive={false}/>)
                                         }
 
@@ -148,7 +148,7 @@ class EcosystemData extends React.Component {
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Checkbox color={"primary"} checked={this.state.woodChecked} onChange={() => this.setState({woodChecked: !this.state.woodChecked})} />
+                                            <Checkbox color={"brown"} checked={this.state.woodChecked} onChange={() => this.setState({woodChecked: !this.state.woodChecked})} />
                                         }
                                         label="Wood"
                                     />
@@ -165,7 +165,7 @@ class EcosystemData extends React.Component {
 
                                         {(this.state.moneyChecked &&
                                             //if money checked, draw its line
-                                            <Line type="monotone" stroke="green" dataKey={MONEY}
+                                            <Line type="monotone" stroke="#ffcc33" dataKey={MONEY}
                                                   isAnimationActive={false}/>
                                         )}
 
@@ -177,7 +177,7 @@ class EcosystemData extends React.Component {
 
                                         {(this.state.woodChecked &&
                                             //if wood checked, draw its line
-                                            <Line type="monotone" stroke="blue" dataKey={WOOD}
+                                            <Line type="monotone" stroke="#834C28" dataKey={WOOD}
                                                   isAnimationActive={false}/>
                                         )}
                                         <YAxis/>
