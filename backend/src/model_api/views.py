@@ -1,5 +1,6 @@
 import uuid
 import json
+import numpy as np
 
 from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +21,7 @@ def new(request):
         global __model
 
         __model = new_model()
+        __model.step(50, np.zeros(__model.n_cells), np.zeros(__model.n_cells), 0)
 
         guid = uuid.uuid4()
 
@@ -52,7 +54,7 @@ def update(request, guid):
         timestep = data['timestep']  # TODO ignored
         warming = data['warming']
 
-        r = __model.step(harvest_effort, lower_harvest_bodymass, warming)
+        r = __model.step(1, harvest_effort, lower_harvest_bodymass, warming)
         return JsonResponse(r)
 
     return HttpResponse(status=400)

@@ -120,12 +120,12 @@ export function computeFoodEaten(state) {
 }
 
 export function canBuy(buildingId, state) {
-    const costs = buildings[buildingId].costs;
-
-    for (const [resource, cost] of Object.entries(costs)) {
-        if (cost > state.resources[resource].amount)
-            return false;
-    }
+    // const costs = buildings[buildingId].costs;
+    //
+    // for (const [resource, cost] of Object.entries(costs)) {
+    //     if (cost > state.resources[resource].amount)
+    //         return false;
+    // }
 
     return true;
 }
@@ -135,11 +135,11 @@ export function numCanBuy(buildingId, state) {
 
     let max = Infinity;
 
-    for (const [resource, cost] of Object.entries(costs)) {
-        const num = Math.floor(state.resources[resource].amount / cost);
-        if (num < max)
-            max = num;
-    }
+    // for (const [resource, cost] of Object.entries(costs)) {
+    //     const num = Math.floor(state.resources[resource].amount / cost);
+    //     if (num < max)
+    //         max = num;
+    // }
 
     return max;
 }
