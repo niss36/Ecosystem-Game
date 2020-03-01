@@ -15,6 +15,7 @@ class Cell extends React.Component {
 
         let overlayClasses = "Cell-overlay";
 
+
         if (selected) {
             if (mode === "remove" || mode === 'log') {
                 classes += " remove";
@@ -22,16 +23,15 @@ class Cell extends React.Component {
                 classes += " " + building;
             }
         }
+        else if (cellClicked === i){
+            classes += " logSelect";
+        }
         else{
             if (logSelection.building !== undefined) {
                 if (logSelection.cells.includes(i)) {
                     classes += " logSelect";
                 }
             }
-        }
-
-        if (cellClicked === i){
-            classes += " logSelect";
         }
 
         if (cellData) {
