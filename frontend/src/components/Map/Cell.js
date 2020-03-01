@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 
 import "./Cell.css";
 import {cellMouseClick} from "../../actions";
+import {BIOMASS, HARVEST_EFFORT, HARVESTED_BIOMASS} from "../../definitions/Map";
 
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked,harvestAmout, cellBiomass} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked,harvestAmount, cellBiomass} = this.props;
 
         let rootClasses = "Cell-root " + cellType;
 
@@ -45,61 +46,43 @@ class Cell extends React.Component {
         }
 
         let overlayStyle = {};
+        const start = [255, 0, 0];
+        const end = [0, 255, 0];
+        const out = new Array(3);
         switch (this.props.overlay) {
-            case "harvest":
+            case HARVEST_EFFORT:
+
                 if (cellData.effort !== undefined) {
-                    console.log(this.props.overlay);
-
                     let effort = cellData.effort;
-                    const start = [255, 0, 0];
-                    const end = [0, 255, 0];
-
-                    const out = new Array(3);
                     for (let i = 0; i < 3; i++) {
                         out[i] = Math.floor(start[i] * effort / 100 + end[i] * (100 - effort) / 100);
                     }
 
-                    console.log(effort);
-                    console.log(out);
-
                     overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
                 }
 
                 break;
-            case "sizes":
-                const start = [0, 255, 0];
-                const end = [255, 0, 0];
-                const out = new Array(3);
-                let normalised = Math.floor(cellBiomass/Math.pow(10, 8));
+            case BIOMASS:
                 for (let i = 0; i<3; i++) {
-                    out[i] = Math.floor(start[i] * normalised / 100 + end[i] * (100 - normalised) / 100);
+                    out[i] = Math.floor(end[i] * cellBiomass / 100 + start[i] * (100 - cellBiomass) / 100);
                 }
                 overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
                 break;
 
-            case "boimass":
+            case HARVESTED_BIOMASS:
 
-                if (harvestAmout !== undefined) {
-                    console.log(harvestAmout);
+                if (harvestAmount !== undefined) {
 
-                    let chnagedamout = (harvestAmout/3_500_000)*100;
-                    console.log(chnagedamout);
-                    const start = [255, 0, 0];
-                    const end = [0, 255, 0];
-
-                    const out = new Array(3);
                     for (let i = 0; i < 3; i++) {
-                        out[i] = Math.floor(start[i] * chnagedamout / 100 + end[i] * (100 - chnagedamout) / 100);
+                        out[i] = Math.floor(start[i] * harvestAmount / 100 + end[i] * (100 - harvestAmount) / 100);
                     }
-
-
                     overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
                 }
 
-
-
                 break;
+
             case undefined:
+            default:
                 break;
         }
 

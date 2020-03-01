@@ -12,9 +12,10 @@ import {NEXT_TURN, NEXT_TURN_LOADING, START_GAME} from "../actions";
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
-import {getHappiness, getIncome} from "../definitions/Util";
+import {getHappiness, getIncome, normalize} from "../definitions/Util";
 
 function nextTurnReducer(state, action) {
+    console.log(state.map.data);
 
     if (action.type === NEXT_TURN) {
 
@@ -70,22 +71,22 @@ function halfDataset(state) {
 }
 
 function sumBiomass(action) {
-    return Math.floor((
+    return(
         action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n})
         + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n})
-    )/(Math.pow(10,9)));
+    );
 
 }
 
 function sumHarvestedBiomass(action) {
-    return Math.floor((action.data.harvestedBiomasses.reduce((total, n) => {return total + n}))/Math.pow(10,9));
+    return action.data.harvestedBiomasses.reduce((total, n) => {return total + n})
 }
 
 function graphDataReducer(state, action) {
 
     if(action.type === START_GAME) {
-        const totalBiomass = sumBiomass(action);
-        const totalHarvestedBiomass = sumHarvestedBiomass(action);
+        const totalBiomass = normalize(sumBiomass(action));
+        const totalHarvestedBiomass = normalize(sumHarvestedBiomass(action));
         const nextGraphData = {...state.graphData,
             dataPoints: [{
                 timestamp: 0,

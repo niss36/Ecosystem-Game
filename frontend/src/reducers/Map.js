@@ -104,7 +104,6 @@ export function map(state = initialState, action) {
 
             return {
                 ...state,
-                data: action.data,
                 selection: nextSelection,
                 builtThisTurn: new Set(),
                 logSelection: {building: undefined, cells: []},
@@ -112,10 +111,6 @@ export function map(state = initialState, action) {
             };
         }
 
-        case START_GAME:
-            return {
-                ...state, data: action.data,
-            };
         case START_BUY_BUILDING: {
             return {...state, selection: {...state.selection, mode: "add", building: action.id, cells: []}};
         }

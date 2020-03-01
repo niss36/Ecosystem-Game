@@ -182,3 +182,7 @@ export function getSelection(i, building) {
             return [];
     }
 }
+
+export function normalize(val) {
+    return Math.floor(val/Math.pow(10,8)) * 2;
+}
