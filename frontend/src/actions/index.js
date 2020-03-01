@@ -90,7 +90,7 @@ export function loading(initial) {
 
         if (initial) {
             return initialFetch().then(({guid, data}) => {
-                console.log(data.harvestedBiomasses);
+                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch({
                     type: START_GAME,
                     guid: guid,
@@ -99,7 +99,7 @@ export function loading(initial) {
             });
         } else {
             return fetchData(getState()).then(data => {
-                console.log(data.harvestedBiomasses);
+                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch(getData(data));
             });
         }

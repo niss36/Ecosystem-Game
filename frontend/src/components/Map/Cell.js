@@ -7,7 +7,7 @@ import {cellMouseClick} from "../../actions";
 class Cell extends React.Component {
 
     render() {
-        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked,harvestAmout} = this.props;
+        const {i, cellType, mode, building, selected, cellData, sameCellType, onMouseEnter, onMouseClick, logSelection, cellClicked,harvestAmout, cellBiomass} = this.props;
 
         let rootClasses = "Cell-root " + cellType;
 
@@ -67,7 +67,16 @@ class Cell extends React.Component {
 
                 break;
             case "sizes":
+                const start = [0, 255, 0];
+                const end = [255, 0, 0];
+                const out = new Array(3);
+                let normalised = Math.floor(cellBiomass/Math.pow(10, 8));
+                for (let i = 0; i<3; i++) {
+                    out[i] = Math.floor(start[i] * normalised / 100 + end[i] * (100 - normalised) / 100);
+                }
+                overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
                 break;
+
             case "boimass":
 
                 if (harvestAmout !== undefined) {

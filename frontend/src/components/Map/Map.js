@@ -15,6 +15,7 @@ import Cell from "./Cell";
 import "./Map.css";
 
 function mapStateToProps(state, ownProps) {
+    let biomass = state.map.data.state.herbivoreBiomasses[ownProps.i] + state.map.data.state.carnivoreBiomasses[ownProps.i];
     return {
         cellType: state.map.cellTypes[ownProps.i],
         mode: state.map.selection.mode,
@@ -26,6 +27,7 @@ function mapStateToProps(state, ownProps) {
         overlay: state.map.overlay,
         cellClicked: state.map.cellClicked,
         harvestAmout: state.map.data.harvestedBiomasses[ownProps.i],
+        cellBiomass: biomass
     }
 }
 
