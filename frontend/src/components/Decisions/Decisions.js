@@ -46,7 +46,6 @@ const ConnectedBuildingPane = connect(
 function EffortBuildingPane({id, ...props}) {
     return (
         <BuildingPane id={id} {...props}>
-            <SizeSliderPane value={props.size} onChange={value => props.onChangeSliders("size", value)}/>
             <EffortSliderPane value={props.effort} onChange={value => props.onChangeSliders("effort", value)}/>
         </BuildingPane>
     );

@@ -23,29 +23,35 @@ export function getIncome(resourceId, state) {
 
     const breakdown = {};
 
-    for (const [building, buildingState] of Object.entries(state.buildings)) {
+    if (resourceId !== FOOD) {
+        for (const [building, buildingState] of Object.entries(state.buildings)) {
 
-        if (buildingState.numberBuilt) {
-            const effect = buildingState.effects[resourceId];
-            if (effect && effect.income) {
-                const buildingIncome = buildingState.numberBuilt * effect.income;
+            if (buildingState.numberBuilt) {
+                const effect = buildingState.effects[resourceId];
+                if (effect && effect.income) {
+                    const buildingIncome = buildingState.numberBuilt * effect.income;
 
-                breakdown[building] = buildingIncome;
-                total += buildingIncome;
+                    breakdown[building] = buildingIncome;
+                    total += buildingIncome;
+                }
             }
         }
+    } else {
+        const totalHarvested = state.modelData.harvestedBiomasses.reduce((total, n) => {return total + n}, 0);
+        const foodProduced = Math.floor((totalHarvested)/Math.pow(10,9)) * 25;
+        breakdown["production"] = foodProduced;
+        total += foodProduced;
+
+
+        const foodEaten = computeFoodEaten(state);
+        breakdown["consumption"] = -foodEaten;
+        total -= foodEaten;
     }
 
     if (resourceId === MONEY) {
         const taxIncome = computeTaxIncome(state);
         breakdown["taxes"] = taxIncome;
         total += taxIncome;
-    }
-
-    if (resourceId === FOOD) {
-        const foodEaten = computeFoodEaten(state);
-        breakdown["consumption"] = -foodEaten;
-        total -= foodEaten;
     }
 
     if (resourceId === WOOD) {
@@ -120,12 +126,12 @@ export function computeFoodEaten(state) {
 }
 
 export function canBuy(buildingId, state) {
-    // const costs = buildings[buildingId].costs;
-    //
-    // for (const [resource, cost] of Object.entries(costs)) {
-    //     if (cost > state.resources[resource].amount)
-    //         return false;
-    // }
+    const costs = buildings[buildingId].costs;
+
+    for (const [resource, cost] of Object.entries(costs)) {
+        if (cost > state.resources[resource].amount)
+            return false;
+    }
 
     return true;
 }
@@ -135,11 +141,11 @@ export function numCanBuy(buildingId, state) {
 
     let max = Infinity;
 
-    // for (const [resource, cost] of Object.entries(costs)) {
-    //     const num = Math.floor(state.resources[resource].amount / cost);
-    //     if (num < max)
-    //         max = num;
-    // }
+    for (const [resource, cost] of Object.entries(costs)) {
+        const num = Math.floor(state.resources[resource].amount / cost);
+        if (num < max)
+            max = num;
+    }
 
     return max;
 }

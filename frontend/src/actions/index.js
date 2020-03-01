@@ -54,7 +54,7 @@ function fetchData(state) {
 
     for (let i = 0; i < SIZE * SIZE; i++) {
         efforts[i] = (state.map.cells[i].effort || 0) / 100;
-        sizes[i] = (state.map.cells[i].size || 0);
+        sizes[i] = 0.1;
     }
 
     const data = {

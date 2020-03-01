@@ -89,17 +89,13 @@ class EcosystemData extends React.Component {
             //Checkbox state for Biomass tab
             totalBiomassChecked: true,
             totalHarvestedChecked: false,
-
-            //Current datakey being plotted by graph on Biodiversity tab
-            currentBiodiversityPlot: "totalBiodiversityScore",
-
         }
     }
 
     render() {
         return (
             <div className="panel">
-                <TabsPane tabs={["Population & Infrastructure", "Resources", "Biomass", "Biodiversity"]}>
+                <TabsPane tabs={["Population & Infrastructure", "Resources", "Biomass",]}>
                     <div>
                         <Grid container>
                             <Grid item xs={3} className={"flex-container"}>
@@ -231,45 +227,6 @@ class EcosystemData extends React.Component {
                                         <Tooltip/>
                                         <CartesianGrid strokeDasharray="3 3"/>
                                         <XAxis dataKey="timestamp"/>
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <div>
-                        <Grid container>
-                            <Grid item xs={3}>
-                                <div>
-                                    <button onClick={() =>
-                                        this.setState({currentBiodiversityPlot: "totalBiodiversityScore"})
-                                    }>Biodiversity Score</button>
-                                </div>
-                                <button onClick={() =>
-                                    this.setState({currentBiodiversityPlot: "abundance"})
-                                }>Abundance</button>
-                            </Grid>
-                            <Grid item xs={9}>
-                                <ResponsiveContainer width="100%" height={400}>
-                                    <LineChart
-                                        data={this.props.data}
-                                        margin={{
-                                            top: 20, right: 20, left: 0, bottom: 10,
-                                        }}
-                                    >
-                                        {(this.state.currentBiodiversityPlot === "totalBiodiversityScore" ?
-                                            //if Biodiversity Score graph
-                                            <Line type="monotone" stroke="green" dataKey="totalBiodiversityScore"
-                                                  isAnimationActive={false}/>
-                                            :
-                                            //if Abundance graph
-                                            <Line type="monotone" stroke="purple" dataKey="abundance"
-                                                  isAnimationActive={false}/>)
-                                        }
-
-                                        <CartesianGrid strokeDasharray="3 3"/>
-                                        <YAxis/>
-                                        <XAxis dataKey="timestamp"/>
-                                        <Tooltip/>
                                     </LineChart>
                                 </ResponsiveContainer>
                             </Grid>

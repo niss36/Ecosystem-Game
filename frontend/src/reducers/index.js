@@ -70,34 +70,21 @@ function halfDataset(state) {
 }
 
 function sumBiomass(action) {
-    return (
+    return Math.floor((
         action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n})
         + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n})
-    );
+    )/(Math.pow(10,9)));
 
-}
-
-function sumAbundance(action) {
-    return (
-        action.data.state.herbivoreAbundances.reduce((total, n) => {return total + n}, 0)
-        + action.data.state.carnivoreAbundances.reduce((total, n) => {return total + n}, 0)
-    );
-}
-
-function sumBiodiversityScores(action) {
-    return action.data.biodiversityScores.reduce((total, n) => {return total + n}, 0);
 }
 
 function sumHarvestedBiomass(action) {
-    return action.data.harvestedBiomasses.reduce((total, n) => {return total + n})
+    return Math.floor((action.data.harvestedBiomasses.reduce((total, n) => {return total + n}))/Math.pow(10,9));
 }
 
 function graphDataReducer(state, action) {
 
     if(action.type === START_GAME) {
         const totalBiomass = sumBiomass(action);
-        const totalAbundance = sumAbundance(action);
-        const totalBiodiversityScore = sumBiodiversityScores(action);
         const totalHarvestedBiomass = sumHarvestedBiomass(action);
         const nextGraphData = {...state.graphData,
             dataPoints: [{
@@ -109,8 +96,6 @@ function graphDataReducer(state, action) {
                 [WOOD]: state.resources[WOOD].amount,
                 totalHarvestedBiomass: totalHarvestedBiomass,
                 totalBiomass: totalBiomass,
-                abundance: totalAbundance,
-                totalBiodiversityScore: totalBiodiversityScore,
             }]
         };
         return {...state, graphData: nextGraphData};
@@ -125,8 +110,6 @@ function graphDataReducer(state, action) {
         const nextTimestamp = state.graphData.currentTimestamp + 1;
         if (nextTimestamp % state.graphData.modValue === 0) {
             const totalBiomass = sumBiomass(action);
-            const totalAbundance = sumAbundance(action);
-            const totalBiodiversityScore = sumBiodiversityScores(action);
             const totalHarvestedBiomass = sumHarvestedBiomass(action);
             const nextGraphData = {
                 ...state.graphData,
@@ -139,8 +122,6 @@ function graphDataReducer(state, action) {
                     [WOOD]: state.resources[WOOD].amount,
                     totalHarvestedBiomass: totalHarvestedBiomass,
                     totalBiomass: totalBiomass,
-                    abundance: totalAbundance,
-                    totalBiodiversityScore: totalBiodiversityScore,
                 }],
                 currentTimestamp: nextTimestamp,
             };
@@ -193,7 +174,16 @@ const mainReducer = combineReducers({
     gameStatus,
     guid,
     timestamp,
+    modelData,
 });
+
+function modelData(state = {}, action) {
+    if (action.type === START_GAME || action.type === NEXT_TURN) {
+        return action.data;
+    }
+
+    return state;
+}
 
 export default function(state = {}, action) {
     state = mainReducer(state, action);
