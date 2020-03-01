@@ -1,7 +1,6 @@
 import {MONEY, WOOD} from "./Resources";
 import {LAND, SEA,FOREST} from "./Map";
 
-export const ANIMAL_FARM = "animalFarm";
 export const FISHING_BOAT = "fishingBoat";
 export const HUNTING_SHACK = "huntingShack";
 export const CHEAP_LUMBER_MILL = "cheapLumberMill";
@@ -11,18 +10,6 @@ export const PLANTING_TREES ="planting";
 
 //TODO define affectedDataTypes for each building type.
 export default {
-    [ANIMAL_FARM]: {
-        name: "Animal Farm",
-        description: "Rear animals to produce food.",
-        requiredCellType: LAND,
-        selectionSize: 2,
-        costs: {
-            [WOOD]: 200,
-            [MONEY]: 100,
-        },
-        affectedDataTypes: [],
-        requireSilder: false,
-    },
     [FISHING_BOAT]: {
         name: "Fishing Boat",
         description: "A boat to catch fish in the ocean.",
