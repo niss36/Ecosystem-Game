@@ -34,7 +34,9 @@ function Body({status, start}) {
         case RUNNING:
             return (<Game/>);
         case LOST:
-            return (<div>You lose</div>); // TODO
+            return (<Box className={"lost"}>You lose
+                    <div className={"img"}/>
+                    </Box>);
         default:
     }
 }

@@ -10,14 +10,12 @@ import "./Menu.css";
 class Menu extends React.Component {
     render() {
         return (
-            <Container className="Menu-root">
                 <Box className="Menu-bgimg">
                     <h1 className="Menu-header">Ecosystem Game</h1>
-                    <Button className="Menu-button" variant="contained" color="primary" onClick={this.props.onStart}>
+                    <Button className="Menu-button" size={"large"} variant="contained" color="primary" onClick={this.props.onStart}>
                         Start
                     </Button>
                 </Box>
-            </Container>
         );
     }
 }

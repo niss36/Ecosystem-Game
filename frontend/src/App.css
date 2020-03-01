@@ -11,3 +11,21 @@
 .flex-grow-1 {
     flex-grow: 1;
 }
+
+.img{
+    background-image: url('./logo.jpg');
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+
+}
+
+.lost{
+    line-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 200px;
+    font-weight: bold;
+}
