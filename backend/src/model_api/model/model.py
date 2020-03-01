@@ -18,50 +18,55 @@ class MadingleyModel:
         self.carnivore_abundances = carnivore_abundances
         self.primary_producer_biomass = primary_producer_biomass
 
-    # noinspection PyPep8Naming,PyMethodMayBeStatic
-    def HerbivoryRate(self, n, m, b):
-        RateConstant = np.random.normal(loc=1.0, scale=0.01) * 1.00E-11
+    # noinspection PyPep8Naming
+    def HerbivoryRate(self, b, ppbm):
+        m = self.bodymasses[b]
+
+        ppbm_sq = ppbm * ppbm
+
+        RateConstant = np.random.normal(loc=1.0, scale=0.01, size=self.n_cells) * 1.00E-11
         HandlingTimeExponent = 0.7
         # _HerbivoryRateConstant * Math.Pow(herbivoreIndividualMass, (_HerbivoryRateMassExponent))
-        return n * RateConstant * m * math.pow(b, 2) / (1 + RateConstant * m * math.pow(b, 2) * math.pow(m, HandlingTimeExponent))
+        return self.herbivore_abundances[:, b] * RateConstant * m * ppbm_sq / (
+                    1 + RateConstant * m * ppbm_sq * math.pow(m, HandlingTimeExponent))
 
     # noinspection PyPep8Naming
-    def CarnivoryRate(self, n, m, window, c):
+    def CarnivoryRate(self, b, window):
         bodymasses = self.bodymasses
         herbivore_abundances = self.herbivore_abundances
-        herbivore_biomasses = self.herbivore_biomasses
         carnivore_abundances = self.carnivore_abundances
-        carnivore_biomasses = self.carnivore_biomasses
+        m = bodymasses[b]
 
         HandlingTimeScalar = 0.5
         HandlingTimeExponent = 0.7
-        KillRateConstant = np.random.normal(loc=1.0, scale=0.01) * 0.000001
+        KillRateConstant = np.random.normal(loc=1.0, scale=0.01, size=self.n_cells) * 0.000001
 
         # Add up all hererotroph biomass in the window: remove the current bin to avoid carnivory
-        PreyAbundance = np.sum([herbivore_abundances[c][i] for i in window] + [carnivore_abundances[c][i] for i in window])
+        # shape (n_cells,)
+        PreyAbundance = np.sum(herbivore_abundances[:, window], axis=1) + np.sum(carnivore_abundances[:, window], axis=1)
 
-        BiomassEaten = 0
+        # shape (n_cells,)
+        AbundanceEatenByPreyAbundance = carnivore_abundances[:, b] * KillRateConstant * m * PreyAbundance / (1 + (
+                KillRateConstant * m * (PreyAbundance * PreyAbundance) * HandlingTimeScalar * math.pow(m,
+                                                                                                       HandlingTimeExponent)))
 
-        if (PreyAbundance > 0):
+        # shape (n_cells, 1)
+        AbundanceEatenByPreyAbundance = AbundanceEatenByPreyAbundance[:, np.newaxis]
 
-            AbundanceEaten = n * KillRateConstant * m * math.pow(PreyAbundance, 2) / (1 + (
-                    KillRateConstant * m * math.pow(PreyAbundance, 2) * HandlingTimeScalar * math.pow(m,
-                                                                                                      HandlingTimeExponent)))
+        # shape (n_cells, len(window))
+        herbivores_eaten = AbundanceEatenByPreyAbundance * herbivore_abundances[:, window]
+        carnivores_eaten = AbundanceEatenByPreyAbundance * carnivore_abundances[:, window]
 
-            for i in window:
-                BiomassEaten += bodymasses[i] * AbundanceEaten * herbivore_abundances[c][i] / PreyAbundance
-                herbivore_abundances[c][i] -= AbundanceEaten * herbivore_abundances[c][i] / PreyAbundance
-                herbivore_biomasses[c][i] = herbivore_abundances[c][i] * bodymasses[i]
-                if herbivore_abundances[c][i] < 0:
-                    herbivore_abundances[c][i] = 0
-                    herbivore_biomasses[c][i] = 0
+        # shape (n_cells,)
+        BiomassEaten = np.sum(bodymasses[window] * (herbivores_eaten + carnivores_eaten), axis=1)
 
-                BiomassEaten += bodymasses[i] * AbundanceEaten * herbivore_abundances[c][i] / PreyAbundance
-                carnivore_abundances[c][i] -= AbundanceEaten * carnivore_abundances[c][i] / PreyAbundance
-                carnivore_biomasses[c][i] = carnivore_abundances[c][i] * bodymasses[i]
-                if carnivore_abundances[c][i] < 0:
-                    carnivore_abundances[c][i] = 0
-                    carnivore_biomasses[c][i] = 0
+        herbivore_abundances[:, window] -= herbivores_eaten
+        herbivore_abundances[:, window] = herbivore_abundances[:, window].clip(min=0)
+        self.herbivore_biomasses[:, window] = herbivore_abundances[:, window] * bodymasses[window]
+
+        carnivore_abundances[:, window] -= carnivores_eaten
+        carnivore_abundances[:, window] = carnivore_abundances[:, window].clip(min=0)
+        self.carnivore_biomasses[:, window] = carnivore_abundances[:, window] * bodymasses[window]
 
         return BiomassEaten
 
@@ -82,77 +87,102 @@ class MadingleyModel:
         n_cells = self.n_cells
         cell_area = self.cell_area
         temperature = self.temperature
-        bodymasses = self.bodymasses
-        herbivore_abundances = self.herbivore_abundances
-        herbivore_biomasses = self.herbivore_biomasses
-        carnivore_abundances = self.carnivore_abundances
-        carnivore_biomasses = self.carnivore_biomasses
-        primary_producer_biomass = self.primary_producer_biomass
 
-        harvested_biomass = np.zeros(n_cells)
-        harvested_abundance = np.zeros(n_cells)
+        total_harvested_abundance = np.zeros(n_cells)
+        total_harvested_biomass = np.zeros(n_cells)
 
         for mon in range(n_months):
             # production into the system
-            for c in range(len(primary_producer_biomass)):
-                primary_producer_biomass[c] = np.random.normal(loc=1.0, scale=0.01) * MiamiNPP(temperature) * cell_area
+            self.primary_producer_biomass = np.random.normal(loc=1.0, scale=0.01, size=n_cells) * MiamiNPP(temperature) * cell_area
 
-                # Update herbivores
-                for b in random.sample(range(len(herbivore_biomasses[c])), len(herbivore_biomasses[c])):
-                    mass_eaten = self.HerbivoryRate(herbivore_abundances[c][b], bodymasses[b],
-                                               0.1 * primary_producer_biomass[c])
-                    mass_eaten = min(mass_eaten, primary_producer_biomass[c])
-                    herbivore_biomasses[c][b] = herbivore_biomasses[c][b] + mass_eaten - (
-                            30 * herbivore_abundances[c][b] * Metabolism(bodymasses[b], temperature))
-                    primary_producer_biomass[c] -= mass_eaten
+            # Update herbivores
+            self.herbivores()
 
-                    # Calculate abundance including some background mortality
-                    herbivore_abundances[c][b] = (herbivore_biomasses[c][b] / bodymasses[b])
-                    herbivore_abundances[c][b] = (1 - math.exp(-np.random.beta(a=1, b=2) * 30)) * \
-                                                 herbivore_abundances[c][b]
-                    herbivore_biomasses[c][b] = herbivore_abundances[c][b] * bodymasses[b]
+            # Update Carnivores
+            self.carnivores()
 
-                # Update Carnivores
-                for b in random.sample(range(len(carnivore_biomasses[c])), len(carnivore_biomasses[c])):
-                    bodymass_ratios = np.array([bodymasses[j] / bodymasses[b] for j in range(len(bodymasses))])
-                    FeedingWindow = np.where((bodymass_ratios > np.random.gamma(1, 0.1)) &
-                                             (bodymass_ratios < np.random.gamma(2, 0.5)))[0].tolist()
-                    if b in FeedingWindow: FeedingWindow.remove(b)
-                    biomass_eaten = self.CarnivoryRate(carnivore_abundances[c][b], bodymasses[b], FeedingWindow, c)
-                    carnivore_biomasses[c][b] = carnivore_biomasses[c][b] + biomass_eaten - (
-                            30 * carnivore_abundances[c][b] * Metabolism(bodymasses[b], temperature))
-                    carnivore_abundances[c][b] = carnivore_biomasses[c][b] / bodymasses[b]
-                    carnivore_abundances[c][b] = (1 - math.exp(-np.random.beta(a=1, b=2) * 30)) * \
-                                                 carnivore_abundances[c][b]
-                    carnivore_biomasses[c][b] = carnivore_abundances[c][b] * bodymasses[b]
+            # Once updated ecology then harvest
+            harvested_abundance, harvested_biomass = self.harvest(harvest_effort, lower_harvest_bodymass)
 
-                # Once updated ecology then harvest
-                if (harvest_effort[c] > 0):
-                    harvested_inds = np.where(bodymasses > lower_harvest_bodymass[c])[0]
+            total_harvested_abundance += harvested_abundance
+            total_harvested_biomass += harvested_biomass
 
-                    for i in harvested_inds:
-                        nharvested_h = harvest_effort[c] * herbivore_abundances[c][i]
-                        harvested_abundance[c] += nharvested_h
-                        herbivore_abundances[c][i] -= nharvested_h
-
-                        nharvested_c = harvest_effort[c] * carnivore_abundances[c][i]
-                        harvested_abundance += nharvested_c
-                        carnivore_abundances[c][i] -= nharvested_c
-
-                        harvested_biomass[c] += bodymasses[i] * (nharvested_h + nharvested_c)
-
-        mean_harvested_bodymass = harvested_biomass / harvested_abundance
+        mean_harvested_bodymass = total_harvested_biomass / total_harvested_abundance
 
         return {
-            'harvested_biomass': harvested_biomass,
+            'harvested_biomass': total_harvested_biomass,
             'mean_harvested_biomass': mean_harvested_bodymass,
         }
+
+    def eating(self, abundances, biomasses, mass_eaten, b):
+        biomasses[:, b] += mass_eaten - (30 * abundances[:, b] * Metabolism(self.bodymasses[b], self.temperature))
+        abundances[:, b] = biomasses[:, b] / self.bodymasses[b]
+
+    def mortality(self, abundances, biomasses, b):
+        abundances[:, b] *= (1 - np.exp(-np.random.beta(a=1, b=2, size=self.n_cells) * 30))
+        biomasses[:, b] = abundances[:, b] * self.bodymasses[b]
+
+    def herbivores(self):
+        n = len(self.bodymasses)
+        for b in random.sample(range(n), n):
+            mass_eaten = self.HerbivoryRate(b, 0.1 * self.primary_producer_biomass)
+            mass_eaten.clip(max=self.primary_producer_biomass, out=mass_eaten)
+            self.primary_producer_biomass -= mass_eaten
+
+            self.eating(self.herbivore_abundances, self.herbivore_biomasses, mass_eaten, b)
+
+            # Calculate abundance including some background mortality
+            self.mortality(self.herbivore_abundances, self.herbivore_biomasses, b)
+
+    def carnivores(self):
+        n = len(self.bodymasses)
+        for b in random.sample(range(n), n):
+            bodymass_ratios = self.bodymasses / self.bodymasses[b]
+            FeedingWindow = np.where((bodymass_ratios > np.random.gamma(1, 0.1)) &
+                                     (bodymass_ratios < np.random.gamma(2, 0.5)))[0].tolist()
+            # FIXME feeding window is the same for all cells :/
+            if b in FeedingWindow:
+                FeedingWindow.remove(b)
+
+            biomass_eaten = self.CarnivoryRate(b, FeedingWindow)
+            self.eating(self.carnivore_abundances, self.carnivore_biomasses, biomass_eaten, b)
+
+            self.mortality(self.carnivore_abundances, self.carnivore_biomasses, b)
+
+    def harvest(self, harvest_effort, lower_harvest_bodymass):
+        bodymasses = self.bodymasses
+        herbivore_abundances = self.herbivore_abundances
+        carnivore_abundances = self.carnivore_abundances
+
+        harvested_abundance = np.zeros(self.n_cells)
+        harvested_biomass = np.zeros(self.n_cells)
+
+        for c in range(self.n_cells):
+            indices = np.where(bodymasses > lower_harvest_bodymass[c])[0]
+
+            # shape (len(indices),)
+            nharvested_h = harvest_effort[c] * herbivore_abundances[c][indices]
+            herbivore_abundances[c][indices] -= nharvested_h
+            # FIXME why aren't biomasses updated?
+
+            # shape (len(indices),)
+            nharvested_c = harvest_effort[c] * carnivore_abundances[c][indices]
+            carnivore_abundances[c][indices] -= nharvested_c
+            # FIXME why aren't biomasses updated?
+
+            # shape (len(indices),)
+            nharvested = nharvested_h + nharvested_c
+
+            harvested_abundance[c] = np.sum(nharvested)
+            harvested_biomass[c] = np.sum(bodymasses[indices] * nharvested)
+
+        return harvested_abundance, harvested_biomass
 
     def compute_biodiversity_scores(self):
         bio_score = np.zeros(self.n_cells)
         for c in range(self.n_cells):
-            max_herbivore = max(np.where(np.array(self.herbivore_biomasses[c]) > 0)[0])
-            max_carnivore = max(np.where(np.array(self.carnivore_biomasses[c]) > 0)[0])
+            max_herbivore = max(np.where(self.herbivore_biomasses[c] > 0)[0], default=0)
+            max_carnivore = max(np.where(self.carnivore_biomasses[c] > 0)[0], default=0)
             bio_score[c] = max_herbivore + (2 * max_carnivore)
 
         return bio_score.tolist()
@@ -201,8 +231,8 @@ def new_model(n_cells=20*20):
 
 
 def get_initial_biomasses(cell_area, bodymasses):
-    return (3300 / len(bodymasses)) * 30 * np.random.normal(loc=0.5, scale=0.01) * np.power(0.6, np.log10(
-        bodymasses * 0.01)) * cell_area
+    n = len(bodymasses)
+    return (3300 / n) * 30 * np.random.normal(loc=0.5, scale=0.01, size=n) * np.power(0.6, np.log10(bodymasses * 0.01)) * cell_area
 
 
 # noinspection PyPep8Naming
@@ -224,45 +254,52 @@ def Metabolism(m, T):
     return EnergyScalar * NormalizationConstant * math.pow(m, MetabolismExponent) * math.exp(-(Ea / (Kb * (T + 273))))
 
 
-# n = 20*20
+# nc = 20 * 20
+# n_months = 12
 #
-# model = new_model(n)
+# model = new_model(nc)
 #
-# lhbm = np.random.normal(loc=10, scale=5, size=n)
-# heff = np.random.uniform(size=n)
+# lhbm = np.random.normal(loc=10, scale=5, size=nc)
+# heff = np.random.uniform(size=nc)
 #
-# harvest = np.zeros(shape=[12, n])
-# hb = np.zeros(shape=[12, n])
-# cb = np.zeros(shape=[12, n])
-# ppb = np.zeros(shape=[12, n])
+# harvested = np.zeros(shape=[n_months, nc])
+# hb = np.zeros(shape=[n_months, nc])
+# cb = np.zeros(shape=[n_months, nc])
+# ppb = np.zeros(shape=[n_months, nc])
+# sc = np.zeros(shape=[n_months, nc])
 #
-# for m in range(12):
-#     print(m)
+# for month in range(n_months):
+#     print(month)
 #     r = model.step(heff, lhbm, 0)
-#     harvest[m, :] = r['harvestedBiomasses']
-#     hb[m, :] = r['state']['herbivoreBiomasses']
-#     cb[m, :] = r['state']['carnivoreBiomasses']
-#     ppb[m, :] = model.primary_producer_biomass
+#     harvested[month, :] = r['harvestedBiomasses']
+#     hb[month, :] = r['state']['herbivoreBiomasses']
+#     cb[month, :] = r['state']['carnivoreBiomasses']
+#     ppb[month, :] = model.primary_producer_biomass
+#     sc[month, :] = r['biodiversityScores']
 #
 # import matplotlib.pyplot as plt
 #
 # # Plotting ecosystem trajectory
-# plt.subplot(4,1,1)
-# plt.plot(range(12),np.log10(hb[:,0:100]))
-# plt.subplot(4,1,2)
-# plt.plot(range(12),np.log10(cb[:,0:100]))
-# plt.subplot(4,1,3)
-# plt.plot(range(12),np.log10(ppb[:,0:100]))
-# plt.subplot(4,1,4)
-# plt.plot(range(12),np.log10(harvest[:,0:100]))
+# plt.subplot(4, 1, 1)
+# plt.plot(range(n_months), np.log10(hb[:, 0:100]))
+# plt.subplot(4, 1, 2)
+# plt.plot(range(n_months), np.log10(cb[:, 0:100]))
+# plt.subplot(4, 1, 3)
+# plt.plot(range(n_months), np.log10(ppb[:, 0:100]))
+# plt.subplot(4, 1, 4)
+# plt.plot(range(n_months), np.log10(harvested[:, 0:100]))
 # plt.show()
 #
 # # Plotting the harvest effort
 # plt.hist(heff)
 #
 # # Checking size structure
-# plt.subplot(2,1,1)
-# plt.plot(model.bodymasses,np.log10(model.herbivore_biomasses[0]))
-# plt.subplot(2,1,2)
-# plt.plot(model.bodymasses,np.log10(model.carnivore_biomasses[0]))
+# plt.subplot(2, 1, 1)
+# plt.plot(model.bodymasses, np.log10(model.herbivore_biomasses[0]))
+# plt.subplot(2, 1, 2)
+# plt.plot(model.bodymasses, np.log10(model.carnivore_biomasses[0]))
+# plt.show()
+#
+# plt.subplot(1, 1, 1)
+# plt.plot(range(n_months), sc[:, 0:100])
 # plt.show()
