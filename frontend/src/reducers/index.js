@@ -5,14 +5,14 @@ import {resources} from "./Resources";
 import {map} from "./Map";
 import {logStorage} from "./LogStorage";
 import {cellInfo} from "./CellInfo";
-import {Data} from "./DataStores";
-import {NEXT_TURN, START_GAME} from "../actions";
+import {graphData} from "./GraphData";
+
+import {NEXT_TURN, NEXT_TURN_LOADING, START_GAME} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
 import {getHappiness, getIncome} from "../definitions/Util";
-import {graphData} from "./GraphData";
 
 function nextTurnReducer(state, action) {
 
@@ -163,20 +163,6 @@ function timestamp(state = 0, action) {
     return state;
 }
 
-const mainReducer = combineReducers({
-    buildings,
-    resources,
-    map,
-    logStorage,
-    graphData,
-    Data,
-    cellInfo,
-    gameStatus,
-    guid,
-    timestamp,
-    modelData,
-});
-
 function modelData(state = {}, action) {
     if (action.type === START_GAME || action.type === NEXT_TURN) {
         return action.data;
@@ -184,6 +170,32 @@ function modelData(state = {}, action) {
 
     return state;
 }
+
+function loading(state = false, action) {
+    switch(action.type){
+        case NEXT_TURN_LOADING:
+            return true;
+        case START_GAME:
+        case NEXT_TURN:
+            return false;
+        default:
+            return state;
+    }
+}
+
+const mainReducer = combineReducers({
+    buildings,
+    resources,
+    map,
+    logStorage,
+    graphData,
+    cellInfo,
+    gameStatus,
+    guid,
+    timestamp,
+    modelData,
+    loading,
+});
 
 export default function(state = {}, action) {
     state = mainReducer(state, action);
@@ -258,5 +270,6 @@ export default function(state = {}, action) {
  *     gameStatus: string,
  *     guid: string,
  *     timestamp: number,
+ *     loading: bool,
  * }
  */
