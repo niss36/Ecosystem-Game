@@ -3,7 +3,6 @@ import {combineReducers} from 'redux';
 import {END_BUY_BUILDING, END_REMOVE_BUILDING, SET_EFFORT, LOG_ITEM_CONFIRM, CHANGE_SLIDERS} from "../actions";
 
 import {
-    ANIMAL_FARM,
     FISHING_BOAT,
     HUNTING_SHACK,
     CHEAP_LUMBER_MILL,
@@ -14,9 +13,6 @@ import {
 import {POPULATION, FOOD, WOOD} from "../definitions/Resources";
 
 const initialEffects = {
-    [ANIMAL_FARM]: {
-        [FOOD]: {income: 100}
-    },
     [FISHING_BOAT]: {
         [FOOD]: {income: 50}
     },
@@ -78,7 +74,6 @@ function effortBuilding(id, affectedResource) {
     }
 }
 
-const animalFarm = normalBuilding(ANIMAL_FARM);
 const fishingBoat = effortBuilding(FISHING_BOAT, FOOD);
 const huntingShack = effortBuilding(HUNTING_SHACK, FOOD);
 const cheapLumberMill = normalBuilding(CHEAP_LUMBER_MILL);
@@ -88,7 +83,6 @@ const planting =normalBuilding(PLANTING_TREES);
 
 
 export const buildings = combineReducers({
-    animalFarm,
     fishingBoat,
     huntingShack,
     cheapLumberMill,

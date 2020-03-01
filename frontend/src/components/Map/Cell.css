@@ -78,6 +78,10 @@ in order to smooth the neighbouring cells.
 }
 
 .Cell-root .Cell-content.logSelect{
+    background-color: purple;
+}
+
+.Cell-root .Cell-content.clickSelect{
     background-color: yellow;
 }
 
@@ -89,9 +93,6 @@ in order to smooth the neighbouring cells.
     background-image: url("/icons/shack.svg");
 }
 
-.Cell-root .Cell-content.animalFarm{
-    background-image:url("/icons/barn.svg");
-}
 
 .Cell-root .Cell-content.settlement{
     background-image: url("/icons/cabin.svg");
