@@ -1,15 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 
-import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../../definitions/Resources";
+import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD, BIOMASS} from "../../definitions/Resources";
 
 import {getHappiness, getIncome, getMaxPopulation} from "../../definitions/Util";
 
-import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
+import {ResourcePane, HappinessPane, PopulationPane, BiomassPane} from "./ResourcePanes";
 
 import "./Resources.css";
 
-function ResourcesContainer({money, food, wood, population, happiness}) {
+function ResourcesContainer({money, food, wood, population, happiness, biomass}) {
     return (
         <>
             <PopulationPane id={POPULATION} {...population}/>
@@ -17,6 +17,7 @@ function ResourcesContainer({money, food, wood, population, happiness}) {
             <ResourcePane id={MONEY} {...money}/>
             <ResourcePane id={FOOD} {...food}/>
             <ResourcePane id={WOOD} {...wood}/>
+            <BiomassPane id={BIOMASS} {...biomass}/>
         </>
     )
 }
@@ -42,6 +43,7 @@ function mapStateToProps(state) {
             max: getMaxPopulation(state),
         },
         [HAPPINESS]: getHappiness(state),
+        [BIOMASS] : {...resources[BIOMASS]},
     }
 }
 
