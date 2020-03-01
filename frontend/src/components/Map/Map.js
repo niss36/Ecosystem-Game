@@ -25,6 +25,7 @@ function mapStateToProps(state, ownProps) {
         logSelection: state.map.logSelection,
         overlay: state.map.overlay,
         cellClicked: state.map.cellClicked,
+        harvestAmout: state.map.data.harvestedBiomasses[ownProps.i],
     }
 }
 
@@ -109,9 +110,9 @@ class SettingsMenu extends React.Component {
                     onClose={this.close}
                 >
                     Overlay
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("harvest")}>Harvest Amout</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("harvest")}>Harvest Efforts</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("sizes")}>Average Sizes</MenuItem>
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("boimass")}>Biomass</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("boimass")}>Last Turn Harvested Biomass</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(undefined)}>None</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Close</MenuItem>
                 </Menu>
