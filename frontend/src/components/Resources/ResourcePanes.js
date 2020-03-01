@@ -83,6 +83,8 @@ function getBreakdownName(id) {
             return "Taxes";
         case "consumption":
             return "Consumption";
+        case "woodGain":
+            return "Base Wood Gain";
         default:
             return buildings[id].name;
     }

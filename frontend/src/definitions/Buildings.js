@@ -40,8 +40,8 @@ export default {
         requiredCellType: FOREST,
         selectionSize: 2,
         costs: {
-            [WOOD]: 200,
-            [MONEY]: 200,
+            [WOOD]: 20,
+            [MONEY]: 300,
         },
         affectedDataTypes: [],
         requireSilder: false,
@@ -52,8 +52,8 @@ export default {
         requiredCellType: FOREST,
         selectionSize: 2,
         costs: {
-            [WOOD]: 400,
-            [MONEY]: 400,
+            [WOOD]: 20,
+            [MONEY]: 600,
         },
         affectedDataTypes: [],
         requireSilder: false,
