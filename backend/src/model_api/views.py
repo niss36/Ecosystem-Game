@@ -21,18 +21,14 @@ def new(request):
         global __model
 
         __model = new_model()
-        __model.step(50, np.zeros(__model.n_cells), np.zeros(__model.n_cells), 0)
+        # run the model for a while to make it stabilise
+        returned_data = __model.step(50, np.zeros(__model.n_cells), np.zeros(__model.n_cells), 0)
 
         guid = uuid.uuid4()
 
         return JsonResponse({
             'guid': str(guid),
-            'data': {
-                'biodiversityScores': __model.compute_biodiversity_scores(),
-                'harvestedBiomasses': [0] * __model.n_cells,
-                'meanHarvestedBiomass': 0,
-                'state': __model.return_state(),
-            }
+            'data': returned_data
         })
 
     return HttpResponse(status=400)
@@ -49,12 +45,12 @@ def update(request, guid):
 
         data = json.loads(request.body)
 
-        harvest_effort = data['harvestEffort']
-        lower_harvest_bodymass = data['lowerHarvestBodymass']
-        timestep = data['timestep']  # TODO ignored
+        harvest_effort = np.array(data['harvestEffort'])
+        lower_harvest_bodymass = np.array(data['lowerHarvestBodymass'])
+        timestep = data['timestep']
         warming = data['warming']
 
-        r = __model.step(1, harvest_effort, lower_harvest_bodymass, warming)
-        return JsonResponse(r)
+        returned_data = __model.step(timestep, harvest_effort, lower_harvest_bodymass, warming)
+        return JsonResponse(returned_data)
 
     return HttpResponse(status=400)

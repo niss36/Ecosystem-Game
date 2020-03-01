@@ -7,7 +7,6 @@ import {FOREST, LAND, SIZE} from "../definitions/Map";
 
 export const START_GAME = "START_GAME";
 export const NEXT_TURN = "NEXT_TURN";
-export const GET_DATA_INITIAL = "GET_DATA_INITIAL";
 export const NEXT_TURN_LOADING = "NEXT_TURN_LOADING";
 export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
@@ -20,7 +19,6 @@ export const CELL_MOUSE_ENTER = "CELL_MOUSE_ENTER";
 export const CELL_MOUSE_CLICK = "CELL_MOUSE_CLICK";
 export const SET_DIFFICULTY = "SET_DIFFICULTY";
 export const LOG_ITEM_SELECT = "LOG_ITEM_SELECT";
-export const LOG_ITEM_CONFIRM = "LOG_ITEM_CONFIRM";
 export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
 export const CHANGE_OVERLAY = "CHANGE_OVERLAY";
@@ -60,7 +58,7 @@ function fetchData(state) {
     const data = {
         harvestEffort: efforts,
         lowerHarvestBodymass: sizes,
-        timestep: 12, // TODO do we want to do 12 months at a time?
+        timestep: 1,
         warming: 0,
     };
 
@@ -90,7 +88,6 @@ export function loading(initial) {
 
         if (initial) {
             return initialFetch().then(({guid, data}) => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch({
                     type: START_GAME,
                     guid: guid,
@@ -99,7 +96,6 @@ export function loading(initial) {
             });
         } else {
             return fetchData(getState()).then(data => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch(getData(data));
             });
         }

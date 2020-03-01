@@ -163,13 +163,11 @@ class MadingleyModel:
             # shape (len(indices),)
             nharvested_h = harvest_effort[c] * herbivore_abundances[c][indices]
             herbivore_abundances[c][indices] -= nharvested_h
-            # FIXME why aren't biomasses updated?
             self.herbivore_biomasses[c][indices] = herbivore_abundances[c][indices] * bodymasses[indices]
 
             # shape (len(indices),)
             nharvested_c = harvest_effort[c] * carnivore_abundances[c][indices]
             carnivore_abundances[c][indices] -= nharvested_c
-            # FIXME why aren't biomasses updated?
             self.carnivore_biomasses[c][indices] = carnivore_abundances[c][indices] * bodymasses[indices]
 
             # shape (len(indices),)

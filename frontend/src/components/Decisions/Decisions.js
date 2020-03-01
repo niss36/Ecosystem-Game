@@ -18,7 +18,7 @@ import {
 import {canBuy} from "../../definitions/Util";
 
 import TabsPane from "../util/TabsPane";
-import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
+import {EffortSliderPane} from "../util/Sliders";
 import BuildingPane from "./BuildingPane";
 import LogPane from "./LogPane";
 

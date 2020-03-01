@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {END_BUY_BUILDING, END_REMOVE_BUILDING, SET_EFFORT, LOG_ITEM_CONFIRM, CHANGE_SLIDERS} from "../actions";
+import {END_BUY_BUILDING, END_REMOVE_BUILDING, CHANGE_SLIDERS} from "../actions";
 
 import {
     FISHING_BOAT,
@@ -33,7 +33,7 @@ const initialEffects = {
     }
 };
 
-function genericBuilding(state, action, id) {
+function genericBuilding(state, action) {
     switch (action.type) {
         case END_REMOVE_BUILDING:
             return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
@@ -46,7 +46,7 @@ function genericBuilding(state, action, id) {
 
 function normalBuilding(id) {
     return function (state = {numberBuilt: 0, effects: initialEffects[id]}, action) {
-        if (action.id === id || action.type === LOG_ITEM_CONFIRM) {
+        if (action.id === id) {
             return genericBuilding(state, action, id);
         }
 
@@ -54,7 +54,7 @@ function normalBuilding(id) {
     }
 }
 
-function effortBuilding(id, affectedResource) {
+function effortBuilding(id) {
     return function (state = {numberBuilt: 0, effort: 50, size: 500, effects: initialEffects[id]}, action) {
         if (action.id === id) {
             if (action.type === CHANGE_SLIDERS) {

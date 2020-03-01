@@ -45,8 +45,7 @@ function nextTurnReducer(state, action) {
 
         if (happiness > 0) {
             return {...state, resources: nextResources};
-        } else {
-            console.log("You lose"); // TODO you lose...
+        } else { // TODO you lose...
             return {...state, resources: nextResources, /*gameStatus: LOST*/};
         }
     }

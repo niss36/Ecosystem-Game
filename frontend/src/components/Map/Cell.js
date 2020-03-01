@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./Cell.css";
-import {cellMouseClick} from "../../actions";
+
 import {BIOMASS, HARVEST_EFFORT, HARVESTED_BIOMASS} from "../../definitions/Map";
+
 
 class Cell extends React.Component {
 
@@ -50,6 +51,7 @@ class Cell extends React.Component {
         const end = [0, 255, 0];
         const out = new Array(3);
         switch (this.props.overlay) {
+
             case HARVEST_EFFORT:
 
                 if (cellData.effort !== undefined) {
@@ -62,6 +64,7 @@ class Cell extends React.Component {
                 }
 
                 break;
+
             case BIOMASS:
                 for (let i = 0; i<3; i++) {
                     out[i] = Math.floor(end[i] * cellBiomass / 100 + start[i] * (100 - cellBiomass) / 100);
@@ -84,6 +87,8 @@ class Cell extends React.Component {
             case undefined:
             default:
                 break;
+            default:
+                break
         }
 
         return (
@@ -103,7 +108,10 @@ Cell.propTypes = {
     mode: PropTypes.string,
     building: PropTypes.string,
     selected: PropTypes.bool,
-    cellData: PropTypes.string,
+    cellData: PropTypes.shape({
+        type: PropTypes.string,
+        effort: PropTypes.number,
+    }),
     onMouseEnter: PropTypes.func,
     onMouseClick: PropTypes.func
 };

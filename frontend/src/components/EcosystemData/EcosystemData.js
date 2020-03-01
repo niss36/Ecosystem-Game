@@ -45,7 +45,7 @@ const PurpleRadio = withStyles({
 
 const CustomizedDot = (props) => {
     const {
-        cx, cy, stroke, payload, value,
+        cx, cy, value,
     } = props;
 
     const colourArray = [red[800], orange[800], yellow[800], lime[800], green[800]];

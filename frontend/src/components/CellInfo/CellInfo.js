@@ -38,7 +38,7 @@ function getBuildingInfo(props) {
 class CellInfo extends React.Component {
     render() {
 
-        const {display, cellNo, cellType, cellSize, cellEffort,cellHarvest,cellBiomass,} = this.props;
+        const {display, cellNo, cellType, cellEffort,cellHarvest,cellBiomass,} = this.props;
 
         return (
             <div className={"CellInfo-root"} style={{display: display}}>
