@@ -6,7 +6,7 @@ import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import {cellMouseClick, cellMouseEnter, changeCellInfo, changeOverlay, setDifficulty} from "../../actions";
+import {cellMouseClick, cellMouseEnter, changeOverlay} from "../../actions";
 
 import {SIZE} from "../../definitions/Map";
 

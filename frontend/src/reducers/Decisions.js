@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import {END_BUY_BUILDING, END_REMOVE_BUILDING, SET_EFFORT, LOG_ITEM_CONFIRM, CHANGE_SLIDERS} from "../actions";
+import {END_BUY_BUILDING, END_REMOVE_BUILDING, LOG_ITEM_CONFIRM, CHANGE_SLIDERS} from "../actions";
 
 import {
     FISHING_BOAT,
@@ -54,7 +54,7 @@ function normalBuilding(id) {
     }
 }
 
-function effortBuilding(id, affectedResource) {
+function effortBuilding(id) {
     return function (state = {numberBuilt: 0, effort: 50, size: 500, effects: initialEffects[id]}, action) {
         if (action.id === id) {
             if (action.type === CHANGE_SLIDERS) {

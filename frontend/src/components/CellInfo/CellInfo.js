@@ -5,7 +5,7 @@ import {changeCellInfo} from "../../actions";
 
 import Buildings from "../../definitions/Buildings";
 
-import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
+import {EffortSliderPane} from "../util/Sliders";
 
 import "./CellInfo.css";
 
@@ -37,7 +37,7 @@ function getBuildingInfo(props) {
 class CellInfo extends React.Component {
     render() {
 
-        const {display, cellNo, cellType, cellSize, cellEffort,cellHarvest,cellBoimass,cellAbundances} = this.props;
+        const {display, cellNo, cellType, cellEffort,cellHarvest,cellBoimass,cellAbundances} = this.props;
 
         return (
             <div className={"CellInfo-root"} style={{display: display}}>
@@ -60,11 +60,6 @@ class CellInfo extends React.Component {
                         </div>
                         {getBuildingInfo(this.props)}
                         <div style={{padding: "20px"}}>
-                        {
-                            cellSize && (
-                                <SizeSliderPane value={cellSize} onChange={value => this.props.changeCell(cellNo, "size", value)}/>
-                            )
-                        }
                         {
                             cellEffort && (
                                 <EffortSliderPane value={cellEffort} onChange={value => this.props.changeCell(cellNo, "effort", value)}/>

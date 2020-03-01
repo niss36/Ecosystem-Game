@@ -48,7 +48,7 @@ function makeLogPlane({...props}){
         <div>
             <br/>
             <div>
-                {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
+                {SimpleMenu(props.commitChange.historyClean.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             </div>
             <div style={{maxHeight: 650, overflow: 'auto'}}>
             <List>

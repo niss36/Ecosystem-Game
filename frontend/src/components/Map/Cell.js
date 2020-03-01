@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./Cell.css";
-import {cellMouseClick} from "../../actions";
 
 class Cell extends React.Component {
 
@@ -48,7 +47,6 @@ class Cell extends React.Component {
         switch (this.props.overlay) {
             case "harvest":
                 if (cellData.effort !== undefined) {
-                    console.log(this.props.overlay);
 
                     let effort = cellData.effort;
                     const start = [255, 0, 0];
@@ -58,9 +56,6 @@ class Cell extends React.Component {
                     for (let i = 0; i < 3; i++) {
                         out[i] = Math.floor(start[i] * effort / 100 + end[i] * (100 - effort) / 100);
                     }
-
-                    console.log(effort);
-                    console.log(out);
 
                     overlayStyle.backgroundColor = "rgb(" + out[0] + "," + out[1] + "," + out[2] + ")";
                 }
@@ -80,10 +75,8 @@ class Cell extends React.Component {
             case "boimass":
 
                 if (harvestAmout !== undefined) {
-                    console.log(harvestAmout);
 
                     let chnagedamout = (harvestAmout/3_500_000)*100;
-                    console.log(chnagedamout);
                     const start = [255, 0, 0];
                     const end = [0, 255, 0];
 
@@ -101,6 +94,8 @@ class Cell extends React.Component {
                 break;
             case undefined:
                 break;
+            default:
+                break
         }
 
         return (

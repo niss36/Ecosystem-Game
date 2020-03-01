@@ -7,7 +7,6 @@ import {FOREST, LAND, SIZE} from "../definitions/Map";
 
 export const START_GAME = "START_GAME";
 export const NEXT_TURN = "NEXT_TURN";
-export const GET_DATA_INITIAL = "GET_DATA_INITIAL";
 export const NEXT_TURN_LOADING = "NEXT_TURN_LOADING";
 export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
@@ -89,7 +88,6 @@ export function loading(initial) {
 
         if (initial) {
             return initialFetch().then(({guid, data}) => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch({
                     type: START_GAME,
                     guid: guid,
@@ -98,7 +96,6 @@ export function loading(initial) {
             });
         } else {
             return fetchData(getState()).then(data => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch(getData(data));
             });
         }
