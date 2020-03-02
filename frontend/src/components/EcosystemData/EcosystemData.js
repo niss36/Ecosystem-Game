@@ -199,7 +199,7 @@ class EcosystemData extends React.Component {
                                     />
                                     <FormControlLabel
                                         control={<Checkbox checked={this.state.totalHarvestedChecked} onChange={() => this.setState({totalHarvestedChecked: !this.state.totalHarvestedChecked})} />}
-                                        label="Mean Biomass Harvested"
+                                        label="Total Biomass Harvested"
                                     />
                                 </FormGroup>
                             </Grid>
