@@ -34,7 +34,7 @@ function Body({status, start}) {
         case MENU:
             return (<Menu onStart={start}/>);
         case RUNNING:
-            return (<Game/>);
+            return (<Game restart={start}/>);
         case LOST:
             return (<div>
                     <div align={'Center'}>

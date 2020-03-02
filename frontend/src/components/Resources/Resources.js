@@ -8,9 +8,11 @@ import {getHappiness, getIncome, getMaxPopulation} from "../../definitions/Util"
 import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
 import "./Resources.css";
+import {Button} from "@material-ui/core";
 
-function ResourcesContainer({money, food, wood, population, happiness}) {
+function ResourcesContainer({restart, money, food, wood, population, happiness}) {
     return (
+
         <>
             <PopulationPane id={POPULATION} {...population}/>
             <HappinessPane id={HAPPINESS} {...happiness}/>
@@ -55,6 +57,7 @@ export default class Resources extends React.Component {
     render() {
         return (
             <div className="Resources-root">
+                <Button onClick={this.props.restart} className="Menu-button" variant="contained" color="primary">Restart</Button>
                 <h3>Resources</h3>
 
                 <ConnectedResourcesContainer/>
