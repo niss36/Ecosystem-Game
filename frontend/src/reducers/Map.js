@@ -45,7 +45,7 @@ function makeFilter(state) {
  */
 function getFilteredSelection(i, state) {
     // assert mode not undefined
-    return getSelection(i, state.selection.building).filter(makeFilter(state));
+    return getSelection(i, state.selection.building, state.selection.buyOne).filter(makeFilter(state));
 }
 
 function makeInitialMap () {
@@ -113,7 +113,7 @@ export function map(state = makeInitialMap(), action) {
         }
 
         case START_BUY_BUILDING: {
-            return {...state, selection: {...state.selection, mode: "add", building: action.id, cells: []}};
+            return {...state, selection: {...state.selection, mode: "add", building: action.id, buyOne: action.buyOne, cells: []}};
         }
 
         case START_REMOVE_BUILDING: {

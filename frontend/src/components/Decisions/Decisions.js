@@ -33,8 +33,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-        onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
+        buyOne: () => dispatch(startBuyBuilding(ownProps.id, true)),
+        buyMany: () => dispatch(startBuyBuilding(ownProps.id, false)),
+        remove: () => dispatch(startRemoveBuilding(ownProps.id)),
     }
 };
 
@@ -55,8 +56,9 @@ const ConnectedEffortBuildingPane = connect(
     mapStateToProps,
     (dispatch, ownProps) => {
         return {
-            onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-            onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
+            buyOne: () => dispatch(startBuyBuilding(ownProps.id, true)),
+            buyMany: () => dispatch(startBuyBuilding(ownProps.id, false)),
+            remove: () => dispatch(startRemoveBuilding(ownProps.id)),
             onChangeSliders: (slider, v) => dispatch(changeSliders(ownProps.id, slider, v))
         }
     }

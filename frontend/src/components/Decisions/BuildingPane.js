@@ -38,7 +38,7 @@ class BuildingPane extends React.Component {
 
     render() {
 
-        const {id, numberBuilt, effects, canBuy, onBuy, onRemove, children} = this.props;
+        const {id, numberBuilt, effects, canBuy, buyOne, buyMany, remove, children} = this.props;
 
         const {name, description, costs} = buildings[id];
 
@@ -72,10 +72,13 @@ class BuildingPane extends React.Component {
                     }
                 </div>
                 <div className="BuildingPane-footer">
-                    <Button onClick={onBuy} disabled={!canBuy} variant="outlined" className="BuildingPane-buy" >
-                        Buy
+                    <Button onClick={buyOne} disabled={!canBuy} variant="outlined" className="BuildingPane-buyOne">
+                        Buy one
                     </Button>
-                    <Button onClick={onRemove} disabled={numberBuilt === 0} variant="outlined" className="BuildingPane-sell">
+                    <Button onClick={buyMany} disabled={!canBuy} variant="outlined" className="BuildingPane-buyMany" >
+                        Buy many
+                    </Button>
+                    <Button onClick={remove} disabled={numberBuilt === 0} variant="outlined" className="BuildingPane-sell">
                         Remove
                     </Button>
                 </div>
@@ -89,8 +92,9 @@ BuildingPane.propTypes = {
     numberBuilt: PropTypes.number,
     effects: PropTypes.any,
     canBuy: PropTypes.bool,
-    onBuy: PropTypes.func,
-    onRemove: PropTypes.func,
+    buyOne: PropTypes.func,
+    buyMany: PropTypes.func,
+    remove: PropTypes.func,
     children: PropTypes.node,
 };
 
