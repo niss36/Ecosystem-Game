@@ -191,7 +191,7 @@ class EcosystemData extends React.Component {
                     </div>
                     <div>
                         <Grid container>
-                            <Grid item xs={3}>
+                            <Grid item xs={3} className={"flex-container"}>
                                 <FormGroup className={"centre"}>
                                     <FormControlLabel
                                         control={<GreenCheckbox checked={this.state.totalBiomassChecked} onChange={() => this.setState({totalBiomassChecked: !this.state.totalBiomassChecked})} />}
