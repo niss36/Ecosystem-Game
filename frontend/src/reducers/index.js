@@ -7,7 +7,7 @@ import {logStorage} from "./LogStorage";
 import {cellInfo} from "./CellInfo";
 import {graphData} from "./GraphData";
 
-import {NEXT_TURN, NEXT_TURN_LOADING, START_GAME} from "../actions";
+import {NEXT_TURN, NEXT_TURN_LOADING, QUIT_GAME, START_GAME} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
@@ -140,7 +140,7 @@ function graphDataReducer(state, action) {
 function gameStatus(state = MENU, action) {
     if (action.type === START_GAME) {
         return RUNNING;
-    } else if (action.type === "QUIT") { // TODO
+    } else if (action.type === QUIT_GAME) {
         return MENU;
     }
 

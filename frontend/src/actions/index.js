@@ -23,6 +23,7 @@ export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
 export const CHANGE_OVERLAY = "CHANGE_OVERLAY";
 export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
+export const QUIT_GAME = "QUIT_GAME";
 
 /**
  * Action creators
@@ -296,5 +297,11 @@ export function changeCellType(i, newCellType) {
         type: CHANGE_CELL_TYPE,
         i: i,
         newCellType: newCellType,
+    }
+}
+
+export function quitGame() {
+    return {
+        type: QUIT_GAME,
     }
 }

@@ -9,6 +9,7 @@ import {ResourcePane, HappinessPane, PopulationPane} from "./ResourcePanes";
 
 import "./Resources.css";
 import {Button} from "@material-ui/core";
+import {quitGame} from "../../actions";
 
 function ResourcesContainer({restart, money, food, wood, population, happiness}) {
     return (
@@ -52,12 +53,12 @@ const ConnectedResourcesContainer = connect(
     dispatch => ({}),
 )(ResourcesContainer);
 
-export default class Resources extends React.Component {
+export class Resources extends React.Component {
 
     render() {
         return (
             <div className="Resources-root">
-                <Button onClick={this.props.restart} className="Menu-button" variant="contained" color="primary">Restart</Button>
+                <Button onClick={this.props.quit} className="Menu-button" variant="contained" color="primary">Quit Game</Button>
                 <h3>Resources</h3>
 
                 <ConnectedResourcesContainer/>
@@ -65,3 +66,8 @@ export default class Resources extends React.Component {
         );
     }
 }
+
+export default connect(
+    null,
+    dispatch => ({quit: () => dispatch(quitGame())})
+)(Resources);
