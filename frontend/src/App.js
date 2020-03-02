@@ -37,7 +37,7 @@ function Body({status, start}) {
             return (<Game restart={start}/>);
         case LOST:
             return (<div>
-                    <div align={'Center'}>
+                    <div align={'Center'} style={{paddingBottom: "30px"}}>
                         <h1 align={'Center'}>You lose</h1>
                         <p>
                             <img src={'/icons/sad.svg'} alt={''} height={100} align={'Center'}/>
