@@ -63,8 +63,8 @@ export default {
         requiredCellType: LAND,
         selectionSize: 2,
         costs: {
-            [WOOD]: 2000,
-            [MONEY]: 2000,
+            [WOOD]: 1500,
+            [MONEY]: 1500,
         },
         affectedDataTypes: [],
         requireSilder: false,
