@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .model.model import new_model
 from .models import Game, update_game_from_model, get_model_from_game
 
-__model = None  # TODO use persistent storage
+__model = None
 
 
 @csrf_exempt
