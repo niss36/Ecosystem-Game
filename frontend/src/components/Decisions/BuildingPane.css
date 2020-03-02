@@ -35,9 +35,14 @@
     flex-grow: 1;
 }
 
-.BuildingPane-footer .MuiButton-root.BuildingPane-buy {
+.BuildingPane-footer .MuiButton-root.BuildingPane-buyOne {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.BuildingPane-footer .MuiButton-root.BuildingPane-buyMany {
+    border-radius: 0;
     border-right: 0;
 }
 

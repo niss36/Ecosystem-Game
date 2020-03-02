@@ -5,9 +5,10 @@ import {changeCellInfo} from "../../actions";
 
 import Buildings from "../../definitions/Buildings";
 
-import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
+import {EffortSliderPane} from "../util/Sliders";
 
 import "./CellInfo.css";
+import {normalize} from "../../definitions/Util";
 
 function getValidBuildings(cellType) {
     let list = [];
@@ -37,7 +38,7 @@ function getBuildingInfo(props) {
 class CellInfo extends React.Component {
     render() {
 
-        const {display, cellNo, cellType, cellSize, cellEffort} = this.props;
+        const {display, cellNo, cellType, cellEffort,cellHarvest,cellBiomass,} = this.props;
 
         return (
             <div className={"CellInfo-root"} style={{display: display}}>
@@ -46,16 +47,17 @@ class CellInfo extends React.Component {
                         <h3>Cell Info</h3>
                     </div>
                     <div className={"CellInfo-contents"}>
+                        <div  style={{borderBottom: "1px solid lightgray"}}>
+                            {normalize(cellHarvest)} Harvest
+                        </div>
                         <div style={{borderBottom: "1px solid lightgray"}}>
-                            {cellType}
+                            {normalize(cellBiomass)} Biomass
+                        </div>
+                        <div style={{borderBottom: "1px solid lightgray"}}>
+                            Cell type: {cellType}
                         </div>
                         {getBuildingInfo(this.props)}
                         <div style={{padding: "20px"}}>
-                        {
-                            cellSize && (
-                                <SizeSliderPane value={cellSize} onChange={value => this.props.changeCell(cellNo, "size", value)}/>
-                            )
-                        }
                         {
                             cellEffort && (
                                 <EffortSliderPane value={cellEffort} onChange={value => this.props.changeCell(cellNo, "effort", value)}/>
@@ -79,6 +81,8 @@ function mapStateToProps(state) {
         cellSize: cell.size,
         cellEffort: cell.effort,
         cellType: state.map.cellTypes[i],
+        cellHarvest: state.modelData.harvestedBiomasses[i],
+        cellBiomass: state.modelData.state.herbivoreBiomasses[i]+state.modelData.state.carnivoreBiomasses[i],
     }
 }
 

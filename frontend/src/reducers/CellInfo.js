@@ -11,9 +11,6 @@ const initialState = {
 
 export function cellInfo(state = initialState, action) {
     switch (action.type) {
-        case NEXT_TURN: {
-            return {...state, display: "none"};
-        }
         case CELL_MOUSE_CLICK:{
             if (state.display === "block" && action.i === state.cellNo ){
 

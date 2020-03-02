@@ -23,29 +23,35 @@ export function getIncome(resourceId, state) {
 
     const breakdown = {};
 
-    for (const [building, buildingState] of Object.entries(state.buildings)) {
+    if (resourceId !== FOOD) {
+        for (const [building, buildingState] of Object.entries(state.buildings)) {
 
-        if (buildingState.numberBuilt) {
-            const effect = buildingState.effects[resourceId];
-            if (effect && effect.income) {
-                const buildingIncome = buildingState.numberBuilt * effect.income;
+            if (buildingState.numberBuilt) {
+                const effect = buildingState.effects[resourceId];
+                if (effect && effect.income) {
+                    const buildingIncome = buildingState.numberBuilt * effect.income;
 
-                breakdown[building] = buildingIncome;
-                total += buildingIncome;
+                    breakdown[building] = buildingIncome;
+                    total += buildingIncome;
+                }
             }
         }
+    } else {
+        const totalHarvested = state.modelData.harvestedBiomasses.reduce((total, n) => {return total + n}, 0);
+        const foodProduced = Math.floor((totalHarvested)/Math.pow(10,9)) * 25;
+        breakdown["production"] = foodProduced;
+        total += foodProduced;
+
+
+        const foodEaten = computeFoodEaten(state);
+        breakdown["consumption"] = -foodEaten;
+        total -= foodEaten;
     }
 
     if (resourceId === MONEY) {
         const taxIncome = computeTaxIncome(state);
         breakdown["taxes"] = taxIncome;
         total += taxIncome;
-    }
-
-    if (resourceId === FOOD) {
-        const foodEaten = computeFoodEaten(state);
-        breakdown["consumption"] = -foodEaten;
-        total -= foodEaten;
     }
 
     if (resourceId === WOOD) {
@@ -75,7 +81,7 @@ export function getHappiness(state) {
 
     //taxes
     const taxes = state.resources.taxes;
-    const taxImpact = 30 - taxes;
+    const taxImpact = 50 - taxes;
     breakdown["tax"] = taxImpact;
     happiness += taxImpact;
 
@@ -109,13 +115,17 @@ export function getHappiness(state) {
 }
 
 export function computeTaxIncome(state) {
-    return state.resources.taxes * state.resources[POPULATION].amount; // TODO
+    //return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
+    if (state.resources.taxes < 50) {
+        return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
+    } else {
+        return ((50 * 0.4 * state.resources[POPULATION].amount) +
+            Math.floor((state.resources.taxes-50) * 0.15 * state.resources[POPULATION].amount));
+    }
 }
 
 export function computeFoodEaten(state) {
-    //TODO: make food eaten actually proportional to food produced by hunters,
-    // requires more thought than I currently have the capacity for
-    const foodEatenPerPop = 25 + Math.floor(state.resources.rationing/4);
+    const foodEatenPerPop = 50 + Math.floor(state.resources.rationing/4);
     return state.resources[POPULATION].amount * foodEatenPerPop;
 }
 
@@ -144,10 +154,12 @@ export function numCanBuy(buildingId, state) {
     return max;
 }
 
-export function getSelection(i, building) {
+export function getSelection(i, building, buyOne) {
     const [row, col] = [Math.floor(i / SIZE), i % SIZE];
 
-    switch (buildings[building].selectionSize) {
+    const size = buyOne ? 1 : buildings[building].selectionSize;
+
+    switch (size) {
         case 3:
             if (col === 0) i++;
             if (col === SIZE - 1) i--;
@@ -175,4 +187,8 @@ export function getSelection(i, building) {
         default:
             return [];
     }
+}
+
+export function normalize(val) {
+    return Math.floor(val/Math.pow(10,8)) * 2;
 }

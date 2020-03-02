@@ -5,13 +5,10 @@ import TabsPane from "../util/TabsPane";
 
 import "./EcosystemData.css";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import {green, lime, orange, purple, red, yellow} from "@material-ui/core/colors";
 
 import {connect} from "react-redux";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {Radio} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -48,7 +45,7 @@ const PurpleRadio = withStyles({
 
 const CustomizedDot = (props) => {
     const {
-        cx, cy, stroke, payload, value,
+        cx, cy, value,
     } = props;
 
     const colourArray = [red[800], orange[800], yellow[800], lime[800], green[800]];
@@ -84,18 +81,21 @@ class EcosystemData extends React.Component {
             //current datakey being plotted by graphs on Population/Happiness tab
             currentPopTab: POPULATION,
 
-            //Radio button state for Resources tab
+            //Checkbox state for Resources tab
             moneyChecked: true,
             foodChecked: false,
             woodChecked: false,
 
+            //Checkbox state for Biomass tab
+            totalBiomassChecked: true,
+            totalHarvestedChecked: false,
         }
     }
 
     render() {
         return (
             <div className="panel">
-                <TabsPane tabs={["Population & Infrastructure", "Resources"]}>
+                <TabsPane tabs={["Population & Infrastructure", "Resources", "Biomass",]}>
                     <div>
                         <Grid container>
                             <Grid item xs={3} className={"flex-container"}>
@@ -178,6 +178,49 @@ class EcosystemData extends React.Component {
                                         {(this.state.woodChecked &&
                                             //if wood checked, draw its line
                                             <Line type="monotone" stroke="#834C28" dataKey={WOOD}
+                                                  isAnimationActive={false}/>
+                                        )}
+                                        <YAxis/>
+                                        <Tooltip/>
+                                        <CartesianGrid strokeDasharray="3 3"/>
+                                        <XAxis dataKey="timestamp"/>
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <div>
+                        <Grid container>
+                            <Grid item xs={3}>
+                                <FormGroup className={"centre"}>
+                                    <FormControlLabel
+                                        control={<GreenCheckbox checked={this.state.totalBiomassChecked} onChange={() => this.setState({totalBiomassChecked: !this.state.totalBiomassChecked})} />}
+                                        label="Total Biomass"
+                                    />
+                                    <FormControlLabel
+                                        control={<Checkbox checked={this.state.totalHarvestedChecked} onChange={() => this.setState({totalHarvestedChecked: !this.state.totalHarvestedChecked})} />}
+                                        label="Total Biomass Harvested"
+                                    />
+                                </FormGroup>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <ResponsiveContainer width="100%" height={400}>
+                                    <LineChart
+                                        data={this.props.data}
+                                        margin={{
+                                            top: 20, right: 20, left: 0, bottom: 10,
+                                        }}
+                                    >
+
+                                        {(this.state.totalBiomassChecked &&
+                                            //if money checked, draw its line
+                                            <Line type="monotone" stroke="green" dataKey="totalBiomass"
+                                                  isAnimationActive={false}/>
+                                        )}
+
+                                        {(this.state.totalHarvestedChecked &&
+                                            //if food checked, draw its line
+                                            <Line type="monotone" stroke="red" dataKey="totalHarvestedBiomass"
                                                   isAnimationActive={false}/>
                                         )}
                                         <YAxis/>

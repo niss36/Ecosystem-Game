@@ -4,7 +4,7 @@ import {Slider} from "@material-ui/core";
 
 const sizes = [
     {
-        value: 10,
+        value: 0.1,
         label: "SMALL",
     },
     {
@@ -17,7 +17,7 @@ const sizes = [
     },
 ];
 
-const minSize = 10;
+const minSize = 0.1;
 
 export function SizeSliderPane({value, onChange}) {
 

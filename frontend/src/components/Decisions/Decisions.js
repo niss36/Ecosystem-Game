@@ -18,7 +18,7 @@ import {
 import {canBuy} from "../../definitions/Util";
 
 import TabsPane from "../util/TabsPane";
-import {EffortSliderPane, SizeSliderPane} from "../util/Sliders";
+import {EffortSliderPane} from "../util/Sliders";
 import BuildingPane from "./BuildingPane";
 import LogPane from "./LogPane";
 
@@ -33,8 +33,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-        onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
+        buyOne: () => dispatch(startBuyBuilding(ownProps.id, true)),
+        buyMany: () => dispatch(startBuyBuilding(ownProps.id, false)),
+        remove: () => dispatch(startRemoveBuilding(ownProps.id)),
     }
 };
 
@@ -46,7 +47,6 @@ const ConnectedBuildingPane = connect(
 function EffortBuildingPane({id, ...props}) {
     return (
         <BuildingPane id={id} {...props}>
-            <SizeSliderPane value={props.size} onChange={value => props.onChangeSliders("size", value)}/>
             <EffortSliderPane value={props.effort} onChange={value => props.onChangeSliders("effort", value)}/>
         </BuildingPane>
     );
@@ -56,8 +56,9 @@ const ConnectedEffortBuildingPane = connect(
     mapStateToProps,
     (dispatch, ownProps) => {
         return {
-            onBuy: () => dispatch(startBuyBuilding(ownProps.id)),
-            onRemove: () => dispatch(startRemoveBuilding(ownProps.id)),
+            buyOne: () => dispatch(startBuyBuilding(ownProps.id, true)),
+            buyMany: () => dispatch(startBuyBuilding(ownProps.id, false)),
+            remove: () => dispatch(startRemoveBuilding(ownProps.id)),
             onChangeSliders: (slider, v) => dispatch(changeSliders(ownProps.id, slider, v))
         }
     }
