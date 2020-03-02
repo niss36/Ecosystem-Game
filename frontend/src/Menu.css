@@ -5,7 +5,6 @@
 .Menu-bgimg {
     min-height: 100vh;
 
-    background-image: url('./logo.jpg');
     background-position: center;
     background-size: cover;
 }

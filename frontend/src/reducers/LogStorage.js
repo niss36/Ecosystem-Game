@@ -46,7 +46,7 @@ export function commitChange(state = initialStores, action){
             case END_BUY_BUILDING:
                 if(action.selectedCells.length !== 0) {
                     let newHistoryClean = [...state.historyClean];
-                    let buyHistory = newHistoryClean[state.currentTurn].buy[action.id];
+                    let buyHistory = [...newHistoryClean[state.currentTurn].buy[action.id]];
                     for(let i = 0; i < action.selectedCells.length; i++) {
                         let cell = action.selectedCells[i];
                             buyHistory.push(cell);
@@ -59,8 +59,8 @@ export function commitChange(state = initialStores, action){
             case END_REMOVE_BUILDING:
                 if(action.selectedCells.length !== 0) {
                     let newHistoryClean = [...state.historyClean];
-                    let buyHistory = newHistoryClean[state.currentTurn].buy[action.id];
-                    let sellHistory = newHistoryClean[state.currentTurn].sell[action.id];
+                    let buyHistory = [...newHistoryClean[state.currentTurn].buy[action.id]];
+                    let sellHistory = [...newHistoryClean[state.currentTurn].sell[action.id]];
                     for(let i = 0; i < action.selectedCells.length; i++) {
                         let cell = action.selectedCells[i];
                         let index = contains(buyHistory, cell);

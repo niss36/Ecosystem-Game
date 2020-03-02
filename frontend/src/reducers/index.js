@@ -46,7 +46,7 @@ function nextTurnReducer(state, action) {
         if (happiness > 0) {
             return {...state, resources: nextResources};
         } else { // TODO you lose...
-            return {...state, resources: nextResources, /*gameStatus: LOST*/};
+            return {...state, resources: nextResources, gameStatus: LOST};
         }
     }
 
@@ -198,6 +198,9 @@ const mainReducer = combineReducers({
 });
 
 export default function(state = {}, action) {
+    if (action.type === START_GAME) {
+        state = {};
+    }
     state = mainReducer(state, action);
     state = nextTurnReducer(state, action);
     state = graphDataReducer(state, action);

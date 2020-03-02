@@ -1,5 +1,7 @@
 /venv/
 
+/data/
+
 # database stuff
 migrations/
 db.sqlite3
