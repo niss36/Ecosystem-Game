@@ -63,8 +63,6 @@ function makeLogPlane({...props}){
 const mapStateToLogProps = (state) => {
     return {
         ...state.logStorage,
-        canConfirm : canConfirmLog(state.logStorage.commitChange.selectedLogIndex.index, state.logStorage.commitChange.displayedTurn, state.logStorage.commitChange.currentTurn),
-        selectedIndex: state.logStorage.commitChange.selectedLogIndex.index,
     };
 };
 
@@ -81,11 +79,6 @@ const ConnectedLogList = connect(
     mapStateToLogProps,
     mapDispatchToLogProps,
 )(makeLogPlane);
-
-
-function canConfirmLog(indexState, displayed, current){
-    return (indexState === "undefined" && displayed === current);
-}
 
 
 class LogPane extends React.Component {

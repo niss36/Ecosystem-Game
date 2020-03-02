@@ -11,7 +11,6 @@ let buildings = Object.keys(buildDict);
 const initialClean = newCleanHistoryMaker();
 
 const initialStores = {
-    selectedLogIndex: {index: "undefined", selectedDel: []},
     displayedTurn: 0,
     currentTurn: 0,
     historyClean: [initialClean],
@@ -84,10 +83,10 @@ export function commitChange(state = initialStores, action){
                     newCleanHistory = [...state.historyClean];
                 }
                 newCleanHistory.push(newCleanHistoryMaker());
-                return {...state,currentTurn: state.currentTurn + 1, displayedTurn: state.currentTurn + 1, selectedLogIndex: {index: "undefined", selectedDel: []}, historyClean: newCleanHistory};
+                return {...state,currentTurn: state.currentTurn + 1, displayedTurn: state.currentTurn + 1, historyClean: newCleanHistory};
             case LOG_CHANGE_DISPLAYED:
                 let newIndex = action.index;
-                return {...state, displayedTurn: newIndex, selectedLogIndex: {index: "undefined", selectedDel: []}, displayedCleanLog: state.historyClean[newIndex], selectedLogItem: {building: undefined, action: ''}};
+                return {...state, displayedTurn: newIndex, displayedCleanLog: state.historyClean[newIndex], selectedLogItem: {building: undefined, action: ''}};
             case LOG_ITEM_SELECT:
                 let newDisplayedLog = {building: action.buildingType, action: action.actionType};
                 if(state.selectedLogItem.building === action.buildingType && state.selectedLogItem.action === action.actionType){
