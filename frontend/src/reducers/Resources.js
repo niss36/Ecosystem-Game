@@ -5,8 +5,14 @@ import {END_BUY_BUILDING, END_REMOVE_BUILDING, SET_TAXES, SET_RATIONING} from ".
 import buildings from "../definitions/Buildings";
 import {POPULATION, MONEY, FOOD, WOOD, HAPPINESS} from "../definitions/Resources";
 
+const initialAmounts = {
+    [MONEY]: 10000,
+    [FOOD]: 2000,
+    [WOOD]: 3000,
+};
+
 function normalResource(id) {
-    return function (state = {amount: 1000}, action) {
+    return function (state = {amount: initialAmounts[id]}, action) {
         switch (action.type) {
             case END_BUY_BUILDING: {
                 const cost = buildings[action.id].costs[id];

@@ -115,13 +115,11 @@ export function getHappiness(state) {
 }
 
 export function computeTaxIncome(state) {
-    return state.resources.taxes * state.resources[POPULATION].amount; // TODO
+    return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
 }
 
 export function computeFoodEaten(state) {
-    //TODO: make food eaten actually proportional to food produced by hunters,
-    // requires more thought than I currently have the capacity for
-    const foodEatenPerPop = 25 + Math.floor(state.resources.rationing/4);
+    const foodEatenPerPop = 50 + Math.floor(state.resources.rationing/4);
     return state.resources[POPULATION].amount * foodEatenPerPop;
 }
 

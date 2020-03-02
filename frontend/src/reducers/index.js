@@ -40,8 +40,9 @@ function nextTurnReducer(state, action) {
         }
 
         //Population growth
-        //TODO: calculate population growth as a function of food growth and/or other factors?
-        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
+        const currentPopulation = state.resources[POPULATION].amount;
+        const growth = Math.pow(Math.floor(currentPopulation/40),2) + 1;
+        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + growth};
 
         if (happiness > 0) {
             return {...state, resources: nextResources};
