@@ -241,7 +241,7 @@ export function cellMouseEnter(i) {
         dispatch({
             type: CELL_MOUSE_ENTER,
             i: i,
-            state: state, // TODO
+            state: state,
         });
     };
 }

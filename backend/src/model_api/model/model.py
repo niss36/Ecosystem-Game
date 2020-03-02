@@ -140,7 +140,6 @@ class MadingleyModel:
             bodymass_ratios = self.bodymasses / self.bodymasses[b]
             FeedingWindow = np.where((bodymass_ratios > np.random.gamma(1, 0.1)) &
                                      (bodymass_ratios < np.random.gamma(2, 0.5)))[0].tolist()
-            # FIXME feeding window is the same for all cells :/
             if b in FeedingWindow:
                 FeedingWindow.remove(b)
 

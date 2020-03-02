@@ -124,7 +124,7 @@ export function map(state = makeInitialMap(), action) {
             const nextCells = [...state.cells];
             const nextBuiltThisTurn = new Set(state.builtThisTurn);
             for (const x of action.selectedCells) {
-                nextCells[x] = {type: state.selection.building, size: action.size, effort: action.effort};//TODO change size and num
+                nextCells[x] = {type: state.selection.building, size: action.size, effort: action.effort};
                 nextBuiltThisTurn.add(x);
             }
             const nextSelection = {...state.selection, mode: undefined, building: undefined, cells: []};

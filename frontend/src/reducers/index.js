@@ -31,9 +31,6 @@ function nextTurnReducer(state, action) {
             let nextAmount = nextResources[id].amount + income;
             if (id === FOOD && nextAmount < 0) {
                 nextAmount = 0;
-                //TODO: inform player that there is a food deficit, effect happiness based on food deficit amount
-                //maybe store the food change per turn in the state somewhere since it is needed for the happiness
-                //calculation and potentially the population growth calculation.
             }
 
             nextResources[id] = {...nextResources[id], amount: nextAmount};
@@ -46,7 +43,7 @@ function nextTurnReducer(state, action) {
 
         if (happiness > 0) {
             return {...state, resources: nextResources};
-        } else { // TODO you lose...
+        } else {
             return {...state, resources: nextResources, gameStatus: LOST};
         }
     }
