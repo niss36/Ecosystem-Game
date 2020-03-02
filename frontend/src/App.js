@@ -11,6 +11,7 @@ import {loading} from "./actions";
 import {Backdrop, CircularProgress, Modal} from '@material-ui/core';
 import {Button} from "@material-ui/core";
 import {EcosystemData} from "./components";
+import Footer from "./components/Footer";
 
 const store = createStore(appReducer, applyMiddleware(thunk));
 
@@ -29,25 +30,33 @@ const ConnectedLoading = connect(
     dispatch => ({}),
 )(makeLoading);
 
+function Lost({restart}) {
+
+    return (
+        <div>
+            <div align={'Center'} style={{paddingBottom: "30px"}}>
+                <h1 align={'Center'}>You lose</h1>
+                <p>
+                    <img src={'/icons/sad.svg'} alt={''} height={100} align={'Center'}/>
+                </p>
+                <Button className="Menu-button" variant="contained" color="primary" onClick={restart}>
+                    Restart
+                </Button>
+            </div>
+            <EcosystemData/>
+            <Footer/>
+        </div>
+    );
+}
+
 function Body({status, start}) {
     switch (status) {
         case MENU:
             return (<Menu onStart={start}/>);
         case RUNNING:
-            return (<Game restart={start}/>);
+            return (<Game/>);
         case LOST:
-            return (<div>
-                    <div align={'Center'} style={{paddingBottom: "30px"}}>
-                        <h1 align={'Center'}>You lose</h1>
-                        <p>
-                            <img src={'/icons/sad.svg'} alt={''} height={100} align={'Center'}/>
-                        </p>
-                        <Button className="Menu-button" variant="contained" color="primary" onClick={start}>
-                            Restart
-                        </Button>
-                    </div>
-                        <EcosystemData/>
-                    </div>);
+            return (<Lost restart={start}/>);
         default:
     }
 }

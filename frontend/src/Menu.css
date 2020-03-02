@@ -1,17 +1,31 @@
-.Menu-bgimg {
+.Menu-root {
     min-height: 100vh;
-    /*line-height: 300px;!*This line gives the vertical spacing for title and button automatically*!*/
 
-    /*background-image: url('./logo.jpg');*/
-    background-size: auto;
-    font-size: 40px;
+    text-align: center;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
+
+.Menu-container {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    flex-grow: 1;
+
+    font-size: 1.25rem;
+}
+
 .Menu-button {
     background: linear-gradient(45deg, #64a5c1 30%, lightgreen 90%);
     border: 0;
-    height: 150px;
-    width: 300px;
+}
+
+.Menu-root .Menu-button {
+    min-width: 400px;
+    min-height: 100px;
+
+    font-size: 4rem;
 }

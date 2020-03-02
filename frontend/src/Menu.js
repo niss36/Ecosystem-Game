@@ -2,15 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+
+import Footer from "./components/Footer";
 
 import "./Menu.css";
 
 class Menu extends React.Component {
     render() {
         return (
-                <Box className="Menu-bgimg">
+            <div className="Menu-root">
+                <Container className="Menu-container">
                     <h1 className="Menu-header">Ecosystem Game</h1>
                     <p>
                         This is a proof of concept for a game using the Madingley model developed by UN-WCMC - a
@@ -27,10 +29,14 @@ class Menu extends React.Component {
                         the <a href="https://madingley.github.io/" target="_blank" rel="noopener noreferrer">Madingley model</a>,
                         and the work of the <a href="https://www.unep-wcmc.org/" target="_blank" rel="noopener noreferrer">UN-WCMC.</a>
                     </p>
+                    <div className="flex-grow-1"/>
                     <Button className="Menu-button" variant="contained" color="primary" onClick={this.props.onStart}>
                         Start
                     </Button>
-                </Box>
+                    <div className="flex-grow-1"/>
+                </Container>
+                <Footer/>
+            </div>
         );
     }
 }

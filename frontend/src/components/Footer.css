@@ -1,0 +1,23 @@
+.Footer-root {
+    padding: 20px 0;
+
+    text-align: center;
+}
+
+.Footer-copyright {
+    font-size: 1.125rem;
+}
+
+.Footer-links {
+    font-size: 1.125rem;
+}
+
+.Footer-icons {
+    font-size: 1rem;
+
+    color: gray;
+}
+
+.Footer-icons a {
+    color: lightblue;
+}
