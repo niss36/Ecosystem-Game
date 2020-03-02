@@ -7,14 +7,15 @@ import {logStorage} from "./LogStorage";
 import {cellInfo} from "./CellInfo";
 import {graphData} from "./GraphData";
 
-import {NEXT_TURN, NEXT_TURN_LOADING, START_GAME} from "../actions";
+import {NEXT_TURN, NEXT_TURN_LOADING, QUIT_GAME, START_GAME} from "../actions";
 
 import {POPULATION, HAPPINESS, MONEY, FOOD, WOOD} from "../definitions/Resources";
 import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 
-import {getHappiness, getIncome} from "../definitions/Util";
+import {getHappiness, getIncome, normalize} from "../definitions/Util";
 
 function nextTurnReducer(state, action) {
+    console.log(state.map.data);
 
     if (action.type === NEXT_TURN) {
 
@@ -39,14 +40,14 @@ function nextTurnReducer(state, action) {
         }
 
         //Population growth
-        //TODO: calculate population growth as a function of food growth and/or other factors?
-        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + 1};
+        const currentPopulation = state.resources[POPULATION].amount;
+        const growth = Math.floor(currentPopulation/30) + 1;
+        nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + growth};
 
         if (happiness > 0) {
             return {...state, resources: nextResources};
-        } else {
-            console.log("You lose"); // TODO you lose...
-            return {...state, resources: nextResources, /*gameStatus: LOST*/};
+        } else { // TODO you lose...
+            return {...state, resources: nextResources, gameStatus: LOST};
         }
     }
 
@@ -56,11 +57,7 @@ function nextTurnReducer(state, action) {
 function halfDataset(state) {
 
     const newModValue = state.graphData.modValue * 2;
-    const newDataPoints = state.graphData.dataPoints.filter(
-        function (el) {
-            return (el.timestamp % newModValue === 0)
-        }
-    );
+    const newDataPoints = state.graphData.dataPoints.filter(el => (el.timestamp % newModValue === 0));
 
     const newGraphData = {...state.graphData,
         dataPoints: newDataPoints,
@@ -69,23 +66,23 @@ function halfDataset(state) {
     return {...state, graphData: newGraphData};
 }
 
-function sumBiomass(action) {
-    return Math.floor((
-        action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n})
-        + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n})
-    )/(Math.pow(10,9)));
+function sum(array) {
+    return array.reduce((t, n) => t + n, 0);
+}
 
+function sumBiomass(action) {
+    return sum(action.data.state.herbivoreBiomasses) + sum(action.data.state.carnivoreBiomasses);
 }
 
 function sumHarvestedBiomass(action) {
-    return Math.floor((action.data.harvestedBiomasses.reduce((total, n) => {return total + n}))/Math.pow(10,9));
+    return sum(action.data.harvestedBiomasses);
 }
 
 function graphDataReducer(state, action) {
 
     if(action.type === START_GAME) {
-        const totalBiomass = sumBiomass(action);
-        const totalHarvestedBiomass = sumHarvestedBiomass(action);
+        const totalBiomass = normalize(sumBiomass(action));
+        const totalHarvestedBiomass = normalize(sumHarvestedBiomass(action));
         const nextGraphData = {...state.graphData,
             dataPoints: [{
                 timestamp: 0,
@@ -103,14 +100,14 @@ function graphDataReducer(state, action) {
 
     if (action.type === NEXT_TURN) {
         //check dataset isn't too large, if so half it
-        if (state.graphData.dataPoints.length === 30) {
+        if (state.graphData.dataPoints.length === 40) {
             state = halfDataset(state);
         }
 
         const nextTimestamp = state.graphData.currentTimestamp + 1;
         if (nextTimestamp % state.graphData.modValue === 0) {
-            const totalBiomass = sumBiomass(action);
-            const totalHarvestedBiomass = sumHarvestedBiomass(action);
+            const totalBiomass = normalize(sumBiomass(action));
+            const totalHarvestedBiomass = normalize(sumHarvestedBiomass(action));
             const nextGraphData = {
                 ...state.graphData,
                 dataPoints: [...state.graphData.dataPoints, {
@@ -127,8 +124,7 @@ function graphDataReducer(state, action) {
             };
 
             return {...state, graphData: nextGraphData};
-        }
-        else {
+        } else {
             const nextGraphData = {...state.graphData, currentTimestamp: nextTimestamp};
             return {...state, graphData: nextGraphData};
         }
@@ -140,7 +136,7 @@ function graphDataReducer(state, action) {
 function gameStatus(state = MENU, action) {
     if (action.type === START_GAME) {
         return RUNNING;
-    } else if (action.type === "QUIT") { // TODO
+    } else if (action.type === QUIT_GAME) {
         return MENU;
     }
 
@@ -198,78 +194,12 @@ const mainReducer = combineReducers({
 });
 
 export default function(state = {}, action) {
+    if (action.type === START_GAME) {
+        state = {};
+    }
     state = mainReducer(state, action);
     state = nextTurnReducer(state, action);
     state = graphDataReducer(state, action);
 
     return state;
 }
-
-/**
- * Structure of the state:
- * {
- *     buildings: {
- *         [<building>]: {
- *             numberBuilt: number,
- *             effects: {
- *                 [POPULATION]: {max: number},
- *                 [<resource>]: {income: number},
- *             },
- *         },
- *     },
- *     resources: {
- *         [<resource>]: {amount: number},
- *         taxes: number,
- *         rationing: number,
- *     },
- *     map: {
- *         selection: {
- *             mode: string,
- *             building: string,
- *             cells: [number],
- *         },
- *         cellTypes: [string],
- *         cells: [
- *             {
- *                 type: string,
- *                 size: number,
- *                 effort: number,
- *             }
- *         ],
- *         builtThisTurn: Set(number),
- *         sameCellTypes: [
- *             {
- *                 top: bool,
- *                 right: bool,
- *                 bottom: bool,
- *                 left: bool,
- *             }
- *         ],
- *         logSelection: {
- *             building: string,
- *             cells: [number]
- *         },
- *     },
- *     data: {
- *         ??
- *     },
- *     graphData: {
- *         dataPoints: [
- *             {
- *                 timestamp: number,
- *                 [<resource>]: number,
- *             },
- *        ],
- *        currentTimestamp: number,
- *        modValue: number,
- *     },
- *     cellInfo: {
- *         display: string,
- *         cellNo: number,
- *     },
- *     gameStatus: string,
- *     guid: string,
- *     timestamp: number,
- *     loading: bool,
- * }
- */

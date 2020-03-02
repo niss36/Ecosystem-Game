@@ -103,7 +103,7 @@ in order to smooth the neighbouring cells.
 }
 
 .Cell-root .Cell-content.expensiveLumberMill{
-    background-image: url("/icons/tree.svg");
+    background-image: url("/icons/sawmill.svg");
 }
 
 .Cell-root .Cell-content.planting{

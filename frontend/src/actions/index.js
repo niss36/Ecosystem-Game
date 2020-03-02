@@ -7,7 +7,6 @@ import {FOREST, LAND, SIZE} from "../definitions/Map";
 
 export const START_GAME = "START_GAME";
 export const NEXT_TURN = "NEXT_TURN";
-export const GET_DATA_INITIAL = "GET_DATA_INITIAL";
 export const NEXT_TURN_LOADING = "NEXT_TURN_LOADING";
 export const START_BUY_BUILDING = "START_BUY_BUILDING";
 export const START_REMOVE_BUILDING = "START_REMOVE_BUILDING";
@@ -24,6 +23,7 @@ export const LOG_CHANGE_DISPLAYED = "LOG_CHANGE_DISPLAYED";
 export const CHANGE_CELL_INFO = "CHANGE_CELL_INFO";
 export const CHANGE_OVERLAY = "CHANGE_OVERLAY";
 export const CHANGE_CELL_TYPE = "CHANGE_CELL_TYPE";
+export const QUIT_GAME = "QUIT_GAME";
 
 /**
  * Action creators
@@ -89,7 +89,6 @@ export function loading(initial) {
 
         if (initial) {
             return initialFetch().then(({guid, data}) => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch({
                     type: START_GAME,
                     guid: guid,
@@ -98,7 +97,6 @@ export function loading(initial) {
             });
         } else {
             return fetchData(getState()).then(data => {
-                console.log(data.state.herbivoreBiomasses[0] + data.state.carnivoreBiomasses[0]);
                 dispatch(getData(data));
             });
         }
@@ -123,7 +121,7 @@ export function getData(data){
                         dispatch(changeCellType(i, LAND));
                     }
                 } else if (cells[i].type === EXPENSIVE_LUMBER_MILL) {
-                    if (Math.random() > 0.9) {
+                    if (Math.random() > 0.95) {
                         dispatch(endRemoveBuilding(EXPENSIVE_LUMBER_MILL, [i], true));
                         dispatch(changeCellType(i, LAND));
                     }
@@ -148,10 +146,11 @@ export function changeOverlay(newOverlay) {
 
 }
 
-export function startBuyBuilding(id) {
+export function startBuyBuilding(id, buyOne) {
     return {
         type: START_BUY_BUILDING,
         id: id,
+        buyOne: buyOne,
     }
 }
 
@@ -298,5 +297,11 @@ export function changeCellType(i, newCellType) {
         type: CHANGE_CELL_TYPE,
         i: i,
         newCellType: newCellType,
+    }
+}
+
+export function quitGame() {
+    return {
+        type: QUIT_GAME,
     }
 }

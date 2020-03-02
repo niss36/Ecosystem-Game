@@ -13,7 +13,7 @@ class Game extends React.Component {
             <Container maxWidth={false} className="Game-root">
                 <Grid container spacing={2}>
                     <Grid item xs={2}>
-                        <Resources/>
+                        <Resources restart={this.props.restart}/>
                     </Grid>
                     <Grid item xs={8} container spacing={2}>
                         <Grid item xs={12} md={4}>

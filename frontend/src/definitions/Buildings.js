@@ -8,7 +8,6 @@ export const EXPENSIVE_LUMBER_MILL = "expensiveLumberMill";
 export const SETTLEMENT = "settlement";
 export const PLANTING_TREES ="planting";
 
-//TODO define affectedDataTypes for each building type.
 export default {
     [FISHING_BOAT]: {
         name: "Fishing Boat",
@@ -16,7 +15,7 @@ export default {
         requiredCellType: SEA,
         selectionSize: 3,
         costs: {
-            [WOOD]: 200,
+            [WOOD]: 170,
             [MONEY]: 100,
         },
         affectedDataTypes: [],
@@ -29,7 +28,7 @@ export default {
         selectionSize: 2,
         costs: {
             [WOOD]: 100,
-            [MONEY]: 400,
+            [MONEY]: 500,
         },
         affectedDataTypes: [],
         requireSilder: true,
@@ -38,7 +37,7 @@ export default {
         name: "Cheap Lumber Mill",
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
         requiredCellType: FOREST,
-        selectionSize: 2,
+        selectionSize: 3,
         costs: {
             [WOOD]: 20,
             [MONEY]: 300,
@@ -50,10 +49,10 @@ export default {
         name: "Expensive Lumber mill",
         description: "Cuts down trees to produce wood sustainably.",
         requiredCellType: FOREST,
-        selectionSize: 2,
+        selectionSize: 3,
         costs: {
             [WOOD]: 20,
-            [MONEY]: 600,
+            [MONEY]: 1200,
         },
         affectedDataTypes: [],
         requireSilder: false,
@@ -63,7 +62,10 @@ export default {
         description: "Provides housing for more people.",
         requiredCellType: LAND,
         selectionSize: 2,
-        costs: {},
+        costs: {
+            [WOOD]: 1500,
+            [MONEY]: 1500,
+        },
         affectedDataTypes: [],
         requireSilder: false,
     },
@@ -71,7 +73,7 @@ export default {
         name: "Tree Planting",
         description:"Plant some trees.",
         requiredCellType:LAND,
-        selectionSize: 2,
+        selectionSize: 3,
         costs:{
             [MONEY]:100
         },

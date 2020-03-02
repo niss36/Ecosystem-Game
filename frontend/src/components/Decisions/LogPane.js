@@ -48,7 +48,7 @@ function makeLogPlane({...props}){
         <div>
             <br/>
             <div>
-                {SimpleMenu(props.commitChange.history.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
+                {SimpleMenu(props.commitChange.historyClean.length, props.onLogHistoryChange, props.commitChange.displayedTurn)}
             </div>
             <div style={{maxHeight: 650, overflow: 'auto'}}>
             <List>
@@ -63,8 +63,6 @@ function makeLogPlane({...props}){
 const mapStateToLogProps = (state) => {
     return {
         ...state.logStorage,
-        canConfirm : canConfirmLog(state.logStorage.commitChange.selectedLogIndex.index, state.logStorage.commitChange.displayedTurn, state.logStorage.commitChange.currentTurn),
-        selectedIndex: state.logStorage.commitChange.selectedLogIndex.index,
     };
 };
 
@@ -81,11 +79,6 @@ const ConnectedLogList = connect(
     mapStateToLogProps,
     mapDispatchToLogProps,
 )(makeLogPlane);
-
-
-function canConfirmLog(indexState, displayed, current){
-    return (indexState === "undefined" && displayed === current);
-}
 
 
 class LogPane extends React.Component {

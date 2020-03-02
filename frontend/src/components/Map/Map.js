@@ -6,16 +6,17 @@ import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import {cellMouseClick, cellMouseEnter, changeCellInfo, changeOverlay, setDifficulty} from "../../actions";
+import {cellMouseClick, cellMouseEnter, changeOverlay} from "../../actions";
 
-import {SIZE} from "../../definitions/Map";
+import {BIOMASS, HARVEST_EFFORT, HARVESTED_BIOMASS, SIZE} from "../../definitions/Map";
 
 import Cell from "./Cell";
 
 import "./Map.css";
+import {normalize} from "../../definitions/Util";
 
 function mapStateToProps(state, ownProps) {
-    let biomass = state.map.data.state.herbivoreBiomasses[ownProps.i] + state.map.data.state.carnivoreBiomasses[ownProps.i];
+    let biomass = normalize(state.modelData.state.herbivoreBiomasses[ownProps.i] + state.modelData.state.carnivoreBiomasses[ownProps.i]);
     return {
         cellType: state.map.cellTypes[ownProps.i],
         mode: state.map.selection.mode,
@@ -26,7 +27,7 @@ function mapStateToProps(state, ownProps) {
         logSelection: state.map.logSelection,
         overlay: state.map.overlay,
         cellClicked: state.map.cellClicked,
-        harvestAmout: state.map.data.harvestedBiomasses[ownProps.i],
+        harvestAmount: normalize(state.modelData.harvestedBiomasses[ownProps.i]),
         cellBiomass: biomass
     }
 }
@@ -112,9 +113,9 @@ class SettingsMenu extends React.Component {
                     onClose={this.close}
                 >
                     Overlay
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("harvest")}>Harvest Efforts</MenuItem>
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("sizes")}>Average Sizes</MenuItem>
-                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod("boimass")}>Last Turn Harvested Biomass</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(HARVEST_EFFORT)}>Harvest Efforts</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(BIOMASS)}>Cell Biomass</MenuItem>
+                    <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(HARVESTED_BIOMASS)}>Last Turn Harvested Biomass</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.overlayMethod(undefined)}>None</MenuItem>
                     <MenuItem style={{display:this.state.mainDisplay}} onClick={this.close}>Close</MenuItem>
                 </Menu>

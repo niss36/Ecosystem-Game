@@ -9,13 +9,15 @@ import Menu from "./Menu";
 import "./App.css"
 import {loading} from "./actions";
 import {Backdrop, CircularProgress, Modal} from '@material-ui/core';
+import {Button} from "@material-ui/core";
+import {EcosystemData} from "./components";
 
 const store = createStore(appReducer, applyMiddleware(thunk));
 
 function makeLoading({...props}){
     return(
         <Modal open={props.loading}>
-            <Backdrop open={props.loading}>
+            <Backdrop open={props.loading} timeout={''}>
                 <CircularProgress color='inherit' size={100}/>
             </Backdrop>
         </Modal>
@@ -32,11 +34,20 @@ function Body({status, start}) {
         case MENU:
             return (<Menu onStart={start}/>);
         case RUNNING:
-            return (<Game/>);
+            return (<Game restart={start}/>);
         case LOST:
-            return (<Box className={"lost"}>You lose
-                    <div className={"img"}/>
-                    </Box>);
+            return (<div>
+                    <div align={'Center'}>
+                        <h1 align={'Center'}>You lose</h1>
+                        <p>
+                            <img src={'/icons/sad.svg'} alt={''} height={100} align={'Center'}/>
+                        </p>
+                        <Button className="Menu-button" variant="contained" color="primary" onClick={start}>
+                            Restart
+                        </Button>
+                    </div>
+                        <EcosystemData/>
+                    </div>);
         default:
     }
 }
