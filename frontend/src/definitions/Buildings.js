@@ -8,7 +8,6 @@ export const EXPENSIVE_LUMBER_MILL = "expensiveLumberMill";
 export const SETTLEMENT = "settlement";
 export const PLANTING_TREES ="planting";
 
-//TODO define affectedDataTypes for each building type.
 export default {
     [FISHING_BOAT]: {
         name: "Fishing Boat",
@@ -38,7 +37,7 @@ export default {
         name: "Cheap Lumber Mill",
         description: "Cuts down trees to produce wood. Substantial impact on the ecosystem.",
         requiredCellType: FOREST,
-        selectionSize: 2,
+        selectionSize: 3,
         costs: {
             [WOOD]: 20,
             [MONEY]: 300,
@@ -50,10 +49,10 @@ export default {
         name: "Expensive Lumber mill",
         description: "Cuts down trees to produce wood sustainably.",
         requiredCellType: FOREST,
-        selectionSize: 2,
+        selectionSize: 3,
         costs: {
             [WOOD]: 20,
-            [MONEY]: 600,
+            [MONEY]: 1200,
         },
         affectedDataTypes: [],
         requireSilder: false,
@@ -74,7 +73,7 @@ export default {
         name: "Tree Planting",
         description:"Plant some trees.",
         requiredCellType:LAND,
-        selectionSize: 2,
+        selectionSize: 3,
         costs:{
             [MONEY]:100
         },

@@ -21,7 +21,7 @@ const initialEffects = {
         [WOOD]: {income: 100}
     },
     [EXPENSIVE_LUMBER_MILL]: {
-        [WOOD]: {income: 100}
+        [WOOD]: {income: 150}
     },
     [PLANTING_TREES]:{
         [WOOD]: {income:10}
