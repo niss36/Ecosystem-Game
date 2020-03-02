@@ -63,7 +63,10 @@ export default {
         description: "Provides housing for more people.",
         requiredCellType: LAND,
         selectionSize: 2,
-        costs: {},
+        costs: {
+            [WOOD]: 400,
+            [MONEY]: 400,
+        },
         affectedDataTypes: [],
         requireSilder: false,
     },

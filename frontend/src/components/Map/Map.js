@@ -27,7 +27,7 @@ function mapStateToProps(state, ownProps) {
         logSelection: state.map.logSelection,
         overlay: state.map.overlay,
         cellClicked: state.map.cellClicked,
-        harvestAmout: state.modelData.harvestedBiomasses[ownProps.i],
+        harvestAmount: normalize(state.modelData.harvestedBiomasses[ownProps.i]),
         cellBiomass: biomass
     }
 }
