@@ -41,7 +41,7 @@ function nextTurnReducer(state, action) {
 
         //Population growth
         const currentPopulation = state.resources[POPULATION].amount;
-        const growth = Math.pow(Math.floor(currentPopulation/40),2) + 1;
+        const growth = Math.floor(currentPopulation/30) + 1;
         nextResources[POPULATION] = {...nextResources[POPULATION], amount: state.resources[POPULATION].amount + growth};
 
         if (happiness > 0) {

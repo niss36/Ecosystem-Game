@@ -48,7 +48,7 @@ function happiness(state = {amount: 100}, action) {
     return state;
 }
 
-function taxes(state = 30, action) {
+function taxes(state = 50, action) {
     if (action.type === SET_TAXES) {
         return action.taxes;
     }

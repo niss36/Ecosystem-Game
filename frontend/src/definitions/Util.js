@@ -81,7 +81,7 @@ export function getHappiness(state) {
 
     //taxes
     const taxes = state.resources.taxes;
-    const taxImpact = 30 - taxes;
+    const taxImpact = 50 - taxes;
     breakdown["tax"] = taxImpact;
     happiness += taxImpact;
 
@@ -115,7 +115,13 @@ export function getHappiness(state) {
 }
 
 export function computeTaxIncome(state) {
-    return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
+    //return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
+    if (state.resources.taxes < 50) {
+        return Math.floor(state.resources.taxes * state.resources[POPULATION].amount * 0.4);
+    } else {
+        return ((50 * 0.4 * state.resources[POPULATION].amount) +
+            Math.floor((state.resources.taxes-50) * 0.15 * state.resources[POPULATION].amount));
+    }
 }
 
 export function computeFoodEaten(state) {
