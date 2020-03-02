@@ -63,7 +63,6 @@ in order to smooth the neighbouring cells.
 .Cell-root.Land .Cell-content {
     color: yellow;
     background-color: var(--land);
-    /*background-image: url("/icons/land.jpg");*/
 }
 
 .Cell-root.Forest .Cell-content {
