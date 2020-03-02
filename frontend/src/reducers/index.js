@@ -15,7 +15,6 @@ import {LOST, MENU, RUNNING} from "../definitions/GameStatus";
 import {getHappiness, getIncome, normalize} from "../definitions/Util";
 
 function nextTurnReducer(state, action) {
-    console.log(state.map.data);
 
     if (action.type === NEXT_TURN) {
 

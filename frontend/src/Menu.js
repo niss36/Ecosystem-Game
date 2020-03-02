@@ -26,8 +26,8 @@ class Menu extends React.Component {
                     </p>
                     <p>
                         Click the following links for more information on
-                        the <a href="https://madingley.github.io/" target="_blank">Madingley model</a>,
-                        and the work of the <a href="https://www.unep-wcmc.org/" target="_blank">UN-WCMC.</a>
+                        the <a href="https://madingley.github.io/" target="_blank" rel="noopener noreferrer">Madingley model</a>,
+                        and the work of the <a href="https://www.unep-wcmc.org/" target="_blank" rel="noopener noreferrer">UN-WCMC.</a>
                     </p>
                     <Button className="Menu-button" variant="contained" color="primary" onClick={this.props.onStart}>
                         Start

@@ -10,7 +10,7 @@ import {
     CHANGE_CELL_INFO,
     CHANGE_OVERLAY,
     CHANGE_CELL_TYPE,
-    CELL_MOUSE_CLICK, START_GAME
+    CELL_MOUSE_CLICK
 } from "../actions";
 
 import buildings from "../definitions/Buildings";

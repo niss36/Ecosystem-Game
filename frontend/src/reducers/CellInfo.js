@@ -1,13 +1,8 @@
-import {
-    CELL_MOUSE_CLICK,
-    NEXT_TURN,
-} from "../actions";
+import {CELL_MOUSE_CLICK} from "../actions";
 const initialState = {
     display: "none",
     cellNo: 0,
 };
-
-
 
 export function cellInfo(state = initialState, action) {
     switch (action.type) {

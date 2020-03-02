@@ -17,7 +17,7 @@ const store = createStore(appReducer, applyMiddleware(thunk));
 function makeLoading({...props}){
     return(
         <Modal open={props.loading}>
-            <Backdrop open={props.loading} timeout={''}>
+            <Backdrop open={props.loading} timeout={0}>
                 <CircularProgress color='inherit' size={100}/>
             </Backdrop>
         </Modal>
