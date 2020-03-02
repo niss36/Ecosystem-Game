@@ -57,11 +57,7 @@ function nextTurnReducer(state, action) {
 function halfDataset(state) {
 
     const newModValue = state.graphData.modValue * 2;
-    const newDataPoints = state.graphData.dataPoints.filter(
-        function (el) {
-            return (el.timestamp % newModValue === 0)
-        }
-    );
+    const newDataPoints = state.graphData.dataPoints.filter(el => (el.timestamp % newModValue === 0));
 
     const newGraphData = {...state.graphData,
         dataPoints: newDataPoints,
@@ -70,16 +66,16 @@ function halfDataset(state) {
     return {...state, graphData: newGraphData};
 }
 
-function sumBiomass(action) {
-    return(
-        action.data.state.herbivoreBiomasses.reduce((total, n) => {return total + n})
-        + action.data.state.carnivoreBiomasses.reduce((total, n) => {return total + n})
-    );
+function sum(array) {
+    return array.reduce((t, n) => t + n, 0);
+}
 
+function sumBiomass(action) {
+    return sum(action.data.state.herbivoreBiomasses) + sum(action.data.state.carnivoreBiomasses);
 }
 
 function sumHarvestedBiomass(action) {
-    return action.data.harvestedBiomasses.reduce((total, n) => {return total + n})
+    return sum(action.data.harvestedBiomasses);
 }
 
 function graphDataReducer(state, action) {
@@ -128,8 +124,7 @@ function graphDataReducer(state, action) {
             };
 
             return {...state, graphData: nextGraphData};
-        }
-        else {
+        } else {
             const nextGraphData = {...state.graphData, currentTimestamp: nextTimestamp};
             return {...state, graphData: nextGraphData};
         }

@@ -36,7 +36,7 @@ function genericBuilding(state, action) {
         case END_REMOVE_BUILDING:
             return {...state, numberBuilt: state.numberBuilt - action.selectedCells.length};
         case END_BUY_BUILDING:
-            return {...state, numberBuilt: state.numberBuilt + action.selectedCells.length};// TODO CHANGE TO BE NUMBER MADE
+            return {...state, numberBuilt: state.numberBuilt + action.selectedCells.length};
         default:
             return state;
     }
@@ -45,7 +45,7 @@ function genericBuilding(state, action) {
 function normalBuilding(id) {
     return function (state = {numberBuilt: 0, effects: initialEffects[id]}, action) {
         if (action.id === id) {
-            return genericBuilding(state, action, id);
+            return genericBuilding(state, action);
         }
 
         return state;
@@ -64,7 +64,7 @@ function effortBuilding(id) {
                     return state;
                 }
             } else {
-                return genericBuilding(state, action, id);
+                return genericBuilding(state, action);
             }
         }
 
@@ -77,8 +77,7 @@ const huntingShack = effortBuilding(HUNTING_SHACK, FOOD);
 const cheapLumberMill = normalBuilding(CHEAP_LUMBER_MILL);
 const expensiveLumberMill = normalBuilding(EXPENSIVE_LUMBER_MILL);
 const settlement = normalBuilding(SETTLEMENT);
-const planting =normalBuilding(PLANTING_TREES);
-
+const planting = normalBuilding(PLANTING_TREES);
 
 export const buildings = combineReducers({
     fishingBoat,
