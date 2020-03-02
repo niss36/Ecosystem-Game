@@ -37,7 +37,7 @@ function Body({status, start}) {
             return (<Game restart={start}/>);
         case LOST:
             return (<div>
-                    <div align={'Center'}>
+                    <div style={{paddingBottom: "30px"}} align={'Center'}>
                         <h1 align={'Center'}>You lose</h1>
                         <p>
                             <img src={'/icons/sad.svg'} alt={''} height={100} align={'Center'}/>
@@ -46,6 +46,7 @@ function Body({status, start}) {
                             Restart
                         </Button>
                     </div>
+
                         <EcosystemData/>
                     </div>);
         default:

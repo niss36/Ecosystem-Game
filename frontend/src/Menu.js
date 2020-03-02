@@ -31,7 +31,6 @@ class Menu extends React.Component {
                         Start
                     </Button>
                 </Box>
-            </Container>
         );
     }
 }
