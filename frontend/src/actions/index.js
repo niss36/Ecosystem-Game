@@ -121,7 +121,7 @@ export function getData(data){
                         dispatch(changeCellType(i, LAND));
                     }
                 } else if (cells[i].type === EXPENSIVE_LUMBER_MILL) {
-                    if (Math.random() > 0.9) {
+                    if (Math.random() > 0.95) {
                         dispatch(endRemoveBuilding(EXPENSIVE_LUMBER_MILL, [i], true));
                         dispatch(changeCellType(i, LAND));
                     }
