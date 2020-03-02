@@ -1,0 +1,102 @@
+/**
+ * Structure of the state:
+ * {
+ *     buildings: {
+ *         [<building>]: {
+ *             numberBuilt: number,
+ *             effects: {
+ *                 [POPULATION]: {max: number},
+ *                 [<resource>]: {income: number},
+ *             },
+ *         },
+ *     },
+ *     resources: {
+ *         [<resource>]: {amount: number},
+ *         taxes: number,
+ *         rationing: number,
+ *     },
+ *     map: {
+ *         selection: {
+ *             mode: string,
+ *             building: string,
+ *             cells: [number],
+ *         },
+ *         cellTypes: [string],
+ *         cells: [
+ *             {
+ *                 type: string,
+ *                 size: number,
+ *                 effort: number,
+ *             }
+ *         ],
+ *         builtThisTurn: Set(number),
+ *         sameCellTypes: [
+ *             {
+ *                 top: bool,
+ *                 right: bool,
+ *                 bottom: bool,
+ *                 left: bool,
+ *             }
+ *         ],
+ *         logSelection: {
+ *             building: string,
+ *             cells: [number]
+ *         },
+ *     },
+ *     logStorage: {
+ *           displayedTurn: number,
+ *           currentTurn: number,
+ *           historyClean: [
+ *                   {
+ *                       buy:
+ *                           [<building>] : [number]
+ *                       sell:
+ *                           [<building>] : [number]
+ *                   }
+ *           ],
+ *           displayedCleanLog: {
+ *                       buy:
+ *                           [<building>] : [number]
+ *                       sell:
+ *                           [<building>] : [number]
+ *           },
+ *           selectedLogItem: {
+ *                   building: string
+ *                   action: string
+ *            },
+ *     }
+ *     graphData: {
+ *         dataPoints: [
+ *             {
+ *                 timestamp: number,
+ *                 [<resource>]: number,
+ *                 totalHarvestedBiomass: number,
+ *                 totalBiomass: number,
+ *             },
+ *        ],
+ *        currentTimestamp: number,
+ *        modValue: number,
+ *     },
+ *     cellInfo: {
+ *         display: string,
+ *         cellNo: number,
+ *     },
+ *     gameStatus: string,
+ *     guid: string,
+ *     timestamp: number,
+ *     loading: bool,
+ *     modelData: {
+ *           biodiversityScores: Number[]
+ *           harvestedBiomasses: Number[],
+ *           meanHarvestedBiomass: Number,
+ *           state:  = {
+ *               herbivoreBiomasses: Number[],
+ *               herbivoreAbundances: Number[],
+ *               carnivoreBiomasses: Number[],
+ *               carnivoreAbundances: Number[],
+ *               temperature: Number, //in C
+ *               timeElapsed: Number, //months
+ *            },
+ *       }
+ * }
+ */
