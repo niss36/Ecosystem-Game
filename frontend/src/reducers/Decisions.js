@@ -14,10 +14,8 @@ import {POPULATION, FOOD, WOOD} from "../definitions/Resources";
 
 const initialEffects = {
     [FISHING_BOAT]: {
-        [FOOD]: {income: 50}
     },
     [HUNTING_SHACK]: {
-        [FOOD]: {income: 100}
     },
     [CHEAP_LUMBER_MILL]: {
         [WOOD]: {income: 100}

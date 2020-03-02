@@ -42,6 +42,18 @@ class BuildingPane extends React.Component {
 
         const {name, description, costs} = buildings[id];
 
+        let effectsPlane = <div/>;
+        if(Object.entries(effects).length){
+            effectsPlane = (<div className="BuildingPane-effects">
+                                <div style={{textAlign: "center"}}>
+                                        Effects
+                                    </div>
+                                    {
+                                        effects && Object.entries(effects).map(this.makeEffect)
+                                    }
+                                </div>)
+        }
+
         return (
             <div className="BuildingPane-root">
                 <div className="BuildingPane-header">
@@ -63,14 +75,7 @@ class BuildingPane extends React.Component {
                         Object.entries(costs).map(this.makeCost)
                     }
                 </div>
-                <div className="BuildingPane-effects">
-                    <div style={{textAlign: "center"}}>
-                        Effects
-                    </div>
-                    {
-                        effects && Object.entries(effects).map(this.makeEffect)
-                    }
-                </div>
+                {effectsPlane}
                 <div className="BuildingPane-footer">
                     <Button onClick={buyOne} disabled={!canBuy} variant="outlined" className="BuildingPane-buyOne">
                         Buy one
