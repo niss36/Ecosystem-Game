@@ -26,7 +26,7 @@ def new(request):
         game = Game(guid=guid, n_cells=model.n_cells, cell_area=model.cell_area)
         game.arrays.save('', ContentFile(''))
         # run the model for a while to make it stabilise
-        returned_data = model.step(50, np.zeros(model.n_cells), np.zeros(model.n_cells), 0)
+        returned_data = model.step(48, np.zeros(model.n_cells), np.zeros(model.n_cells), 0)
 
         update_game_from_model(game, model)
         game.save()
