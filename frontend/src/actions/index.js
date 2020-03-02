@@ -145,10 +145,11 @@ export function changeOverlay(newOverlay) {
 
 }
 
-export function startBuyBuilding(id) {
+export function startBuyBuilding(id, buyOne) {
     return {
         type: START_BUY_BUILDING,
         id: id,
+        buyOne: buyOne,
     }
 }
 

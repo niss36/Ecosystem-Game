@@ -150,10 +150,12 @@ export function numCanBuy(buildingId, state) {
     return max;
 }
 
-export function getSelection(i, building) {
+export function getSelection(i, building, buyOne) {
     const [row, col] = [Math.floor(i / SIZE), i % SIZE];
 
-    switch (buildings[building].selectionSize) {
+    const size = buyOne ? 1 : buildings[building].selectionSize;
+
+    switch (size) {
         case 3:
             if (col === 0) i++;
             if (col === SIZE - 1) i--;

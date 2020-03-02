@@ -51,6 +51,7 @@ export function commitChange(state = initialStores, action){
                         let cell = action.selectedCells[i];
                             buyHistory.push(cell);
                     }
+                    newHistoryClean[state.currentTurn] = {...newHistoryClean[state.currentTurn], buy: {...newHistoryClean[state.currentTurn].buy, [action.id]: buyHistory}};
                     return {...state, historyClean: newHistoryClean};
                 }
                 else{
@@ -71,6 +72,7 @@ export function commitChange(state = initialStores, action){
                             sellHistory.push(cell);
                         }
                     }
+                    newHistoryClean[state.currentTurn] = {...newHistoryClean[state.currentTurn], buy: {...newHistoryClean[state.currentTurn].buy, [action.id]: buyHistory}, sell: {...newHistoryClean[state.currentTurn].sell, [action.id]: sellHistory}};
                     return {...state, historyClean: newHistoryClean};
                 }
                 else{
