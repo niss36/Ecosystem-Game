@@ -109,8 +109,8 @@ function graphDataReducer(state, action) {
 
         const nextTimestamp = state.graphData.currentTimestamp + 1;
         if (nextTimestamp % state.graphData.modValue === 0) {
-            const totalBiomass = sumBiomass(action);
-            const totalHarvestedBiomass = sumHarvestedBiomass(action);
+            const totalBiomass = normalize(sumBiomass(action));
+            const totalHarvestedBiomass = normalize(sumHarvestedBiomass(action));
             const nextGraphData = {
                 ...state.graphData,
                 dataPoints: [...state.graphData.dataPoints, {
