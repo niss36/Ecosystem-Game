@@ -10,6 +10,7 @@ import "./Menu.css";
 class Menu extends React.Component {
     render() {
         return (
+            <div align={'Center'}>
             <Container className="Menu-root">
                 <Box className="Menu-bgimg">
                     <h1 className="Menu-header">Ecosystem Game</h1>
@@ -18,6 +19,7 @@ class Menu extends React.Component {
                     </Button>
                 </Box>
             </Container>
+            </div>
         );
     }
 }
