@@ -15,7 +15,7 @@ export default {
         requiredCellType: SEA,
         selectionSize: 3,
         costs: {
-            [WOOD]: 200,
+            [WOOD]: 170,
             [MONEY]: 100,
         },
         affectedDataTypes: [],
@@ -28,7 +28,7 @@ export default {
         selectionSize: 2,
         costs: {
             [WOOD]: 100,
-            [MONEY]: 400,
+            [MONEY]: 500,
         },
         affectedDataTypes: [],
         requireSilder: true,
@@ -63,8 +63,8 @@ export default {
         requiredCellType: LAND,
         selectionSize: 2,
         costs: {
-            [WOOD]: 400,
-            [MONEY]: 400,
+            [WOOD]: 2000,
+            [MONEY]: 2000,
         },
         affectedDataTypes: [],
         requireSilder: false,

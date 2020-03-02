@@ -104,7 +104,7 @@ function graphDataReducer(state, action) {
 
     if (action.type === NEXT_TURN) {
         //check dataset isn't too large, if so half it
-        if (state.graphData.dataPoints.length === 30) {
+        if (state.graphData.dataPoints.length === 40) {
             state = halfDataset(state);
         }
 
