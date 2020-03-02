@@ -17,11 +17,11 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/backend/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6 (Ecosystem-Game)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python (Ecosystem-Game)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
-    <option name="requirementsPath" value="$MODULE_DIR$\backend\requirements.txt" />
+    <option name="requirementsPath" value="$MODULE_DIR$/backend/requirements.txt" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="renderExternalDocumentation" value="true" />
