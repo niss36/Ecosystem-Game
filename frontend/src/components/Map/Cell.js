@@ -86,7 +86,7 @@ class Cell extends React.Component {
 
             case undefined:
             default:
-                break
+                break;
         }
 
         return (
