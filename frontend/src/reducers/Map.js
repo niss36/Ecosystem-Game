@@ -45,7 +45,7 @@ function makeFilter(state) {
  */
 function getFilteredSelection(i, state) {
     // assert mode not undefined
-    return getSelection(i, state.selection.building, state.selection.buyOne).filter(makeFilter(state));
+    return getSelection(i, state.selection.building, state.selection.mode === "add" && state.selection.buyOne).filter(makeFilter(state));
 }
 
 function makeInitialMap () {
